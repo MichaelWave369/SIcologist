@@ -23,40 +23,36 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 13. Replication Registry + Evidence Ladder
 14. Claim Registry + Evidence Graph
 15. Falsification + Claim Challenge Engine
+16. Claim Stress Lab + Adversarial Challenge Generator
 
-## Rung 15
+## Rung 16
 
-Rung 15 preregisters attempts to falsify or weaken explicit Rung 14 claim revisions.
+Rung 16 proposes ways to stress a target claim against a registered rival.
 
-A challenge freezes:
+It requires explicit claim-to-hypothesis bindings rather than inferring hypotheses from prose.
 
-    target claim revision
-    rival claim revision
-    challenge question
-    expected observation
-    falsifier
-    boundary conditions
-    discriminating probe
-    observation-to-outcome decision table
+For every declared probe in the selected differential model, the stress lab reports:
 
-The decision table must include at least one way for the target claim to survive and at least one way for it to be contradicted.
+    pairwise expected information gain
+    target/rival positive likelihoods
+    likelihood separation
+    estimated engineering cost
+    estimated invasiveness
+    transparent weighted stress score
 
-Once evidence arrives, the observed label selects the preregistered outcome. The evaluator cannot choose a friendlier verdict afterward.
+The generator never runs a probe, preregisters a challenge, or attaches evidence automatically.
 
-Challenge outcomes are:
+An operator can explicitly select one generated candidate and freeze it into a Rung 15 challenge contract. Selection requires operator approval and an approval receipt, and the resulting selection receipt still carries:
 
-    SURVIVED_CHALLENGE
-    WEAKENED
-    CONTRADICTED
-    INCONCLUSIVE
+    executionAuthorized = false
 
-A result can be attached back to the target claim as explicit evidence. Target contradiction does not automatically prove the rival claim, and challenge survival does not prove the target claim.
+Cost values are engineering defaults, not measured runtime economics.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run challenge
+    npm run stress
 
 ## License
 

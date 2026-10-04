@@ -104,3 +104,16 @@ export {
   ClaimChallengeRegistry,
   validateChallengeConstants
 } from "./challenge/registry.js";
+
+export {
+  STRESS_LAB_VERSION,
+  DEFAULT_STRESS_WEIGHTS,
+  DEFAULT_PROBE_COSTS,
+  validateStressWeights,
+  resolveProbeCost,
+  invasivenessForProbe
+} from "./stress/policy.js";
+export {
+  generateClaimStressReport,
+  preregisterStressCandidate
+} from "./stress/engine.js";

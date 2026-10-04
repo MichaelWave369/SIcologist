@@ -42,7 +42,13 @@ import {
   CLAIM_CHALLENGE_OUTCOMES,
   CLAIM_CHALLENGE_STATES,
   ClaimChallengeRegistry,
-  validateChallengeConstants
+  validateChallengeConstants,
+  STRESS_LAB_VERSION,
+  DEFAULT_STRESS_WEIGHTS,
+  DEFAULT_PROBE_COSTS,
+  generateClaimStressReport,
+  preregisterStressCandidate,
+  validateStressWeights
 } from "../src/index.js";
 
 const required=[
@@ -69,6 +75,7 @@ const required=[
   "schemas/replication-registry.schema.json","schemas/replication-registry-summary.schema.json",
   "schemas/claim.schema.json","schemas/claim-evidence.schema.json","schemas/claim-assessment.schema.json","schemas/claim-evidence-graph.schema.json",
   "schemas/claim-challenge.schema.json","schemas/claim-challenge-result.schema.json","schemas/claim-challenge-registry.schema.json",
+  "schemas/claim-stress-report.schema.json","schemas/stress-selection-receipt.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -126,7 +133,10 @@ for(const [name,value] of Object.entries({
   ClaimEvidenceRegistry,
   validateClaimRegistryConstants,
   ClaimChallengeRegistry,
-  validateChallengeConstants
+  validateChallengeConstants,
+  generateClaimStressReport,
+  preregisterStressCandidate,
+  validateStressWeights
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -144,6 +154,9 @@ if(CLAIM_CHALLENGE_OUTCOMES.length!==4) throw new Error("Expected 4 claim challe
 if(CLAIM_CHALLENGE_STATES.length!==2) throw new Error("Expected 2 claim challenge states");
 const challengeConstantErrors=validateChallengeConstants();
 if(challengeConstantErrors.length) throw new Error("Challenge constant errors: "+challengeConstantErrors.join(", "));
+if(STRESS_LAB_VERSION!=="STRESS_LAB_V0.1") throw new Error("Unexpected stress lab version");
+validateStressWeights(DEFAULT_STRESS_WEIGHTS);
+if(Object.keys(DEFAULT_PROBE_COSTS).length!==PROBE_CATALOG.length) throw new Error("Stress cost catalog must cover every probe");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
