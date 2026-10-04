@@ -24,35 +24,42 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 14. Claim Registry + Evidence Graph
 15. Falsification + Claim Challenge Engine
 16. Claim Stress Lab + Adversarial Challenge Generator
+17. Research Campaign Planner
 
-## Rung 16
+## Rung 17
 
-Rung 16 proposes ways to stress a target claim against a registered rival.
+Rung 17 turns one target claim, multiple registered rivals, and Rung 16 stress reports into a bounded research campaign.
 
-It requires explicit claim-to-hypothesis bindings rather than inferring hypotheses from prose.
+The planner freezes:
 
-For every declared probe in the selected differential model, the stress lab reports:
+    target claim revision
+    rival claim revisions
+    hypothesis bindings
+    stress reports
+    ranked candidate steps
+    max step count
+    estimated-cost budget
+    stop and escalation rules
 
-    pairwise expected information gain
-    target/rival positive likelihoods
-    likelihood separation
-    estimated engineering cost
-    estimated invasiveness
-    transparent weighted stress score
+The default selection strategy first tries to cover distinct rivals with their strongest challenge, then spends remaining step/budget capacity on the strongest remaining candidates.
 
-The generator never runs a probe, preregisters a challenge, or attaches evidence automatically.
-
-An operator can explicitly select one generated candidate and freeze it into a Rung 15 challenge contract. Selection requires operator approval and an approval receipt, and the resulting selection receipt still carries:
+Every planned step retains:
 
     executionAuthorized = false
+    operatorSelectionRequired = true
+    checkpointRequiredAfterCompletion = true
 
-Cost values are engineering defaults, not measured runtime economics.
+The campaign tracker gates every next selection. It waits for the prior challenge result, then waits for that result to be attached to the claim evidence graph before continuing.
+
+It stops or escalates when a challenge contradicts the target, the target is superseded, the next rival revision becomes stale, the claim becomes contested, or the plan is exhausted.
+
+A campaign plan never executes probes or automatically advances to the next experiment.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run stress
+    npm run campaign
 
 ## License
 

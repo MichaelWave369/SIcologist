@@ -117,3 +117,16 @@ export {
   generateClaimStressReport,
   preregisterStressCandidate
 } from "./stress/engine.js";
+
+export {
+  CAMPAIGN_VERSION,
+  CAMPAIGN_GATE_DECISIONS,
+  DEFAULT_CAMPAIGN_POLICY,
+  normalizeCampaignPolicy
+} from "./campaign/policy.js";
+export {
+  verifyResearchCampaignPlan,
+  createResearchCampaignPlan,
+  ResearchCampaignTracker,
+  validateCampaignConstants
+} from "./campaign/planner.js";

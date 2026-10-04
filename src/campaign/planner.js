@@ -177,6 +177,7 @@ export function createResearchCampaignPlan(claimRegistry,{
     stopRules:{
       challengeContradicted:resolvedPolicy.stopOnChallengeContradiction?"STOP":"CONTINUE_WITH_REVIEW",
       targetSuperseded:"STOP",
+      rivalSuperseded:"STOP_PLAN_STALE",
       contestedClaim:resolvedPolicy.escalateOnContestedClaim?"ESCALATE":"CONTINUE",
       unresolvedChallenge:"WAIT",
       unresolvedEvidenceAttachment:"WAIT",
