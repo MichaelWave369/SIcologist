@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Replication Registry Summary",
+  "type":"object",
+  "required":["version","protocolFingerprint","registeredReceiptCount","uniqueEvidenceCount","statusCounts","declaredReplicatorCount","supportReplicatorCount","environmentCount","supportEnvironmentCount","comparableCount","supportCount","divergenceCount","supportRate","divergenceRate","heterogeneity","adverseEvidence","policy","evidenceBoundary","evidenceGrade","promotionStatus","fingerprint"],
+  "properties":{
+    "version":{"const":"REPLICATION_REGISTRY_SUMMARY_V0.1"},
+    "evidenceGrade":{"enum":["NO_REPLICATION_EVIDENCE","SINGLE_REPLICATION_SUPPORT","MULTI_REPLICATOR_SUPPORT","CROSS_ENVIRONMENT_SUPPORT","ROBUST_REPLICATION_CANDIDATE"]},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

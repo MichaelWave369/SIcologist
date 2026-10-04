@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Replication Registry",
+  "type":"object",
+  "required":["version","protocol","policy","receipts","fingerprint"],
+  "properties":{
+    "version":{"const":"REPLICATION_REGISTRY_V0.1"},
+    "protocol":{"type":"object"},
+    "policy":{"type":"object"},
+    "receipts":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

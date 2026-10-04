@@ -76,3 +76,9 @@ export {
   verifyReplicationReceipt,
   createReplicationReceipt
 } from "./replication/protocol.js";
+
+export {
+  REPLICATION_EVIDENCE_GRADES,
+  DEFAULT_EVIDENCE_LADDER_POLICY,
+  ReplicationEvidenceRegistry
+} from "./replication/registry.js";

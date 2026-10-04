@@ -20,37 +20,45 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 10. Sealed External Evaluation Harness
 11. Independent Evaluator Package + Custody Split
 12. Reproducibility + External Replication Protocol
+13. Replication Registry + Evidence Ladder
 
-## Rung 12
+## Rung 13
 
-Rung 12 freezes an independently scored reference run into a portable replication target.
+Rung 13 aggregates multiple Rung 12 replication receipts without treating receipt count as scientific truth.
 
-The protocol binds the challenge, reference receipt, model artifact SHA-256, source commit, dependency fingerprint, seed schedule, reference environment, environment policy, and scoring tolerances.
+The registry:
+- verifies every replication receipt
+- requires one frozen replication protocol
+- rejects exact duplicate receipts
+- detects reused observed evidence
+- counts declared replicators separately from run count
+- tracks cross-environment support
+- preserves divergent, mismatched, and insufficient runs
+- measures metric-delta heterogeneity
+- measures prediction-agreement heterogeneity
+- applies frozen promotion thresholds
 
-Replication receipts classify runs as:
+Evidence grades are:
 
-    REPLAY_EXACT
-    REPLICATION_WITHIN_TOLERANCE
-    REPLICATION_DIVERGED
-    ENVIRONMENT_MISMATCH
-    ARTIFACT_MISMATCH
-    INSUFFICIENT_REPLICATION_EVIDENCE
+    NO_REPLICATION_EVIDENCE
+    SINGLE_REPLICATION_SUPPORT
+    MULTI_REPLICATOR_SUPPORT
+    CROSS_ENVIRONMENT_SUPPORT
+    ROBUST_REPLICATION_CANDIDATE
 
-Environment drift is recorded separately from artifact drift. A different OS, architecture, or hardware class may still achieve REPLAY_EXACT when the frozen experiment and outputs match.
+Even the top grade retains:
 
-Receipts retain:
-
+    replicatorIdentity = DECLARED_NOT_VERIFIED
     replicationIndependence = NOT_ESTABLISHED
-    externalValidity = CANDIDATE
-    productionStatus = NOT_VALIDATED
+    scientificTruth = NOT_ESTABLISHED
 
-because software cannot prove institutional independence or scientific generalization.
+A registry is an evidence summary, not a reality oracle.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run replicate
+    npm run evidence
 
 ## License
 
