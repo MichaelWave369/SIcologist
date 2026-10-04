@@ -55,6 +55,10 @@ function sortCandidates(items){
   );
 }
 
+function pairCandidateKey(report,candidate){
+  return report.fingerprint+":"+candidate.candidateId;
+}
+
 function buildSelectionPool(stressReports){
   const topByRival=sortCandidates(
     stressReports.map(report=>({
@@ -62,11 +66,11 @@ function buildSelectionPool(stressReports){
       candidate:report.recommendation
     }))
   );
-  const topIds=new Set(topByRival.map(item=>item.candidate.candidateId));
+  const topKeys=new Set(topByRival.map(item=>pairCandidateKey(item.stressReport,item.candidate)));
   const remainder=sortCandidates(
     stressReports.flatMap(report=>
       report.candidates
-        .filter(candidate=>!topIds.has(candidate.candidateId))
+        .filter(candidate=>!topKeys.has(pairCandidateKey(report,candidate)))
         .map(candidate=>({stressReport:report,candidate}))
     )
   );
@@ -113,11 +117,12 @@ export function createResearchCampaignPlan(claimRegistry,{
   const pool=buildSelectionPool(stressReports);
   const steps=[];
   let totalCost=0;
-  const selectedCandidateIds=new Set();
+  const selectedCandidateKeys=new Set();
 
   for(const item of pool){
     if(steps.length>=resolvedPolicy.maxSteps) break;
-    if(selectedCandidateIds.has(item.candidate.candidateId)) continue;
+    const selectionKey=pairCandidateKey(item.stressReport,item.candidate);
+    if(selectedCandidateKeys.has(selectionKey)) continue;
     const nextCost=round(totalCost+item.candidate.metrics.estimatedCost);
     if(nextCost-resolvedPolicy.maxEstimatedCost>1e-9) continue;
 
@@ -140,7 +145,7 @@ export function createResearchCampaignPlan(claimRegistry,{
     };
     const step={...stepBody,stepId:fingerprint(stepBody)};
     steps.push(step);
-    selectedCandidateIds.add(item.candidate.candidateId);
+    selectedCandidateKeys.add(selectionKey);
     totalCost=nextCost;
   }
 
@@ -277,6 +282,15 @@ export class ResearchCampaignTracker{
         assessment,
         {completedSelections:this.#selections.length}
       );
+    }
+
+    const nextRival=claimRegistry.claim(nextStep.rivalClaimId);
+    if(!nextRival||nextRival.supersededBy||nextRival.revision!==nextStep.rivalRevision){
+      return this.#gate("STOP_PLAN_STALE",assessment,{
+        reason:"The next planned rival claim revision is no longer current.",
+        nextStepNumber:nextStep.stepNumber,
+        rivalClaimId:nextStep.rivalClaimId
+      });
     }
 
     return this.#gate("READY_FOR_OPERATOR_SELECTION",assessment,{
