@@ -1,44 +1,62 @@
 # Architecture
 
 ```text
-Observation Adapter
-       |
-       v
+Agent / Runtime
+      |
+      v
+Session Event Adapter
+      |
+      v
+Agent Session Observatory
+      |
+      +--> deterministic event normalization
+      |
+      +--> behavioral metric extraction
+      |
+      v
 Baseline Comparator
-       |
-       v
+      |
+      v
 Condition Assessor
-       |
-       v
+      |
+      v
 Probe / Explanation Layer
-       |
-       v
+      |
+      v
 Intervention Planner
-       |
+      |
   Governance Gate
-       |
-       v
+      |
+      v
 Execution Adapter (external)
-       |
-       v
+      |
+      v
 Recovery Comparator
-       |
-       v
+      |
+      v
 Evidence Ledger
 ```
 
-## Rung 1 boundary
-Rung 1 contains the deterministic domain core only. It does not directly call an LLM, mutate prompts, clear memory, disable tools, or switch models.
+## Rung 2 boundary
+
+Rung 2 observes and derives. It still does not directly call an LLM, mutate prompts, clear memory, disable tools, switch models, or grant authority.
 
 ```text
+observation != interpretation
 assessment != authority
 recommendation != execution
 capability != permission
 ```
 
+The session layer is deliberately adapter-friendly. A PhiVessel, PhiBot, local Ollama harness, replay runner, or any other agent runtime can emit the same canonical event vocabulary.
+
 ## Modules
+
 - `conditions.js`: versioned behavioral-condition catalog
-- `assess.js`: deterministic condition evaluation
+- `assess.js`: deterministic condition evaluation with missing-data awareness
 - `interventions.js`: governed action planning
 - `recovery.js`: before/after comparison
 - `ledger.js`: hash-chained evidence record
+- `session/events.js`: canonical session-event vocabulary and validation
+- `session/metrics.js`: deterministic metric extraction
+- `session/observatory.js`: streaming session observer and report generation

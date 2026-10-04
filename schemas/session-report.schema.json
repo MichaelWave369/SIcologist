@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Session Report",
+  "type":"object",
+  "required":["eventCount","byType","metrics","metricCoverage","assessment","plan","ledgerValid"],
+  "properties":{
+    "eventCount":{"type":"integer","minimum":0},
+    "byType":{"type":"object","additionalProperties":{"type":"integer","minimum":0}},
+    "metrics":{"type":"object"},
+    "metricCoverage":{"type":"array","items":{"type":"string"}},
+    "assessment":{"type":"object"},
+    "plan":{"type":"object"},
+    "ledgerValid":{"type":"boolean"}
+  }
+}
