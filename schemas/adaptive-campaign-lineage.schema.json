@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Adaptive Campaign Lineage",
+  "type":"object",
+  "required":["version","rootPlanFingerprint","revisionCount","revisions","fingerprint"],
+  "properties":{
+    "version":{"const":"ADAPTIVE_CAMPAIGN_LINEAGE_V0.1"},
+    "revisionCount":{"type":"integer","minimum":1},
+    "revisions":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
