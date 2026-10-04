@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Case File",
+  "type":"object",
+  "required":["version","caseId","agentId","title","context","state","eventCount","events","ledgerValid"],
+  "properties":{
+    "version":{"const":"0.5.0"},
+    "caseId":{"type":"string","minLength":1},
+    "agentId":{"type":"string","minLength":1},
+    "title":{"type":"string"},
+    "context":{"type":"object"},
+    "state":{"enum":["OPEN","ACTIVE_INTERVENTION","RECOVERED","CLOSED"]},
+    "eventCount":{"type":"integer","minimum":1},
+    "events":{"type":"array","items":{"type":"object"}},
+    "ledgerValid":{"type":"boolean"}
+  }
+}

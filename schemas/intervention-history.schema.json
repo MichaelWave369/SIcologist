@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Intervention History",
+  "type":"object",
+  "required":["episodeCount","interventions","evidenceKind","causalStatus"],
+  "properties":{
+    "episodeCount":{"type":"integer","minimum":0},
+    "interventions":{"type":"array"},
+    "evidenceKind":{"const":"OBSERVATIONAL_HISTORY"},
+    "causalStatus":{"const":"CAUSALITY_NOT_ESTABLISHED"}
+  }
+}
