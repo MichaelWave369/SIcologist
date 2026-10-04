@@ -93,3 +93,14 @@ export {
   ClaimEvidenceRegistry,
   validateClaimRegistryConstants
 } from "./claims/registry.js";
+
+export {
+  CLAIM_CHALLENGE_OUTCOMES,
+  CLAIM_CHALLENGE_STATES,
+  CHALLENGE_OUTCOME_TO_EVIDENCE_RELATION,
+  evidenceRelationForChallengeOutcome
+} from "./challenge/types.js";
+export {
+  ClaimChallengeRegistry,
+  validateChallengeConstants
+} from "./challenge/registry.js";

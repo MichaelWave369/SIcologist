@@ -38,7 +38,11 @@ import {
   CLAIM_STATUSES,
   CLAIM_EVIDENCE_GRADES,
   ClaimEvidenceRegistry,
-  validateClaimRegistryConstants
+  validateClaimRegistryConstants,
+  CLAIM_CHALLENGE_OUTCOMES,
+  CLAIM_CHALLENGE_STATES,
+  ClaimChallengeRegistry,
+  validateChallengeConstants
 } from "../src/index.js";
 
 const required=[
@@ -64,6 +68,7 @@ const required=[
   "schemas/replication-protocol.schema.json","schemas/replication-receipt.schema.json",
   "schemas/replication-registry.schema.json","schemas/replication-registry-summary.schema.json",
   "schemas/claim.schema.json","schemas/claim-evidence.schema.json","schemas/claim-assessment.schema.json","schemas/claim-evidence-graph.schema.json",
+  "schemas/claim-challenge.schema.json","schemas/claim-challenge-result.schema.json","schemas/claim-challenge-registry.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -119,7 +124,9 @@ for(const [name,value] of Object.entries({
   verifyReplicationReceipt,
   ReplicationEvidenceRegistry,
   ClaimEvidenceRegistry,
-  validateClaimRegistryConstants
+  validateClaimRegistryConstants,
+  ClaimChallengeRegistry,
+  validateChallengeConstants
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -127,12 +134,16 @@ for(const [name,value] of Object.entries({
 if(REPLICATION_STATUSES.length!==6) throw new Error("Expected 6 replication statuses");
 if(REPLICATION_EVIDENCE_GRADES.length!==5) throw new Error("Expected 5 replication evidence grades");
 if(DEFAULT_EVIDENCE_LADDER_POLICY.robustCandidate.minSupportReplicators<4) throw new Error("Robust evidence policy unexpectedly weak");
-if(CLAIM_EVIDENCE_TYPES.length!==9) throw new Error("Expected 9 claim evidence types");
+if(CLAIM_EVIDENCE_TYPES.length!==10) throw new Error("Expected 10 claim evidence types");
 if(CLAIM_EVIDENCE_RELATIONS.length!==4) throw new Error("Expected 4 claim evidence relations");
 if(CLAIM_STATUSES.length!==5) throw new Error("Expected 5 claim statuses");
 if(CLAIM_EVIDENCE_GRADES.length!==7) throw new Error("Expected 7 claim evidence grades");
 const claimConstantErrors=validateClaimRegistryConstants();
 if(claimConstantErrors.length) throw new Error("Claim registry constant errors: "+claimConstantErrors.join(", "));
+if(CLAIM_CHALLENGE_OUTCOMES.length!==4) throw new Error("Expected 4 claim challenge outcomes");
+if(CLAIM_CHALLENGE_STATES.length!==2) throw new Error("Expected 2 claim challenge states");
+const challengeConstantErrors=validateChallengeConstants();
+if(challengeConstantErrors.length) throw new Error("Challenge constant errors: "+challengeConstantErrors.join(", "));
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");

@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Challenge Result",
+  "type":"object",
+  "required":["version","contractId","targetClaimId","rivalClaimId","probeId","observationLabel","outcome","evidenceFingerprint","evaluatorId","note","interpretation","fingerprint"],
+  "properties":{
+    "version":{"const":"CLAIM_CHALLENGE_RESULT_V0.1"},
+    "outcome":{"enum":["SURVIVED_CHALLENGE","WEAKENED","CONTRADICTED","INCONCLUSIVE"]},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Preregistered Claim Challenge",
+  "type":"object",
+  "required":["version","target","rival","challengeQuestion","expectedObservation","falsifier","boundaryConditions","discriminatingProbe","decisionTable","preregistrationNote","boundaries","contractId","state"],
+  "properties":{
+    "version":{"const":"CLAIM_CHALLENGE_V0.1"},
+    "contractId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "state":{"enum":["PREREGISTERED","RESOLVED"]},
+    "decisionTable":{"type":"object","minProperties":2}
+  }
+}

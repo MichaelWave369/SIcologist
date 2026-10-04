@@ -22,44 +22,41 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 12. Reproducibility + External Replication Protocol
 13. Replication Registry + Evidence Ladder
 14. Claim Registry + Evidence Graph
+15. Falsification + Claim Challenge Engine
 
-## Rung 14
+## Rung 15
 
-Rung 14 turns evidence artifacts into explicit, versioned claims.
+Rung 15 preregisters attempts to falsify or weaken explicit Rung 14 claim revisions.
 
-Claims are immutable revisions. Changing a statement, scope, qualifier, or claim type creates a new revision that supersedes the prior claim instead of rewriting history.
+A challenge freezes:
 
-Evidence edges are explicit:
+    target claim revision
+    rival claim revision
+    challenge question
+    expected observation
+    falsifier
+    boundary conditions
+    discriminating probe
+    observation-to-outcome decision table
 
-    SUPPORTS
-    CONTRADICTS
-    QUALIFIES
-    CONTEXT
+The decision table must include at least one way for the target claim to survive and at least one way for it to be contradicted.
 
-Evidence can arrive as a verified fingerprinted artifact or as a declared SHA-256. Verified artifacts carry stronger provenance. Replication-registry summaries can raise a claim's engineering evidence grade, but contradictory evidence always keeps the claim contested.
+Once evidence arrives, the observed label selects the preregistered outcome. The evaluator cannot choose a friendlier verdict afterward.
 
-Claim status is limited to:
+Challenge outcomes are:
 
-    UNASSESSED
-    SUPPORT_ONLY
-    CONTESTED
+    SURVIVED_CHALLENGE
+    WEAKENED
     CONTRADICTED
-    SUPERSEDED
+    INCONCLUSIVE
 
-There is intentionally no PROVEN status.
-
-The evidence graph contains claim nodes, evidence nodes, evidence-to-claim relations, and claim supersession edges.
-
-Every assessment retains:
-
-    causalityEstablished = false
-    scientificTruth = NOT_ESTABLISHED
+A result can be attached back to the target claim as explicit evidence. Target contradiction does not automatically prove the rival claim, and challenge survival does not prove the target claim.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run claims
+    npm run challenge
 
 ## License
 
