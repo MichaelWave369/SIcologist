@@ -2,9 +2,11 @@ import {readFile,access} from "node:fs/promises";
 import {
   CASE_EVENT_TYPES,
   CONDITION_CATALOG,
+  DIFFERENTIAL_CATALOG,
   PROBE_CATALOG,
   SESSION_EVENT_TYPES,
   profileScopes,
+  validateDifferentialCatalog,
   validateProbeCatalog
 } from "../src/index.js";
 
@@ -20,6 +22,7 @@ const required=[
   "docs/PHI_INTERFEROMETER.md",
   "docs/LONGITUDINAL_PROFILES.md",
   "docs/CASE_FILES.md",
+  "docs/DIFFERENTIAL_HYPOTHESES.md",
   "schemas/observation.schema.json",
   "schemas/assessment.schema.json",
   "schemas/intervention.schema.json",
@@ -35,6 +38,8 @@ const required=[
   "schemas/case-event.schema.json",
   "schemas/case-file.schema.json",
   "schemas/intervention-history.schema.json",
+  "schemas/differential-snapshot.schema.json",
+  "schemas/differential-evidence.schema.json",
   "fixtures/session-loop.json",
   "fixtures/probe-experiment.json"
 ];
@@ -67,7 +72,15 @@ const scopes=profileScopes({
 if(scopes.length!==4) throw new Error(`Expected 4 profile scopes, got ${scopes.length}`);
 if(new Set(scopes.map(scope=>scope.key)).size!==4) throw new Error("Profile scope keys must be unique");
 
-if(CASE_EVENT_TYPES.length!==10) throw new Error(`Expected 10 case event types, got ${CASE_EVENT_TYPES.length}`);
+if(CASE_EVENT_TYPES.length!==11) throw new Error(`Expected 11 case event types, got ${CASE_EVENT_TYPES.length}`);
 if(new Set(CASE_EVENT_TYPES).size!==CASE_EVENT_TYPES.length) throw new Error("Case event types must be unique");
+
+if(DIFFERENTIAL_CATALOG.length!==CONDITION_CATALOG.length){
+  throw new Error("Differential catalog must cover every condition");
+}
+const differentialErrors=validateDifferentialCatalog();
+if(differentialErrors.length){
+  throw new Error(`Differential catalog errors: ${JSON.stringify(differentialErrors)}`);
+}
 
 console.log("SIcologist repository contracts valid.");

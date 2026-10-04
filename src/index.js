@@ -19,3 +19,19 @@ export {CASE_EVENT_TYPES,validateCaseEventType} from "./cases/events.js";
 export {CaseFile} from "./cases/case-file.js";
 export {extractInterventionEpisodes,summarizeInterventionHistory,recommendFromHistory} from "./cases/history.js";
 export {CaseBook} from "./cases/book.js";
+export {
+  DIFFERENTIAL_MODEL_VERSION,
+  DIFFERENTIAL_CALIBRATION,
+  DIFFERENTIAL_CATALOG,
+  PROBE_POSITIVE_CRITERIA,
+  getDifferentialSpec,
+  validateDifferentialCatalog
+} from "./differential/catalog.js";
+export {
+  normalizeWeights,
+  entropy,
+  bayesUpdate,
+  probeInformationGain,
+  rankProbesByInformationGain
+} from "./differential/math.js";
+export {DifferentialHypothesisEngine} from "./differential/engine.js";

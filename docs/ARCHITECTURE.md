@@ -16,64 +16,75 @@ Universal Assessment   Longitudinal Profile
                 v
              Case File
                 |
-      +---------+----------+
-      |                    |
-      v                    v
- Probe Engine       Intervention Planner
-      |                    |
-      v               Governance Gate
- Differential             |
- Evidence                 v
-      |           External Execution Adapter
-      |                    |
-      +---------+----------+
+                v
+      Differential Hypothesis Engine
+                |
+       +--------+--------+
+       |                 |
+       v                 v
+Probe Information    Hypothesis Weight
+Gain Ranking         Update
+       |                 |
+       +--------+--------+
+                |
+                v
+          Probe Engine
+                |
+                v
+      Governed Intervention
                 |
                 v
         Recovery Measurement
                 |
                 v
-        Case Outcome History
-                |
-                v
-  Evidence-Informed Recommendation
-                |
-                v
-          Reality / Case Ledger
+          Case / History
 ```
 
-## Rung 5 boundary
+## Rung 6 boundary
 
-A case file is an operational incident record for software agents.
+The differential engine ranks explicit candidate explanations using declared priors and likelihoods.
 
-It is not a medical chart.
-
-An intervention history summarizes observed associations between actions and subsequent measured outcomes. It does not establish causal mechanism.
+The default likelihood table is:
 
 ```text
-history != mechanism
-association != causation
-recommendation != authority
-case record != diagnosis
+ENGINEERING_HEURISTIC_V0.1
+calibration = UNVALIDATED
 ```
 
-## Case chronology
+It is scaffolding for choosing informative probes. It is not a learned scientific model and must not be presented as one.
 
-Each case event carries:
+```text
+posterior weight != probability of truth
+leading hypothesis != confirmed explanation
+information gain != causation
+ranking != authority
+```
 
-- monotonically increasing sequence
-- stable case ID
-- event type
-- event payload
-- previous event hash
-- current event hash
-- deterministic or caller-supplied timestamp marker
+## Evidence update
 
-The chain is independently verifiable.
+For hypothesis `H_i`, current normalized weight `w_i`, probe positive likelihood `p_i`, and declared probe reliability `r`:
 
-## Intervention linkage
+```text
+effective_p_i = 0.5 + (p_i - 0.5) * r
 
-Every applied intervention gets a stable `interventionId`. A recovery record references that identifier. This prevents the system from vaguely claiming that "something we did earlier" worked.
+positive evidence:
+  new_weight_i ∝ w_i * effective_p_i
 
-## Learning from history
+negative evidence:
+  new_weight_i ∝ w_i * (1 - effective_p_i)
+```
 
-Historical recommendations are ranked from measured intervention episodes. The output includes attempts, measured outcomes, recovered/improved/unchanged/degraded counts, average condition-score improvement, authorization class, and an explicit `CAUSALITY_NOT_ESTABLISHED` marker.
+Weights are normalized after the update.
+
+Inconclusive evidence is recorded but does not change weights.
+
+## Probe choice
+
+For each unused probe the engine computes Shannon entropy before the probe and expected entropy after positive/negative outcomes.
+
+```text
+information_gain =
+  current_entropy - expected_posterior_entropy
+```
+
+The highest-scoring probe is recommended first.

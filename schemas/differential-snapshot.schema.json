@@ -1,0 +1,23 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Differential Snapshot",
+  "type":"object",
+  "required":["version","conditionId","conditionKey","evidenceModel","calibration","priorSource","explanationStatus","differentialStatus","entropy","evidenceCount","ranking","evidence","recommendedProbe","probeRanking","fingerprint"],
+  "properties":{
+    "version":{"const":"0.6.0"},
+    "conditionId":{"type":"string"},
+    "conditionKey":{"type":"string"},
+    "evidenceModel":{"const":"ENGINEERING_HEURISTIC_V0.1"},
+    "calibration":{"const":"UNVALIDATED"},
+    "priorSource":{"type":"string"},
+    "explanationStatus":{"const":"NOT_ESTABLISHED"},
+    "differentialStatus":{"enum":["HYPOTHESES_OPEN","LEADING_HYPOTHESIS"]},
+    "entropy":{"type":"number","minimum":0},
+    "evidenceCount":{"type":"integer","minimum":0},
+    "ranking":{"type":"array"},
+    "evidence":{"type":"array"},
+    "recommendedProbe":{"type":["object","null"]},
+    "probeRanking":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

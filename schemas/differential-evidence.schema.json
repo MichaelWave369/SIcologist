@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Differential Evidence",
+  "type":"object",
+  "required":["seq","probeId","outcome","reliability","source","before","after","evidenceId"],
+  "properties":{
+    "seq":{"type":"integer","minimum":1},
+    "probeId":{"type":"string"},
+    "outcome":{"enum":["POSITIVE","NEGATIVE","INCONCLUSIVE"]},
+    "reliability":{"type":"number","minimum":0,"maximum":1},
+    "source":{"type":"string"},
+    "detail":{},
+    "before":{"type":"array"},
+    "after":{"type":"array"},
+    "evidenceId":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
