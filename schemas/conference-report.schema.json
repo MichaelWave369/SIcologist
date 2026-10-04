@@ -1,0 +1,24 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Closed Case Conference",
+  "type":"object",
+  "required":["version","conferenceId","caseId","agentId","conditionId","phase","requiredRoles","blindReviewCount","revisionCount","blindAggregate","finalAggregate","roundComparison","finalReviews","epistemicStatus","explanationStatus","fingerprint"],
+  "properties":{
+    "version":{"const":"0.7.0"},
+    "conferenceId":{"type":"string","minLength":1},
+    "caseId":{"type":"string","minLength":1},
+    "agentId":{"type":"string","minLength":1},
+    "conditionId":{"type":"string","minLength":1},
+    "phase":{"const":"CLOSED"},
+    "requiredRoles":{"type":"array","items":{"type":"string"}},
+    "blindReviewCount":{"type":"integer","minimum":2},
+    "revisionCount":{"type":"integer","minimum":0},
+    "blindAggregate":{"type":"object"},
+    "finalAggregate":{"type":"object"},
+    "roundComparison":{"type":"object"},
+    "finalReviews":{"type":"array"},
+    "epistemicStatus":{"const":"CONSENSUS_IS_NOT_TRUTH"},
+    "explanationStatus":{"const":"NOT_ESTABLISHED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

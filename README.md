@@ -10,17 +10,15 @@ SIcologist is a deterministic, model-agnostic framework for observing agent beha
 
 ```text
 Agent session
-   -> event stream
    -> behavioral + longitudinal assessment
-   -> case file
    -> differential hypotheses
-   -> information-gain probe selection
-   -> controlled evidence
-   -> hypothesis-weight update
+   -> blind case conference
+   -> disagreement / minority analysis
+   -> informative probe
+   -> evidence update
    -> governed intervention
    -> measured recovery
-   -> case outcome + history
-   -> evidence ledger
+   -> case history
 ```
 
 ## Rungs
@@ -41,25 +39,43 @@ Contextual per-agent baselines with qualified admission, fallback cohorts, self-
 Hash-chained case chronology, intervention-to-recovery linkage, recurrence, and observational intervention history.
 
 ### Rung 6 — Differential Hypothesis Engine
-- converts condition alternatives into explicit competing hypotheses
-- keeps priors and posterior **weights** inspectable
-- uses versioned, unvalidated engineering likelihoods rather than hidden model intuition
-- ranks candidate probes by expected information gain
-- accepts positive, negative, or inconclusive evidence
-- records before/after hypothesis weights for every update
-- never emits a "confirmed diagnosis"
-- integrates differential snapshots into case chronology
-- validates hypothesis/probe coverage across all declared conditions
+Explicit competing explanations, inspectable weights, evidence updates, entropy, and information-gain probe choice.
 
-Rung 6 answers:
+### Rung 7 — Case Conference / Multi-Agent Differential Review
+- six declared review roles
+- blind first-pass differential submissions
+- submission receipts without peer-content leakage
+- seal-before-discussion enforcement
+- consensus distribution and top-choice agreement
+- average pairwise disagreement
+- minority-hypothesis preservation
+- evidence-reference overlap measurement
+- optional post-seal revisions
+- convergence/divergence measurement after review
+- deterministic conference fingerprints
+- case-file integration
+- explicit rule that consensus is **not** truth
+
+Default conference roles:
 
 ```text
-Given the evidence we have,
-which explanation currently deserves the most weight,
-and which next probe should reduce uncertainty the most?
+OBSERVER
+VERIFIER
+CHALLENGER
+HISTORIAN
+INTERVENTION_SPECIALIST
+GOVERNANCE_AUDITOR
 ```
 
-The normalized weights are reasoning aids, **not calibrated probabilities of truth**.
+The conference asks:
+
+```text
+What did independent reviewers conclude before seeing one another?
+Where do they disagree?
+Which minority explanation would be lost by majority voting?
+Did discussion increase or decrease convergence?
+What evidence is shared versus independently sourced?
+```
 
 ## Quick start
 
@@ -68,7 +84,7 @@ Requires Node.js 20+.
 ```bash
 npm test
 npm run validate
-npm run differential
+npm run conference
 ```
 
 ## Design rules
@@ -76,10 +92,10 @@ npm run differential
 1. Evidence before labels.
 2. Conditions describe system behavior, not personhood.
 3. Unknown is not zero.
-4. Hypothesis weights are inspectable and versioned.
-5. No hypothesis becomes "confirmed" merely because it leads the ranking.
-6. Prefer the probe with the greatest declared information value.
-7. A baseline only learns from explicitly qualified evidence.
+4. Blind reviews must be sealed before peer content is exposed.
+5. Consensus is a property of reviewers, not proof of truth.
+6. Preserve minority hypotheses and disagreement.
+7. Hypothesis weights remain inspectable and versioned.
 8. Historical success is association until controlled evidence says more.
 9. Never silently cross an authority boundary.
 10. Preserve replayability and provenance.
