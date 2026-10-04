@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Calibration Benchmark Report",
+  "type":"object",
+  "required":["version","dataset","empiricalModel","heuristic","empirical","comparison","benchmarkStatus","productionStatus","fingerprint"],
+  "properties":{
+    "version":{"const":"CALIBRATION_BENCHMARK_V0.1"},
+    "dataset":{"type":"object"},
+    "empiricalModel":{"type":"object"},
+    "heuristic":{"type":"object"},
+    "empirical":{"type":"object"},
+    "comparison":{"type":"object"},
+    "benchmarkStatus":{"const":"SYNTHETIC_VALIDATION_ONLY"},
+    "productionStatus":{"const":"NOT_VALIDATED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

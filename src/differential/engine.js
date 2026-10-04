@@ -16,14 +16,8 @@ function applyPriors(spec,priors={}){
   const rows=spec.hypotheses.map(hypothesis=>({
     id:hypothesis.id,
     label:hypothesis.label,
-    priorWeight:
-      typeof priors[hypothesis.id]==="number"
-        ? priors[hypothesis.id]
-        : hypothesis.priorWeight,
-    weight:
-      typeof priors[hypothesis.id]==="number"
-        ? priors[hypothesis.id]
-        : hypothesis.priorWeight,
+    priorWeight:typeof priors[hypothesis.id]==="number"?priors[hypothesis.id]:hypothesis.priorWeight,
+    weight:typeof priors[hypothesis.id]==="number"?priors[hypothesis.id]:hypothesis.priorWeight,
     predictions:hypothesis.predictions
   }));
   const normalized=normalizeWeights(rows);
@@ -62,18 +56,23 @@ export class DifferentialHypothesisEngine{
   #hypotheses;
   #evidence=[];
   #priorSource;
+  #evidenceModel;
+  #calibration;
+  #externalValidity;
 
-  constructor({
-    conditionId,
-    priors={},
-    priorSource="UNIFORM_DEFAULT"
-  }){
-    const spec=getDifferentialSpec(conditionId);
-    if(!spec) throw new TypeError(`Unknown conditionId: ${conditionId}`);
-    const prepared=applyPriors(spec,priors);
-    this.#spec=spec;
+  constructor({conditionId,priors={},priorSource="UNIFORM_DEFAULT",spec=null}){
+    const resolvedSpec=spec??getDifferentialSpec(conditionId);
+    if(!resolvedSpec) throw new TypeError("Unknown conditionId: "+conditionId);
+    if(resolvedSpec.conditionId!==conditionId){
+      throw new TypeError("Differential spec condition "+resolvedSpec.conditionId+" does not match "+conditionId);
+    }
+    const prepared=applyPriors(resolvedSpec,priors);
+    this.#spec=resolvedSpec;
     this.#hypotheses=prepared.hypotheses;
-    this.#priorSource=prepared.supplied?priorSource:"UNIFORM_DEFAULT";
+    this.#priorSource=prepared.supplied?priorSource:(resolvedSpec.priorSource??"MODEL_DEFAULT");
+    this.#evidenceModel=resolvedSpec.version??DIFFERENTIAL_MODEL_VERSION;
+    this.#calibration=resolvedSpec.calibration??DIFFERENTIAL_CALIBRATION;
+    this.#externalValidity=resolvedSpec.externalValidity??"NOT_DECLARED";
   }
 
   static fromAssessment(assessment,conditionId=null,options={}){
@@ -81,10 +80,7 @@ export class DifferentialHypothesisEngine{
       ? assessment?.findings?.find(item=>item.id===conditionId)
       : assessment?.findings?.[0];
     if(!finding) throw new Error("No active condition finding available for differential reasoning");
-    return new DifferentialHypothesisEngine({
-      conditionId:finding.id,
-      ...options
-    });
+    return new DifferentialHypothesisEngine({conditionId:finding.id,...options});
   }
 
   recommendProbe({includeObserved=false}={}){
@@ -92,24 +88,13 @@ export class DifferentialHypothesisEngine{
     const candidateIds=this.#spec.probes
       .map(item=>item.probeId)
       .filter(probeId=>includeObserved||!observed.has(probeId));
-
     const ranking=rankProbesByInformationGain(this.#hypotheses,candidateIds);
-    if(!ranking.length){
-      return {
-        status:"NO_UNUSED_PROBE",
-        recommendation:null,
-        ranking:[]
-      };
-    }
-
+    if(!ranking.length) return {status:"NO_UNUSED_PROBE",recommendation:null,ranking:[]};
     const best=ranking[0];
     const probe=this.#spec.probes.find(item=>item.probeId===best.probeId);
     return {
       status:"PROBE_RECOMMENDED",
-      recommendation:{
-        ...best,
-        positiveCriterion:probe?.positiveCriterion??null
-      },
+      recommendation:{...best,positiveCriterion:probe?.positiveCriterion??null},
       ranking:ranking.map(item=>({
         ...item,
         positiveCriterion:this.#spec.probes.find(p=>p.probeId===item.probeId)?.positiveCriterion??null
@@ -117,18 +102,12 @@ export class DifferentialHypothesisEngine{
     };
   }
 
-  observe({
-    probeId,
-    outcome,
-    reliability=1,
-    source="EXTERNAL_ADAPTER",
-    detail=null
-  }){
+  observe({probeId,outcome,reliability=1,source="EXTERNAL_ADAPTER",detail=null}){
     if(!this.#spec.probes.some(item=>item.probeId===probeId)){
-      throw new TypeError(`Probe ${probeId} is not declared for ${this.#spec.conditionId}`);
+      throw new TypeError("Probe "+probeId+" is not declared for "+this.#spec.conditionId);
     }
     if(!["POSITIVE","NEGATIVE","INCONCLUSIVE"].includes(outcome)){
-      throw new TypeError(`Unsupported evidence outcome: ${outcome}`);
+      throw new TypeError("Unsupported evidence outcome: "+outcome);
     }
     if(typeof reliability!=="number"||!Number.isFinite(reliability)||reliability<0||reliability>1){
       throw new TypeError("reliability must be in [0,1]");
@@ -136,26 +115,10 @@ export class DifferentialHypothesisEngine{
 
     const before=ranked(this.#hypotheses);
     const next=bayesUpdate(this.#hypotheses,{probeId,outcome,reliability});
-    this.#hypotheses=next.map(item=>({
-      ...item,
-      weight:Number(item.weight.toFixed(9))
-    }));
+    this.#hypotheses=next.map(item=>({...item,weight:Number(item.weight.toFixed(9))}));
     const after=ranked(this.#hypotheses);
-
-    const eventBody={
-      seq:this.#evidence.length+1,
-      probeId,
-      outcome,
-      reliability,
-      source,
-      detail,
-      before,
-      after
-    };
-    const event={
-      ...eventBody,
-      evidenceId:fingerprint(eventBody)
-    };
+    const eventBody={seq:this.#evidence.length+1,probeId,outcome,reliability,source,detail,before,after};
+    const event={...eventBody,evidenceId:fingerprint(eventBody)};
     this.#evidence.push(event);
     return structuredClone(event);
   }
@@ -167,8 +130,9 @@ export class DifferentialHypothesisEngine{
       version:"0.6.0",
       conditionId:this.#spec.conditionId,
       conditionKey:this.#spec.conditionKey,
-      evidenceModel:DIFFERENTIAL_MODEL_VERSION,
-      calibration:DIFFERENTIAL_CALIBRATION,
+      evidenceModel:this.#evidenceModel,
+      calibration:this.#calibration,
+      externalValidity:this.#externalValidity,
       priorSource:this.#priorSource,
       explanationStatus:"NOT_ESTABLISHED",
       differentialStatus:statusFor(ranking,this.#evidence.length),
@@ -179,9 +143,6 @@ export class DifferentialHypothesisEngine{
       recommendedProbe:probeRecommendation.recommendation,
       probeRanking:probeRecommendation.ranking
     };
-    return {
-      ...body,
-      fingerprint:fingerprint(body)
-    };
+    return {...body,fingerprint:fingerprint(body)};
   }
 }

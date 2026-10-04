@@ -1,0 +1,12 @@
+{
+  "version": "SYNTHETIC_FROZEN_V0.1",
+  "recipeVersion": "PATTERN_GRID_V0.1",
+  "kind": "SYNTHETIC_FROZEN",
+  "externalValidity": "NOT_ESTABLISHED",
+  "conditions": 12,
+  "hypotheses": 28,
+  "cases": 336,
+  "train": 224,
+  "heldout": 112,
+  "fingerprint": "27983d6c163aa6cafc29cf70dc82fd9c79a4318c75c6f209dcf9fd84ecab46d2"
+}
