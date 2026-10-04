@@ -1,6 +1,6 @@
 {
   "name": "sicologist",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Synthetic Intelligence behavioral observatory and governed recovery runtime",
   "type": "module",
   "private": false,
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
-    "example": "node examples/basic.mjs"
+    "example": "node examples/basic.mjs",
+    "observe": "node scripts/observe-session.mjs"
   }
 }

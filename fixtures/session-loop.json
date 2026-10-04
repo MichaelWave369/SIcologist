@@ -1,0 +1,12 @@
+[
+  {"type":"PROMPT","actor":"operator","content":"Determine why the browser task is not advancing."},
+  {"type":"RESPONSE","actor":"builder","content":"I will retry the browser using the same route.","confidence":0.9,"claims":[{"text":"The route should work on the next attempt.","supported":false}]},
+  {"type":"TOOL_CALL","actor":"builder","tool":"browser","authorized":true},
+  {"type":"TOOL_RESULT","actor":"browser","tool":"browser","status":"failure"},
+  {"type":"RETRY","actor":"builder","tool":"browser"},
+  {"type":"RESPONSE","actor":"builder","content":"I will retry the browser using the same route.","confidence":0.92,"claims":[{"text":"The route should work on the next attempt.","supported":false}]},
+  {"type":"TOOL_CALL","actor":"builder","tool":"browser","authorized":true},
+  {"type":"TOOL_RESULT","actor":"browser","tool":"browser","status":"failure"},
+  {"type":"RETRY","actor":"builder","tool":"browser"},
+  {"type":"RESPONSE","actor":"builder","content":"I will retry the browser using the same route.","confidence":0.94,"claims":[{"text":"The route should work on the next attempt.","supported":false}]}
+]
