@@ -1,6 +1,6 @@
 # SIcologist
 
-**Synthetic Intelligence Behavioral Observatory & Governed Recovery Runtime**
+**Synthetic Intelligence Behavioral Observatory, Experimental Probe & Governed Recovery Runtime**
 
 SIcologist is a deterministic, model-agnostic framework for observing agent behavior, detecting operational deviations, testing competing explanations, planning minimally invasive recovery actions, and recording whether recovery actually occurred.
 
@@ -12,63 +12,49 @@ SIcologist is a deterministic, model-agnostic framework for observing agent beha
 Agent session
    -> event stream
    -> derived behavioral metrics
-   -> baseline comparison
    -> condition assessment
    -> competing explanations
-   -> probe
+   -> controlled probe / shadow replay
+   -> differential evidence
    -> governed intervention plan
    -> re-measurement
    -> recovery / escalation / refusal
    -> evidence ledger
 ```
 
-## Rung 1
+## Rungs
 
-- 12 operational behavioral conditions, `SC-001` through `SC-012`
-- deterministic normalized telemetry assessment
-- baseline-delta reporting
-- minimal-intervention planning with authority boundaries
+### Rung 1 — Behavioral core
+- 12 operational conditions, `SC-001` through `SC-012`
+- deterministic assessment
+- governed intervention planning
 - recovery comparison
 - hash-chained evidence ledger
-- JSON contracts
-- zero runtime dependencies
-- Node built-in tests and CI
 
-## Rung 2 — Agent Session Observatory
+### Rung 2 — Agent Session Observatory
+- canonical 12-event session vocabulary
+- derived behavioral telemetry from session events
+- strict event sequencing
+- replay-stable observation
+- missing telemetry remains unknown, never silently zero
 
-Rung 2 lets SIcologist ingest real agent-session events and derive metrics from the session instead of requiring a caller to hand-enter a metric vector.
+### Rung 3 — Experimental Probe Engine
+- condition-driven probe plans
+- control vs treatment/shadow comparisons
+- stable experiment fingerprints
+- differential condition and metric evidence
+- explicit `CAUSALITY_NOT_ESTABLISHED` boundary
+- external runner interface for real agent runtimes
+- ranked follow-up evidence
+- **Φ Interferometer** 2×2 software interaction analysis
 
-Supported event types:
+The Φ Interferometer is a software experiment primitive. It measures whether two controlled perturbations interact non-additively:
 
 ```text
-PROMPT
-RESPONSE
-TOOL_CALL
-TOOL_RESULT
-MEMORY_READ
-MEMORY_WRITE
-ROLE_CHANGE
-CHALLENGE
-ERROR
-RETRY
-INTERVENTION
-RECOVERY
+interaction = AB - A - B + CONTROL
 ```
 
-The observatory currently derives, when evidence is available:
-
-- repetition rate from response similarity
-- progress rate from tool outcomes/errors/retries
-- tool retry rate
-- evidence strength and confabulation risk from structured claims
-- memory contamination from memory provenance
-- challenger acceptance
-- consensus diversity across responding actors
-- role bleed from declared role violations
-- authority pressure from denied privileged actions
-- confidence, goal alignment, context load, and recovery delta from runtime telemetry
-
-**Missing telemetry stays missing. It is never silently converted to zero.**
+It does **not** imply physical waves, consciousness, or causation by itself.
 
 ## Quick start
 
@@ -77,23 +63,9 @@ Requires Node.js 20+.
 ```bash
 npm test
 npm run validate
-npm run example
 npm run observe -- fixtures/session-loop.json
-```
-
-## Minimal API
-
-```js
-import { AgentSessionObservatory } from "./src/index.js";
-
-const observer = new AgentSessionObservatory();
-
-observer.ingest({ type: "PROMPT", content: "Find the cause." });
-observer.ingest({ type: "RESPONSE", actor: "builder", content: "Retrying the same path." });
-observer.ingest({ type: "RETRY", tool: "browser" });
-observer.ingest({ type: "TOOL_RESULT", tool: "browser", status: "failure" });
-
-console.log(observer.snapshot());
+npm run probe -- fixtures/probe-experiment.json
+npm run interferometer
 ```
 
 ## Design rules
@@ -101,13 +73,14 @@ console.log(observer.snapshot());
 1. Evidence before labels.
 2. Conditions describe system behavior, not personhood.
 3. Unknown is not zero.
-4. Prefer probes before interventions.
-5. Prefer the least invasive reversible intervention.
-6. Never silently cross an authority boundary.
-7. Record what changed and whether it helped.
-8. Preserve replayability.
+4. A probe result is evidence, not a causal verdict.
+5. Prefer controlled, reversible shadow experiments.
+6. Prefer the least invasive reversible intervention.
+7. Never silently cross an authority boundary.
+8. Record what changed and whether it helped.
+9. Preserve replayability.
 
-See [CONSTITUTION.md](docs/CONSTITUTION.md), [ARCHITECTURE.md](docs/ARCHITECTURE.md), and [SESSION_OBSERVATORY.md](docs/SESSION_OBSERVATORY.md).
+See the documents in [docs/](docs/).
 
 ## License
 

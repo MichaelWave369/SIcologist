@@ -6,3 +6,7 @@ export {BehaviorLedger} from "./ledger.js";
 export {SESSION_EVENT_TYPES,normalizeSessionEvent} from "./session/events.js";
 export {deriveSessionMetrics,normalizeBehaviorText,textSimilarity,summarizeEventTypes} from "./session/metrics.js";
 export {AgentSessionObservatory,observeSession} from "./session/observatory.js";
+export {canonicalize,fingerprint} from "./experiment/fingerprint.js";
+export {PROBE_CATALOG,getProbeSpec,createExperimentPlan,validateProbeCatalog} from "./experiment/probes.js";
+export {evaluateProbePair,rankProbeEvidence,executeProbePlan} from "./experiment/engine.js";
+export {analyzeFactorialInteraction,analyzeSessionInteraction} from "./experiment/interferometer.js";
