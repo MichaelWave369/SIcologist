@@ -393,7 +393,7 @@ export function createReplicationReceipt(protocol,{
     },
     metrics:metrics?{
       reference:clone(protocol.reference.metrics),
-      observed:coreMetrics(evaluationReceipt),
+      observed:metrics.complete?coreMetrics(evaluationReceipt):null,
       absoluteDeltas:metrics.deltas,
       withinTolerance:metrics.within
     }:null,
