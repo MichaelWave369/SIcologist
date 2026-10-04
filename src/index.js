@@ -52,3 +52,5 @@ export {runCalibrationBenchmark} from "./calibration/benchmark.js";
 export {DATASET_USES,CANDIDATE_STATUSES,validateDatasetUse,validateHypothesis,declaredProbeIds} from "./intake/policy.js";
 export {RealCaseCandidate} from "./intake/candidate.js";
 export {RealCaseDatasetRegistry} from "./intake/registry.js";
+export {SealedEvaluationHarness,verifyEvaluationReceipt} from "./evaluation/harness.js";
+export {predictEvaluationManifest} from "./evaluation/runner.js";

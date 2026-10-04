@@ -14,7 +14,10 @@ import {
   validateFrozenSyntheticBenchmark,
   validateProbeCatalog,
   DATASET_USES,
-  CANDIDATE_STATUSES
+  CANDIDATE_STATUSES,
+  SealedEvaluationHarness,
+  verifyEvaluationReceipt,
+  predictEvaluationManifest
 } from "../src/index.js";
 
 const required=[
@@ -23,6 +26,7 @@ const required=[
   "docs/SESSION_OBSERVATORY.md","docs/EXPERIMENTAL_PROBES.md","docs/PHI_INTERFEROMETER.md",
   "docs/LONGITUDINAL_PROFILES.md","docs/CASE_FILES.md","docs/DIFFERENTIAL_HYPOTHESES.md",
   "docs/CASE_CONFERENCE.md","docs/CALIBRATION_BENCHMARK.md","docs/REAL_CASE_INTAKE.md",
+  "docs/SEALED_EXTERNAL_EVALUATION.md",
   "schemas/observation.schema.json","schemas/assessment.schema.json","schemas/intervention.schema.json",
   "schemas/ledger-entry.schema.json","schemas/session-event.schema.json","schemas/session-report.schema.json",
   "schemas/experiment-plan.schema.json","schemas/probe-result.schema.json","schemas/interferometer-result.schema.json",
@@ -32,6 +36,7 @@ const required=[
   "schemas/conference-review.schema.json","schemas/conference-report.schema.json",
   "schemas/empirical-model.schema.json","schemas/benchmark-report.schema.json",
   "schemas/real-case-candidate.schema.json","schemas/real-case-dataset.schema.json",
+  "schemas/sealed-evaluation-manifest.schema.json","schemas/sealed-evaluation-receipt.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -69,6 +74,10 @@ if(dataset.cases.length!==FROZEN_BENCHMARK_COUNTS.cases) throw new Error("Frozen
 
 if(DATASET_USES.length!==2) throw new Error("Expected 2 dataset uses");
 if(CANDIDATE_STATUSES.length!==5) throw new Error("Expected 5 candidate statuses");
+
+if(typeof SealedEvaluationHarness!=="function") throw new Error("SealedEvaluationHarness export missing");
+if(typeof verifyEvaluationReceipt!=="function") throw new Error("verifyEvaluationReceipt export missing");
+if(typeof predictEvaluationManifest!=="function") throw new Error("predictEvaluationManifest export missing");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
