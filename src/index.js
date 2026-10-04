@@ -82,3 +82,14 @@ export {
   DEFAULT_EVIDENCE_LADDER_POLICY,
   ReplicationEvidenceRegistry
 } from "./replication/registry.js";
+
+export {
+  CLAIM_EVIDENCE_TYPES,
+  CLAIM_EVIDENCE_RELATIONS,
+  CLAIM_STATUSES,
+  CLAIM_EVIDENCE_GRADES
+} from "./claims/types.js";
+export {
+  ClaimEvidenceRegistry,
+  validateClaimRegistryConstants
+} from "./claims/registry.js";
