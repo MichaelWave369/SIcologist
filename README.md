@@ -13,13 +13,13 @@ Agent session
    -> event stream
    -> behavioral + longitudinal assessment
    -> case file
-   -> competing explanations
-   -> controlled probe / shadow replay
-   -> intervention
+   -> differential hypotheses
+   -> information-gain probe selection
+   -> controlled evidence
+   -> hypothesis-weight update
+   -> governed intervention
    -> measured recovery
-   -> case outcome
-   -> historical effectiveness summary
-   -> future evidence-informed recommendation
+   -> case outcome + history
    -> evidence ledger
 ```
 
@@ -38,30 +38,28 @@ Controlled shadow experiments, differential evidence, and the software-only Φ I
 Contextual per-agent baselines with qualified admission, fallback cohorts, self-deviation scoring, and baseline-poisoning resistance.
 
 ### Rung 5 — Case Files + Intervention History
-- deterministic per-agent operational case files
-- append-only hash-chained case chronology
-- assessment, profile, probe, intervention, recovery, note, close, and reopen events
-- intervention-to-recovery linkage
-- partial recovery scoring instead of binary disappearance
-- recurrence tracking across cases
-- historical intervention effectiveness summaries
-- evidence-informed future recommendations
-- explicit separation between historical association and causal proof
-- deterministic case-book export/import with fingerprint verification
+Hash-chained case chronology, intervention-to-recovery linkage, recurrence, and observational intervention history.
 
-The case layer answers:
+### Rung 6 — Differential Hypothesis Engine
+- converts condition alternatives into explicit competing hypotheses
+- keeps priors and posterior **weights** inspectable
+- uses versioned, unvalidated engineering likelihoods rather than hidden model intuition
+- ranks candidate probes by expected information gain
+- accepts positive, negative, or inconclusive evidence
+- records before/after hypothesis weights for every update
+- never emits a "confirmed diagnosis"
+- integrates differential snapshots into case chronology
+- validates hypothesis/probe coverage across all declared conditions
+
+Rung 6 answers:
 
 ```text
-What happened?
-What evidence did we have?
-What did we try?
-Was it authorized?
-What changed afterward?
-Has this happened before?
-What has historically helped this agent under comparable conditions?
+Given the evidence we have,
+which explanation currently deserves the most weight,
+and which next probe should reduce uncertainty the most?
 ```
 
-It does **not** convert correlation into mechanism. Historical treatment success is operational evidence, not causal proof.
+The normalized weights are reasoning aids, **not calibrated probabilities of truth**.
 
 ## Quick start
 
@@ -70,11 +68,7 @@ Requires Node.js 20+.
 ```bash
 npm test
 npm run validate
-npm run observe -- fixtures/session-loop.json
-npm run probe -- fixtures/probe-experiment.json
-npm run interferometer
-npm run profile
-npm run cases
+npm run differential
 ```
 
 ## Design rules
@@ -82,14 +76,13 @@ npm run cases
 1. Evidence before labels.
 2. Conditions describe system behavior, not personhood.
 3. Unknown is not zero.
-4. A probe result is evidence, not a causal verdict.
-5. A baseline only learns from explicitly qualified evidence.
-6. A case chronology is append-only evidence, not a rewritten narrative.
-7. Link interventions to measured outcomes.
+4. Hypothesis weights are inspectable and versioned.
+5. No hypothesis becomes "confirmed" merely because it leads the ranking.
+6. Prefer the probe with the greatest declared information value.
+7. A baseline only learns from explicitly qualified evidence.
 8. Historical success is association until controlled evidence says more.
-9. Prefer the least invasive reversible intervention.
-10. Never silently cross an authority boundary.
-11. Preserve replayability and provenance.
+9. Never silently cross an authority boundary.
+10. Preserve replayability and provenance.
 
 See the documents in [docs/](docs/).
 

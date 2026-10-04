@@ -74,21 +74,10 @@ export class CaseFile{
     return clone(event);
   }
 
-  state(){
-    return deriveState(this.#events);
-  }
-
-  id(){
-    return this.#caseId;
-  }
-
-  agentId(){
-    return this.#agentId;
-  }
-
-  events(){
-    return clone(this.#events);
-  }
+  state(){ return deriveState(this.#events); }
+  id(){ return this.#caseId; }
+  agentId(){ return this.#agentId; }
+  events(){ return clone(this.#events); }
 
   verify(){
     let prevHash=null;
@@ -110,6 +99,10 @@ export class CaseFile{
 
   recordProfileComparison(profileComparison,{at=null}={}){
     return this.#append("PROFILE_COMPARISON_RECORDED",{profileComparison},at);
+  }
+
+  recordDifferential(differential,{at=null}={}){
+    return this.#append("DIFFERENTIAL_RECORDED",{differential},at);
   }
 
   recordProbe(probeResult,{at=null}={}){
@@ -228,9 +221,7 @@ export class CaseFile{
     };
   }
 
-  export(){
-    return this.snapshot();
-  }
+  export(){ return this.snapshot(); }
 
   static fromSnapshot(snapshot){
     if(snapshot?.version!=="0.5.0") throw new TypeError("Unsupported case snapshot version");
