@@ -12,7 +12,7 @@ export const REPLICATION_EVIDENCE_GRADES=Object.freeze([
 export const DEFAULT_EVIDENCE_LADDER_POLICY=Object.freeze({
   multi:{
     minSupportReplicators:2,
-    minSupportRate:.67
+    minSupportRate:2/3
   },
   crossEnvironment:{
     minSupportReplicators:3,

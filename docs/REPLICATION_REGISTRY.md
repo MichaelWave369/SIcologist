@@ -52,7 +52,7 @@ At least one unique supportive replication exists.
 
 ### MULTI_REPLICATOR_SUPPORT
 
-At least 2 declared supportive replicators and support rate >= 0.67.
+At least 2 declared supportive replicators and support rate >= 2/3.
 
 ### CROSS_ENVIRONMENT_SUPPORT
 
