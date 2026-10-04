@@ -67,3 +67,12 @@ export {
   signEvaluatorReceipt,
   verifyEvaluatorSignature
 } from "./evaluation/signature.js";
+
+export {
+  REPLICATION_STATUSES,
+  normalizeReplicationEnvironment,
+  verifyReplicationProtocol,
+  createReplicationProtocol,
+  verifyReplicationReceipt,
+  createReplicationReceipt
+} from "./replication/protocol.js";

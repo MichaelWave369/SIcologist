@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Replication Protocol",
+  "type":"object",
+  "required":["version","status","reference","artifacts","referenceEnvironment","environmentPolicy","seedSchedule","tolerances","evidenceBoundary","fingerprint"],
+  "properties":{
+    "version":{"const":"REPLICATION_PROTOCOL_V0.1"},
+    "status":{"const":"FROZEN"},
+    "reference":{"type":"object"},
+    "artifacts":{"type":"object"},
+    "referenceEnvironment":{"type":"object"},
+    "environmentPolicy":{"type":"object"},
+    "seedSchedule":{"type":"array","minItems":1},
+    "tolerances":{"type":"object"},
+    "evidenceBoundary":{"type":"object"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

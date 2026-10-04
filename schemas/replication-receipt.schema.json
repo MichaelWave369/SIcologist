@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Replication Receipt",
+  "type":"object",
+  "required":["version","protocolFingerprint","replicatorId","replicationStatus","referenceReceiptFingerprint","artifactMismatches","integrityErrors","environment","artifacts","evidenceBoundary","fingerprint"],
+  "properties":{
+    "version":{"const":"REPLICATION_RECEIPT_V0.1"},
+    "replicationStatus":{"enum":["REPLAY_EXACT","REPLICATION_WITHIN_TOLERANCE","REPLICATION_DIVERGED","ENVIRONMENT_MISMATCH","ARTIFACT_MISMATCH","INSUFFICIENT_REPLICATION_EVIDENCE"]},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -24,7 +24,12 @@ import {
   signIndependentEvaluationReceipt,
   verifyIndependentEvaluationReceipt,
   predictIndependentChallenge,
-  verifyEvaluatorSignature
+  verifyEvaluatorSignature,
+  REPLICATION_STATUSES,
+  createReplicationProtocol,
+  createReplicationReceipt,
+  verifyReplicationProtocol,
+  verifyReplicationReceipt
 } from "../src/index.js";
 
 const required=[
@@ -47,6 +52,7 @@ const required=[
   "schemas/independent-challenge.schema.json","schemas/private-custody.schema.json",
   "schemas/independent-submission.schema.json","schemas/independent-evaluation-receipt.schema.json",
   "schemas/evaluator-signature.schema.json",
+  "schemas/replication-protocol.schema.json","schemas/replication-receipt.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -95,10 +101,16 @@ for(const [name,value] of Object.entries({
   signIndependentEvaluationReceipt,
   verifyIndependentEvaluationReceipt,
   predictIndependentChallenge,
-  verifyEvaluatorSignature
+  verifyEvaluatorSignature,
+  createReplicationProtocol,
+  createReplicationReceipt,
+  verifyReplicationProtocol,
+  verifyReplicationReceipt
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
+
+if(REPLICATION_STATUSES.length!==6) throw new Error("Expected 6 replication statuses");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");

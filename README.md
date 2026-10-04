@@ -10,7 +10,7 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 
 1. Behavioral core
 2. Agent Session Observatory
-3. Experimental Probe Engine + software-only Φ Interferometer
+3. Experimental Probe Engine + software-only Phi Interferometer
 4. Longitudinal Agent Profiles
 5. Case Files + Intervention History
 6. Differential Hypothesis Engine
@@ -19,43 +19,38 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 9. Real-Case Evidence Intake + Dataset Builder
 10. Sealed External Evaluation Harness
 11. Independent Evaluator Package + Custody Split
+12. Reproducibility + External Replication Protocol
 
-## Rung 11
+## Rung 12
 
-Rung 11 turns evaluation into portable split-custody artifacts.
+Rung 12 freezes an independently scored reference run into a portable replication target.
 
-The evaluator creates:
+The protocol binds the challenge, reference receipt, model artifact SHA-256, source commit, dependency fingerprint, seed schedule, reference environment, environment policy, and scoring tolerances.
 
-    PUBLIC challenge bundle
-    PRIVATE custody bundle
+Replication receipts classify runs as:
 
-The model runner receives only the public bundle, freezes its model artifact and prediction set, and returns an independent submission bundle. The evaluator then scores that immutable submission against the private custody labels.
+    REPLAY_EXACT
+    REPLICATION_WITHIN_TOLERANCE
+    REPLICATION_DIVERGED
+    ENVIRONMENT_MISMATCH
+    ARTIFACT_MISMATCH
+    INSUFFICIENT_REPLICATION_EVIDENCE
 
-The protocol verifies:
+Environment drift is recorded separately from artifact drift. A different OS, architecture, or hardware class may still achieve REPLAY_EXACT when the frozen experiment and outputs match.
 
-    challenge fingerprint
-    custody fingerprint
-    reference-label commitment
-    model commitment
-    prediction commitment
-    submission fingerprint
+Receipts retain:
 
-An optional Ed25519 signature envelope can attest the immutable scored receipt.
+    replicationIndependence = NOT_ESTABLISHED
+    externalValidity = CANDIDATE
+    productionStatus = NOT_VALIDATED
 
-A verified signature proves possession of the corresponding private key. It does not prove the human or organization behind the key is independent, accredited, or trustworthy.
-
-Receipts therefore preserve:
-
-    custodySeparation = SPLIT_PACKAGE_VERIFIED
-    custodyIndependence = NOT_ESTABLISHED
-
-until independent custody is supported by evidence outside this software protocol.
+because software cannot prove institutional independence or scientific generalization.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run evaluate:custody
+    npm run replicate
 
 ## License
 
