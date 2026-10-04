@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Challenge Registry",
+  "type":"object",
+  "required":["version","contracts","results","fingerprint"],
+  "properties":{
+    "version":{"const":"CLAIM_CHALLENGE_REGISTRY_V0.1"},
+    "contracts":{"type":"array"},
+    "results":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
