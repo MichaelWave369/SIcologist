@@ -1,7 +1,7 @@
 import {fingerprint} from "../experiment/fingerprint.js";
 import {getDifferentialSpec} from "../differential/catalog.js";
 import {calibrationBins,confusionMatrix,logLoss,multiclassBrier} from "../calibration/metrics.js";
-import {signEvaluatorReceipt,verifyEvaluatorSignature} from "./signature.js";
+import {signEvaluatorReceipt} from "./signature.js";
 
 function clone(value){ return structuredClone(value); }
 function round(value){ return Number(value.toFixed(9)); }
@@ -344,9 +344,7 @@ export function scoreIndependentSubmission({
   challengeBundle,
   custodyBundle,
   submissionBundle,
-  evaluatorReceipt,
-  signature=null,
-  evaluatorPublicKeyPem=null
+  evaluatorReceipt
 }){
   validateChallenge(challengeBundle);
   validateCustody(custodyBundle,challengeBundle);
@@ -409,24 +407,7 @@ export function scoreIndependentSubmission({
       labelsAbsentFromSubmission:true
     }
   };
-  let receipt=fingerprinted(body);
-
-  if(signature!==null||evaluatorPublicKeyPem!==null){
-    if(!signature||!evaluatorPublicKeyPem){
-      throw new Error("Both signature and evaluatorPublicKeyPem are required");
-    }
-    if(!verifyEvaluatorSignature(receipt,signature,evaluatorPublicKeyPem)){
-      throw new Error("Evaluator signature verification failed");
-    }
-    const signedBody={
-      ...body,
-      identityAssurance:"ED25519_PUBLIC_KEY_VERIFIED",
-      evaluatorSignature:clone(signature)
-    };
-    receipt=fingerprinted(signedBody);
-  }
-
-  return receipt;
+  return fingerprinted(body);
 }
 
 export function signIndependentEvaluationReceipt(receipt,credentials){

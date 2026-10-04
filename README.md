@@ -18,37 +18,44 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 8. Calibration + Benchmark Lab
 9. Real-Case Evidence Intake + Dataset Builder
 10. Sealed External Evaluation Harness
+11. Independent Evaluator Package + Custody Split
 
-## Rung 10
+## Rung 11
 
-Rung 10 evaluates a frozen model against approved EVAL_QUARANTINE cases without exposing reference labels through the runner API before predictions are committed.
+Rung 11 turns evaluation into portable split-custody artifacts.
 
-The protocol freezes three independent commitments:
+The evaluator creates:
 
+    PUBLIC challenge bundle
+    PRIVATE custody bundle
+
+The model runner receives only the public bundle, freezes its model artifact and prediction set, and returns an independent submission bundle. The evaluator then scores that immutable submission against the private custody labels.
+
+The protocol verifies:
+
+    challenge fingerprint
+    custody fingerprint
     reference-label commitment
-    model-artifact commitment
-    prediction-set commitment
+    model commitment
+    prediction commitment
+    submission fingerprint
 
-Only after the prediction commitment exists can an authorized reveal score the run.
+An optional Ed25519 signature envelope can attest the immutable scored receipt.
 
-The public evaluation manifest contains trial IDs, conditions, and probe outcomes. It omits adjudicated labels, raw source references, approval receipts, and raw agent identity.
+A verified signature proves possession of the corresponding private key. It does not prove the human or organization behind the key is independent, accredited, or trustworthy.
 
-Every closed receipt records:
+Receipts therefore preserve:
 
-    labelRevealTiming = AFTER_PREDICTION_COMMIT
-    labelSemantics = ADJUDICATED_REFERENCE
-    evaluationStatus = SEALED_REFERENCE_EVALUATION_COMPLETE
-    externalValidity = CANDIDATE
+    custodySeparation = SPLIT_PACKAGE_VERIFIED
     custodyIndependence = NOT_ESTABLISHED
-    productionStatus = NOT_VALIDATED
 
-This proves ordering and commitment integrity within the protocol. It does not prove that a genuinely independent third party held the labels.
+until independent custody is supported by evidence outside this software protocol.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run evaluate:sealed
+    npm run evaluate:custody
 
 ## License
 
