@@ -27,14 +27,25 @@ export {
   getDifferentialSpec,
   validateDifferentialCatalog
 } from "./differential/catalog.js";
-export {
-  normalizeWeights,
-  entropy,
-  bayesUpdate,
-  probeInformationGain,
-  rankProbesByInformationGain
-} from "./differential/math.js";
+export {normalizeWeights,entropy,bayesUpdate,probeInformationGain,rankProbesByInformationGain} from "./differential/math.js";
 export {DifferentialHypothesisEngine} from "./differential/engine.js";
 export {CASE_CONFERENCE_ROLES,validateConferenceRole} from "./conference/roles.js";
 export {totalVariationDistance,aggregateConferenceReviews,compareConferenceRounds} from "./conference/math.js";
 export {CaseConference} from "./conference/conference.js";
+export {
+  FROZEN_BENCHMARK_VERSION,
+  FROZEN_RECIPE_VERSION,
+  FROZEN_BENCHMARK_FINGERPRINT,
+  FROZEN_BENCHMARK_COUNTS,
+  generateFrozenSyntheticBenchmark,
+  validateFrozenSyntheticBenchmark
+} from "./calibration/frozen.js";
+export {
+  EMPIRICAL_MODEL_VERSION,
+  EMPIRICAL_CALIBRATION,
+  fitEmpiricalDifferentialModel,
+  getEmpiricalSpec
+} from "./calibration/fit.js";
+export {multiclassBrier,logLoss,calibrationBins,confusionMatrix} from "./calibration/metrics.js";
+export {evaluateDifferentialModel} from "./calibration/evaluate.js";
+export {runCalibrationBenchmark} from "./calibration/benchmark.js";

@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Empirical Differential Model",
+  "type":"object",
+  "required":["version","calibration","externalValidity","datasetVersion","datasetFingerprint","trainingFingerprint","trainingCaseCount","smoothing","specs","fingerprint"],
+  "properties":{
+    "version":{"const":"EMPIRICAL_MODEL_V0.1"},
+    "calibration":{"const":"SYNTHETIC_BENCHMARKED"},
+    "externalValidity":{"const":"NOT_ESTABLISHED"},
+    "datasetVersion":{"type":"string"},
+    "datasetFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "trainingFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "trainingCaseCount":{"type":"integer","minimum":1},
+    "smoothing":{"type":"object"},
+    "specs":{"type":"object"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
