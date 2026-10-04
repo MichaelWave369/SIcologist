@@ -2,7 +2,7 @@ import {sign,verify} from "node:crypto";
 import {canonicalize,fingerprint} from "../experiment/fingerprint.js";
 
 function payloadBytes(payload){
-  return Buffer.from(canonicalize(payload),"utf8");
+  return Buffer.from(JSON.stringify(canonicalize(payload)),"utf8");
 }
 
 export function evaluatorPublicKeyFingerprint(publicKeyPem){
