@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Phi Interferometer Result",
+  "type":"object",
+  "required":["metric","status","causalStatus"],
+  "properties":{
+    "metric":{"type":"string"},
+    "status":{"enum":["COMPLETE","INSUFFICIENT_DATA"]},
+    "interaction":{"type":"number"},
+    "effectA":{"type":"number"},
+    "effectB":{"type":"number"},
+    "threshold":{"type":"number"},
+    "classification":{"enum":["POSITIVE_INTERACTION","NEGATIVE_INTERACTION","ADDITIVE_WITHIN_THRESHOLD"]},
+    "causalStatus":{"const":"CAUSALITY_NOT_ESTABLISHED"}
+  }
+}

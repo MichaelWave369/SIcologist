@@ -1,7 +1,7 @@
 {
   "name": "sicologist",
-  "version": "0.2.0",
-  "description": "Synthetic Intelligence behavioral observatory and governed recovery runtime",
+  "version": "0.3.0",
+  "description": "Synthetic Intelligence behavioral observatory, experimental probe and governed recovery runtime",
   "type": "module",
   "private": false,
   "license": "MIT",
@@ -10,6 +10,8 @@
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
     "example": "node examples/basic.mjs",
-    "observe": "node scripts/observe-session.mjs"
+    "observe": "node scripts/observe-session.mjs",
+    "probe": "node scripts/probe-session.mjs",
+    "interferometer": "node examples/interferometer.mjs"
   }
 }

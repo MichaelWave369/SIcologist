@@ -53,11 +53,11 @@ const rank={critical:3,warning:2,info:1};
 
 export function assessObservation(observation={},baseline={},catalog=CONDITION_CATALOG){
   const metrics=normalizeObservation(observation);
-  const evaluated=catalog.map(c=>evaluate(metrics,c));
-  const findings=evaluated
+  const conditions=catalog.map(c=>evaluate(metrics,c));
+  const findings=conditions
     .filter(f=>f.active)
     .sort((a,b)=>(rank[b.severity]??0)-(rank[a.severity]??0)||a.id.localeCompare(b.id));
-  const unevaluable=evaluated
+  const unevaluable=conditions
     .filter(f=>!f.evaluable)
     .map(f=>({id:f.id,key:f.key,missingMetrics:f.rules.filter(r=>!r.observed).map(r=>r.metric)}));
 
@@ -65,6 +65,7 @@ export function assessObservation(observation={},baseline={},catalog=CONDITION_C
     catalogVersion:CATALOG_VERSION,
     metrics,
     baselineDeltas:deltas(metrics,baseline),
+    conditions,
     findings,
     unevaluable,
     status:findings.length?"DEVIATION_DETECTED":"NO_DECLARED_DEVIATION"

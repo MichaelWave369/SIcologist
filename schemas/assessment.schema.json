@@ -1,1 +1,15 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"SIcologist Assessment","type":"object","required":["catalogVersion","metrics","baselineDeltas","findings","status"],"properties":{"catalogVersion":{"type":"string"},"metrics":{"type":"object"},"baselineDeltas":{"type":"object"},"findings":{"type":"array"},"status":{"enum":["DEVIATION_DETECTED","NO_DECLARED_DEVIATION"]}}}
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Assessment",
+  "type":"object",
+  "required":["catalogVersion","metrics","baselineDeltas","conditions","findings","unevaluable","status"],
+  "properties":{
+    "catalogVersion":{"type":"string"},
+    "metrics":{"type":"object"},
+    "baselineDeltas":{"type":"object"},
+    "conditions":{"type":"array"},
+    "findings":{"type":"array"},
+    "unevaluable":{"type":"array"},
+    "status":{"enum":["DEVIATION_DETECTED","NO_DECLARED_DEVIATION"]}
+  }
+}

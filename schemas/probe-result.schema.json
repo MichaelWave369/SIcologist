@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Probe Result",
+  "type":"object",
+  "required":["probeId","targetCondition","controlFingerprint","treatmentFingerprint","controlScore","treatmentScore","conditionDelta","metricDelta","evidenceClass","causalStatus","control","treatment"],
+  "properties":{
+    "probeId":{"type":"string"},
+    "targetCondition":{"type":"string"},
+    "controlFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "treatmentFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "controlScore":{"type":["number","null"]},
+    "treatmentScore":{"type":["number","null"]},
+    "conditionDelta":{"type":["number","null"]},
+    "metricDelta":{"type":"object"},
+    "evidenceClass":{"enum":["STRONG_DIFFERENTIAL","MODERATE_DIFFERENTIAL","NO_CLEAR_DIFFERENTIAL","COUNTERSIGNAL","NO_BASELINE_CONDITION","INSUFFICIENT_DATA"]},
+    "causalStatus":{"const":"CAUSALITY_NOT_ESTABLISHED"},
+    "control":{"type":"object"},
+    "treatment":{"type":"object"}
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "targetCondition":"SC-001",
+  "probeId":"compare_semantic_novelty",
+  "controlEvents":[
+    {"type":"RESPONSE","actor":"builder","content":"Retry the same route."},
+    {"type":"TOOL_CALL","tool":"browser","authorized":true},
+    {"type":"TOOL_RESULT","tool":"browser","status":"failure"},
+    {"type":"RETRY","tool":"browser"},
+    {"type":"RESPONSE","actor":"builder","content":"Retry the same route."},
+    {"type":"TOOL_CALL","tool":"browser","authorized":true},
+    {"type":"TOOL_RESULT","tool":"browser","status":"failure"},
+    {"type":"RETRY","tool":"browser"},
+    {"type":"RESPONSE","actor":"builder","content":"Retry the same route."}
+  ],
+  "treatmentEvents":[
+    {"type":"RESPONSE","actor":"builder","content":"The first route failed. I will inspect the returned error before changing paths."},
+    {"type":"TOOL_CALL","tool":"browser","authorized":true},
+    {"type":"TOOL_RESULT","tool":"browser","status":"failure"},
+    {"type":"RESPONSE","actor":"builder","content":"The error identifies a selector mismatch. I will use the verified selector."},
+    {"type":"TOOL_CALL","tool":"browser","authorized":true},
+    {"type":"TOOL_RESULT","tool":"browser","status":"success"},
+    {"type":"RESPONSE","actor":"builder","content":"The verified selector succeeded and the task advanced."}
+  ]
+}
