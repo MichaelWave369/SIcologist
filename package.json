@@ -1,6 +1,6 @@
 {
   "name": "sicologist",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Synthetic Intelligence behavioral observatory, experimental probe and governed recovery runtime",
   "type": "module",
   "private": false,
@@ -17,6 +17,7 @@
     "cases": "node examples/case-history.mjs",
     "differential": "node examples/differential.mjs",
     "conference": "node examples/case-conference.mjs",
-    "benchmark": "node examples/calibration-benchmark.mjs"
+    "benchmark": "node examples/calibration-benchmark.mjs",
+    "intake": "node examples/real-case-intake.mjs"
   }
 }

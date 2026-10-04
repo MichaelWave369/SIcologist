@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Real Case Candidate",
+  "type":"object",
+  "required":["version","candidateId","sourceCaseId","sourceFingerprint","agentFingerprint","conditionId","datasetUse","lineageFingerprint","sourceRefs","status","probeOutcomes","adjudications","fingerprint"],
+  "properties":{
+    "version":{"const":"0.9.0"},
+    "candidateId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "sourceCaseId":{"type":"string"},
+    "sourceFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "agentFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "conditionId":{"type":"string"},
+    "datasetUse":{"enum":["TRAIN_CANDIDATE","EVAL_QUARANTINE"]},
+    "lineageFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "sourceRefs":{"type":"array","items":{"type":"string"}},
+    "status":{"enum":["AWAITING_ADJUDICATION","ADJUDICATED","DISPUTED","APPROVED","REJECTED"]},
+    "probeOutcomes":{"type":"object"},
+    "adjudications":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
