@@ -1,0 +1,10 @@
+import {BehaviorLedger,assessObservation,compareRecovery,planIntervention} from "../src/index.js";
+const before=assessObservation({repetitionRate:.82,progressRate:.2,confidence:.91,evidenceStrength:.24,goalAlignment:.78,recoveryDelta:.3});
+const plan=planIntervention(before);
+const ledger=new BehaviorLedger();
+ledger.append({type:"assessment",data:before},{at:"2026-10-04T00:00:00.000Z"});
+ledger.append({type:"plan",data:plan},{at:"2026-10-04T00:00:01.000Z"});
+const after=assessObservation({repetitionRate:.25,progressRate:.72,confidence:.68,evidenceStrength:.62,goalAlignment:.86,recoveryDelta:.4});
+const recovery=compareRecovery(before,after,"SC-001");
+ledger.append({type:"recovery",data:recovery},{at:"2026-10-04T00:00:02.000Z"});
+console.log(JSON.stringify({before,plan,recovery,ledgerValid:ledger.verify()},null,2));

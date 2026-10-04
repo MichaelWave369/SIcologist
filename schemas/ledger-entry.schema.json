@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"SIcologist Ledger Entry","type":"object","required":["seq","at","prevHash","event","hash"],"properties":{"seq":{"type":"integer","minimum":1},"at":{"type":"string"},"prevHash":{"type":["string","null"]},"event":{},"hash":{"type":"string","pattern":"^[a-f0-9]{64}$"}}}
