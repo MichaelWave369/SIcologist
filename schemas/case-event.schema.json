@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Case Event",
+  "type":"object",
+  "required":["caseId","seq","at","type","data","prevHash","hash"],
+  "properties":{
+    "caseId":{"type":"string","minLength":1},
+    "seq":{"type":"integer","minimum":1},
+    "at":{"type":"string"},
+    "type":{"enum":["CASE_OPENED","ASSESSMENT_RECORDED","PROFILE_COMPARISON_RECORDED","PROBE_RECORDED","INTERVENTION_PLANNED","INTERVENTION_APPLIED","RECOVERY_RECORDED","NOTE_ADDED","CASE_CLOSED","CASE_REOPENED"]},
+    "data":{"type":"object"},
+    "prevHash":{"type":["string","null"]},
+    "hash":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -11,67 +11,57 @@ SIcologist is a deterministic, model-agnostic framework for observing agent beha
 ```text
 Agent session
    -> event stream
-   -> derived behavioral metrics
-   -> universal condition assessment
-   -> longitudinal self-baseline comparison
+   -> behavioral + longitudinal assessment
+   -> case file
    -> competing explanations
    -> controlled probe / shadow replay
-   -> differential evidence
-   -> governed intervention plan
-   -> re-measurement
-   -> recovery / escalation / refusal
+   -> intervention
+   -> measured recovery
+   -> case outcome
+   -> historical effectiveness summary
+   -> future evidence-informed recommendation
    -> evidence ledger
 ```
 
 ## Rungs
 
 ### Rung 1 — Behavioral core
-- 12 operational conditions, `SC-001` through `SC-012`
-- deterministic assessment
-- governed intervention planning
-- recovery comparison
-- hash-chained evidence ledger
+Declared operational conditions, governance, recovery comparison, and hash-chained evidence.
 
 ### Rung 2 — Agent Session Observatory
-- canonical 12-event session vocabulary
-- derived behavioral telemetry from session events
-- strict event sequencing
-- replay-stable observation
-- missing telemetry remains unknown, never silently zero
+Canonical session events and automatically derived behavioral telemetry.
 
 ### Rung 3 — Experimental Probe Engine
-- condition-driven probe plans
-- control vs treatment/shadow comparisons
-- stable experiment fingerprints
-- differential condition and metric evidence
-- explicit `CAUSALITY_NOT_ESTABLISHED` boundary
-- external runner interface for real agent runtimes
-- ranked follow-up evidence
-- **Φ Interferometer** 2×2 software interaction analysis
+Controlled shadow experiments, differential evidence, and the software-only Φ Interferometer.
 
 ### Rung 4 — Longitudinal Agent Profiles
-- per-agent contextual behavioral baselines
-- exact and fallback cohort scopes
-- online mean/variance/min/max statistics
-- self-deviation z-scores with variance floor protection
-- explicit profile maturity and metric coverage
-- qualified-session admission gate
-- duplicate-sample rejection
-- invalid-ledger / untrusted / critical-session baseline-poisoning protection
-- deterministic export/import for persistent profile stores
-- evaluate-before-admit workflow to prevent the current session from normalizing itself
+Contextual per-agent baselines with qualified admission, fallback cohorts, self-deviation scoring, and baseline-poisoning resistance.
 
-Rung 4 lets SIcologist ask two different questions:
+### Rung 5 — Case Files + Intervention History
+- deterministic per-agent operational case files
+- append-only hash-chained case chronology
+- assessment, profile, probe, intervention, recovery, note, close, and reopen events
+- intervention-to-recovery linkage
+- partial recovery scoring instead of binary disappearance
+- recurrence tracking across cases
+- historical intervention effectiveness summaries
+- evidence-informed future recommendations
+- explicit separation between historical association and causal proof
+- deterministic case-book export/import with fingerprint verification
+
+The case layer answers:
 
 ```text
-Universal:
-"Does this session match a declared behavioral condition?"
-
-Longitudinal:
-"Is this session unusual for this specific agent in this context?"
+What happened?
+What evidence did we have?
+What did we try?
+Was it authorized?
+What changed afterward?
+Has this happened before?
+What has historically helped this agent under comparable conditions?
 ```
 
-Those are deliberately separate. A behavior can be unusual for an agent without being globally bad, and globally risky without being unusual for that agent.
+It does **not** convert correlation into mechanism. Historical treatment success is operational evidence, not causal proof.
 
 ## Quick start
 
@@ -84,6 +74,7 @@ npm run observe -- fixtures/session-loop.json
 npm run probe -- fixtures/probe-experiment.json
 npm run interferometer
 npm run profile
+npm run cases
 ```
 
 ## Design rules
@@ -92,13 +83,13 @@ npm run profile
 2. Conditions describe system behavior, not personhood.
 3. Unknown is not zero.
 4. A probe result is evidence, not a causal verdict.
-5. Prefer controlled, reversible shadow experiments.
-6. A baseline only learns from explicitly qualified evidence.
-7. Evaluate a session before admitting it into its own baseline.
-8. Prefer the least invasive reversible intervention.
-9. Never silently cross an authority boundary.
-10. Record what changed and whether it helped.
-11. Preserve replayability.
+5. A baseline only learns from explicitly qualified evidence.
+6. A case chronology is append-only evidence, not a rewritten narrative.
+7. Link interventions to measured outcomes.
+8. Historical success is association until controlled evidence says more.
+9. Prefer the least invasive reversible intervention.
+10. Never silently cross an authority boundary.
+11. Preserve replayability and provenance.
 
 See the documents in [docs/](docs/).
 

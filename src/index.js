@@ -15,3 +15,7 @@ export {emptyMetricStats,updateMetricStats,summarizeMetricStats,profileMaturity}
 export {compareMetricsToProfile} from "./profile/deviation.js";
 export {LongitudinalProfile} from "./profile/profile.js";
 export {LongitudinalProfileBook} from "./profile/book.js";
+export {CASE_EVENT_TYPES,validateCaseEventType} from "./cases/events.js";
+export {CaseFile} from "./cases/case-file.js";
+export {extractInterventionEpisodes,summarizeInterventionHistory,recommendFromHistory} from "./cases/history.js";
+export {CaseBook} from "./cases/book.js";

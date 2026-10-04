@@ -4,72 +4,76 @@
 Agent / Runtime
       |
       v
-Session Event Adapter
+Session Observatory
       |
-      v
-Agent Session Observatory
-      |
-      +--------------------------+
-      |                          |
-      v                          v
-Universal Condition      Longitudinal Profile
-Assessor                  Comparator
-      |                          |
-      +------------+-------------+
-                   |
-                   v
-        Explanation / Probe Layer
-                   |
-         +---------+---------+
-         |                   |
-         v                   v
-  Probe Planner      Intervention Planner
-         |                   |
-         v              Governance Gate
- Shadow / Replay            |
-         |                   v
-         v          External Execution Adapter
- Differential Evidence      |
-         |                   v
-         +------------> Recovery Comparator
-                              |
-                              v
-                         Evidence Ledger
+      +--------------------+
+      |                    |
+      v                    v
+Universal Assessment   Longitudinal Profile
+      |                    |
+      +---------+----------+
+                |
+                v
+             Case File
+                |
+      +---------+----------+
+      |                    |
+      v                    v
+ Probe Engine       Intervention Planner
+      |                    |
+      v               Governance Gate
+ Differential             |
+ Evidence                 v
+      |           External Execution Adapter
+      |                    |
+      +---------+----------+
+                |
+                v
+        Recovery Measurement
+                |
+                v
+        Case Outcome History
+                |
+                v
+  Evidence-Informed Recommendation
+                |
+                v
+          Reality / Case Ledger
 ```
 
-## Rung 4 profile boundary
+## Rung 5 boundary
 
-Longitudinal baselines are descriptive statistics over qualified software-agent telemetry. They are not personality tests, psychiatric profiles, or evidence of consciousness.
+A case file is an operational incident record for software agents.
+
+It is not a medical chart.
+
+An intervention history summarizes observed associations between actions and subsequent measured outcomes. It does not establish causal mechanism.
 
 ```text
-unusual != harmful
-normal != safe
-baseline != authority
-correlation != causation
+history != mechanism
+association != causation
+recommendation != authority
+case record != diagnosis
 ```
 
-A session is evaluated against the existing profile **before** it can be admitted into that profile. This prevents the current observation from diluting its own deviation.
+## Case chronology
 
-## Context scopes
+Each case event carries:
 
-Profile samples are accumulated into four deterministic scopes:
+- monotonically increasing sequence
+- stable case ID
+- event type
+- event payload
+- previous event hash
+- current event hash
+- deterministic or caller-supplied timestamp marker
 
-1. exact agent + model + role + task class + runtime
-2. agent + model + role + task class, any runtime
-3. agent + model + role, any task/runtime
-4. agent global, any model/role/task/runtime
+The chain is independently verifiable.
 
-Resolution chooses the most specific mature profile available.
+## Intervention linkage
 
-## Baseline admission
+Every applied intervention gets a stable `interventionId`. A recovery record references that identifier. This prevents the system from vaguely claiming that "something we did earlier" worked.
 
-A session is rejected from longitudinal training when:
+## Learning from history
 
-- it is not explicitly marked `QUALIFIED`
-- its source is not trusted
-- its ledger is invalid
-- it contains an active critical condition and no explicit critical override was supplied
-- the sample identifier has already been admitted
-- no numeric metrics are present
-
-This is baseline-poisoning resistance, not a claim that qualified samples are objectively correct.
+Historical recommendations are ranked from measured intervention episodes. The output includes attempts, measured outcomes, recovered/improved/unchanged/degraded counts, average condition-score improvement, authorization class, and an explicit `CAUSALITY_NOT_ESTABLISHED` marker.
