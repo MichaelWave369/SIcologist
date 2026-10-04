@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Independent Evaluation Receipt",
+  "type":"object",
+  "required":["version","challengeId","challengeFingerprint","custodyFingerprint","evaluationSetFingerprint","labelCommitment","model","modelCommitment","submissionFingerprint","predictionsCommitment","evaluatorId","evaluatorReceipt","labelRevealTiming","labelSemantics","custodySeparation","custodyIndependence","identityAssurance","externalValidity","productionStatus","metrics","scoredCases","integrity","fingerprint"],
+  "properties":{
+    "version":{"const":"INDEPENDENT_EVALUATION_RECEIPT_V0.1"},
+    "labelRevealTiming":{"const":"AFTER_EXTERNAL_SUBMISSION_COMMIT"},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "custodySeparation":{"const":"SPLIT_PACKAGE_VERIFIED"},
+    "custodyIndependence":{"const":"NOT_ESTABLISHED"},
+    "externalValidity":{"const":"CANDIDATE"},
+    "productionStatus":{"const":"NOT_VALIDATED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

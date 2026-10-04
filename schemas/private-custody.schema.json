@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Private Custody Bundle",
+  "type":"object",
+  "required":["version","challengeId","evaluatorId","sourceDatasetFingerprint","challengeFingerprint","evaluationSetFingerprint","labelCommitment","custodyProtocol","labelSemantics","labels","fingerprint"],
+  "properties":{
+    "version":{"const":"PRIVATE_CUSTODY_V0.1"},
+    "custodyProtocol":{"const":"SPLIT_PACKAGE_V0.1"},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "labels":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

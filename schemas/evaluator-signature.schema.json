@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Evaluator Signature Envelope",
+  "type":"object",
+  "required":["version","evaluatorId","receiptFingerprint","publicKeyFingerprint","identityAssurance","algorithm","signature"],
+  "properties":{
+    "version":{"const":"EVALUATOR_SIGNATURE_V0.1"},
+    "evaluatorId":{"type":"string","minLength":1},
+    "receiptFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "publicKeyFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "identityAssurance":{"const":"PUBLIC_KEY_ONLY"},
+    "algorithm":{"const":"Ed25519"},
+    "signature":{"type":"string","minLength":1}
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Independent Challenge Bundle",
+  "type":"object",
+  "required":["version","challengeId","evaluatorId","sourceDatasetFingerprint","evaluationSetFingerprint","labelCommitment","custodyProtocol","labelsExposed","labelSemantics","caseCount","cases","fingerprint"],
+  "properties":{
+    "version":{"const":"INDEPENDENT_CHALLENGE_V0.1"},
+    "challengeId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "labelsExposed":{"const":false},
+    "custodyProtocol":{"const":"SPLIT_PACKAGE_V0.1"},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "cases":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
