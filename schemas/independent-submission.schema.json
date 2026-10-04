@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Independent Model Submission",
+  "type":"object",
+  "required":["version","challengeId","challengeFingerprint","evaluationSetFingerprint","labelCommitment","labelsSeen","model","modelCommitment","predictions","predictionsCommitment","fingerprint"],
+  "properties":{
+    "version":{"const":"INDEPENDENT_SUBMISSION_V0.1"},
+    "labelsSeen":{"const":false},
+    "predictions":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -54,3 +54,16 @@ export {RealCaseCandidate} from "./intake/candidate.js";
 export {RealCaseDatasetRegistry} from "./intake/registry.js";
 export {SealedEvaluationHarness,verifyEvaluationReceipt} from "./evaluation/harness.js";
 export {predictEvaluationManifest} from "./evaluation/runner.js";
+export {
+  createIndependentCustodySplit,
+  createIndependentSubmission,
+  scoreIndependentSubmission,
+  signIndependentEvaluationReceipt,
+  verifyIndependentEvaluationReceipt
+} from "./evaluation/custody.js";
+export {predictIndependentChallenge} from "./evaluation/challenge-runner.js";
+export {
+  evaluatorPublicKeyFingerprint,
+  signEvaluatorReceipt,
+  verifyEvaluatorSignature
+} from "./evaluation/signature.js";
