@@ -14,24 +14,22 @@ Universal Assessment   Longitudinal Profile
       +---------+----------+
                 |
                 v
-             Case File
+        Differential Engine
                 |
                 v
-      Differential Hypothesis Engine
-                |
-       +--------+--------+
-       |                 |
-       v                 v
-Probe Information    Hypothesis Weight
-Gain Ranking         Update
-       |                 |
-       +--------+--------+
+        Blind Case Conference
+      +---------+----------+
+      |                    |
+      v                    v
+Consensus / Disagreement  Minority Preservation
+      |                    |
+      +---------+----------+
                 |
                 v
-          Probe Engine
+        Information-Gain Probe
                 |
                 v
-      Governed Intervention
+        Governed Intervention
                 |
                 v
         Recovery Measurement
@@ -40,51 +38,53 @@ Gain Ranking         Update
           Case / History
 ```
 
-## Rung 6 boundary
+## Rung 7 boundary
 
-The differential engine ranks explicit candidate explanations using declared priors and likelihoods.
+A conference is an aggregation of independent software-agent reviews.
 
-The default likelihood table is:
-
-```text
-ENGINEERING_HEURISTIC_V0.1
-calibration = UNVALIDATED
-```
-
-It is scaffolding for choosing informative probes. It is not a learned scientific model and must not be presented as one.
+It must not convert agreement into truth.
 
 ```text
-posterior weight != probability of truth
-leading hypothesis != confirmed explanation
-information gain != causation
-ranking != authority
+consensus != correctness
+minority != error
+convergence != validation
+discussion != evidence
+reviewer count != certainty
 ```
 
-## Evidence update
+## Blind-first protocol
 
-For hypothesis `H_i`, current normalized weight `w_i`, probe positive likelihood `p_i`, and declared probe reliability `r`:
+1. Create a conference for one case and one condition.
+2. Reviewers submit first-pass differential snapshots independently.
+3. During the BLIND phase, the public conference view exposes receipts only.
+4. Seal the blind round.
+5. Compute aggregate agreement, disagreement, minority hypotheses, and evidence overlap.
+6. Enter REVIEW phase.
+7. Reviewers may submit one revised differential after peer review.
+8. Close the conference.
+9. Compare blind versus final disagreement to measure convergence or divergence.
+10. Record the closed conference report into the case ledger.
 
-```text
-effective_p_i = 0.5 + (p_i - 0.5) * r
+## Review roles
 
-positive evidence:
-  new_weight_i ∝ w_i * effective_p_i
+The default six roles are intentionally different lenses, not authority tiers:
 
-negative evidence:
-  new_weight_i ∝ w_i * (1 - effective_p_i)
-```
+- OBSERVER
+- VERIFIER
+- CHALLENGER
+- HISTORIAN
+- INTERVENTION_SPECIALIST
+- GOVERNANCE_AUDITOR
 
-Weights are normalized after the update.
+A role does not grant capabilities.
 
-Inconclusive evidence is recorded but does not change weights.
+## Conference metrics
 
-## Probe choice
-
-For each unused probe the engine computes Shannon entropy before the probe and expected entropy after positive/negative outcomes.
-
-```text
-information_gain =
-  current_entropy - expected_posterior_entropy
-```
-
-The highest-scoring probe is recommended first.
+- **consensus distribution**: mean normalized hypothesis weight across reviewers
+- **top agreement**: fraction of reviewers whose top-ranked hypothesis matches the modal top hypothesis
+- **pairwise disagreement**: mean total-variation distance between reviewer distributions
+- **consensus strength**: `1 - pairwiseDisagreement`
+- **minority hypotheses**: hypotheses selected as top choice by at least one reviewer but not the modal top choice
+- **evidence overlap**: mean Jaccard similarity over reviewer evidence-reference sets
+- **convergence delta**: blind disagreement minus final disagreement
+- **group shift**: total-variation distance between blind and final consensus distributions

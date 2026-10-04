@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Case Conference Review",
+  "type":"object",
+  "required":["reviewerId","role","differential","evidenceRefs"],
+  "properties":{
+    "reviewerId":{"type":"string","minLength":1},
+    "role":{"enum":["OBSERVER","VERIFIER","CHALLENGER","HISTORIAN","INTERVENTION_SPECIALIST","GOVERNANCE_AUDITOR"]},
+    "differential":{"type":"object"},
+    "evidenceRefs":{"type":"array","items":{"type":"string"}},
+    "note":{"type":"string"}
+  }
+}

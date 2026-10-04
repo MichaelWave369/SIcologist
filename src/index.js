@@ -35,3 +35,6 @@ export {
   rankProbesByInformationGain
 } from "./differential/math.js";
 export {DifferentialHypothesisEngine} from "./differential/engine.js";
+export {CASE_CONFERENCE_ROLES,validateConferenceRole} from "./conference/roles.js";
+export {totalVariationDistance,aggregateConferenceReviews,compareConferenceRounds} from "./conference/math.js";
+export {CaseConference} from "./conference/conference.js";
