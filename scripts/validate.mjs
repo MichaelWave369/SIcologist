@@ -29,7 +29,10 @@ import {
   createReplicationProtocol,
   createReplicationReceipt,
   verifyReplicationProtocol,
-  verifyReplicationReceipt
+  verifyReplicationReceipt,
+  REPLICATION_EVIDENCE_GRADES,
+  DEFAULT_EVIDENCE_LADDER_POLICY,
+  ReplicationEvidenceRegistry
 } from "../src/index.js";
 
 const required=[
@@ -53,6 +56,7 @@ const required=[
   "schemas/independent-submission.schema.json","schemas/independent-evaluation-receipt.schema.json",
   "schemas/evaluator-signature.schema.json",
   "schemas/replication-protocol.schema.json","schemas/replication-receipt.schema.json",
+  "schemas/replication-registry.schema.json","schemas/replication-registry-summary.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -105,12 +109,15 @@ for(const [name,value] of Object.entries({
   createReplicationProtocol,
   createReplicationReceipt,
   verifyReplicationProtocol,
-  verifyReplicationReceipt
+  verifyReplicationReceipt,
+  ReplicationEvidenceRegistry
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
 
 if(REPLICATION_STATUSES.length!==6) throw new Error("Expected 6 replication statuses");
+if(REPLICATION_EVIDENCE_GRADES.length!==5) throw new Error("Expected 5 replication evidence grades");
+if(DEFAULT_EVIDENCE_LADDER_POLICY.robustCandidate.minSupportReplicators<4) throw new Error("Robust evidence policy unexpectedly weak");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
