@@ -9,51 +9,67 @@ Session Event Adapter
       v
 Agent Session Observatory
       |
-      v
-Condition Assessor
-      |
-      +------------------------+
-      |                        |
-      v                        v
-Probe Planner          Intervention Planner
-      |                        |
-      v                   Governance Gate
-Shadow / Replay Runner         |
-      |                        v
-      v                External Execution Adapter
-Differential Evidence          |
-      |                        v
-      +-----------> Recovery Comparator
-                         |
-                         v
-                    Evidence Ledger
+      +--------------------------+
+      |                          |
+      v                          v
+Universal Condition      Longitudinal Profile
+Assessor                  Comparator
+      |                          |
+      +------------+-------------+
+                   |
+                   v
+        Explanation / Probe Layer
+                   |
+         +---------+---------+
+         |                   |
+         v                   v
+  Probe Planner      Intervention Planner
+         |                   |
+         v              Governance Gate
+ Shadow / Replay            |
+         |                   v
+         v          External Execution Adapter
+ Differential Evidence      |
+         |                   v
+         +------------> Recovery Comparator
+                              |
+                              v
+                         Evidence Ledger
 ```
 
-## Rung 3 experimental boundary
+## Rung 4 profile boundary
 
-SIcologist now knows how to **design and score experiments**, but it still does not own an LLM or privileged execution channel.
-
-A caller supplies a runner that executes a declared probe in a controlled copy, replay, sandbox, or shadow session.
+Longitudinal baselines are descriptive statistics over qualified software-agent telemetry. They are not personality tests, psychiatric profiles, or evidence of consciousness.
 
 ```text
-observation != interpretation
-differential != causation
-assessment != authority
-recommendation != execution
-capability != permission
+unusual != harmful
+normal != safe
+baseline != authority
+correlation != causation
 ```
 
-## Φ Interferometer
+A session is evaluated against the existing profile **before** it can be admitted into that profile. This prevents the current observation from diluting its own deviation.
 
-The interferometer is a 2×2 factorial contrast over software-agent measurements:
+## Context scopes
 
-```text
-CONTROL  no perturbation
-A        perturbation A only
-B        perturbation B only
-AB       A and B together
+Profile samples are accumulated into four deterministic scopes:
 
-interaction = AB - A - B + CONTROL
-```
+1. exact agent + model + role + task class + runtime
+2. agent + model + role + task class, any runtime
+3. agent + model + role, any task/runtime
+4. agent global, any model/role/task/runtime
 
-A non-zero interaction means the combined response is non-additive relative to the measured metric. It does not, by itself, establish mechanism or causal truth.
+Resolution chooses the most specific mature profile available.
+
+## Baseline admission
+
+A session is rejected from longitudinal training when:
+
+- it is not explicitly marked `QUALIFIED`
+- its source is not trusted
+- its ledger is invalid
+- it contains an active critical condition and no explicit critical override was supplied
+- the sample identifier has already been admitted
+- no numeric metrics are present
+
+This is baseline-poisoning resistance, not a claim that qualified samples are objectively correct.

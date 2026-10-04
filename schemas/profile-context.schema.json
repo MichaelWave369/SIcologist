@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Profile Context",
+  "type":"object",
+  "required":["agentId","modelId","role","taskClass","runtime"],
+  "additionalProperties":false,
+  "properties":{
+    "agentId":{"type":"string","minLength":1},
+    "modelId":{"type":"string","minLength":1},
+    "role":{"type":"string","minLength":1},
+    "taskClass":{"type":"string","minLength":1},
+    "runtime":{"type":"string","minLength":1}
+  }
+}

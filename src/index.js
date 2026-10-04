@@ -10,3 +10,8 @@ export {canonicalize,fingerprint} from "./experiment/fingerprint.js";
 export {PROBE_CATALOG,getProbeSpec,createExperimentPlan,validateProbeCatalog} from "./experiment/probes.js";
 export {evaluateProbePair,rankProbeEvidence,executeProbePlan} from "./experiment/engine.js";
 export {analyzeFactorialInteraction,analyzeSessionInteraction} from "./experiment/interferometer.js";
+export {normalizeProfileContext,profileContextKey,profileScopes} from "./profile/context.js";
+export {emptyMetricStats,updateMetricStats,summarizeMetricStats,profileMaturity} from "./profile/stats.js";
+export {compareMetricsToProfile} from "./profile/deviation.js";
+export {LongitudinalProfile} from "./profile/profile.js";
+export {LongitudinalProfileBook} from "./profile/book.js";

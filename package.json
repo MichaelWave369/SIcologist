@@ -1,6 +1,6 @@
 {
   "name": "sicologist",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Synthetic Intelligence behavioral observatory, experimental probe and governed recovery runtime",
   "type": "module",
   "private": false,
@@ -12,6 +12,7 @@
     "example": "node examples/basic.mjs",
     "observe": "node scripts/observe-session.mjs",
     "probe": "node scripts/probe-session.mjs",
-    "interferometer": "node examples/interferometer.mjs"
+    "interferometer": "node examples/interferometer.mjs",
+    "profile": "node examples/profile.mjs"
   }
 }
