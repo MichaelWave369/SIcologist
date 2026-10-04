@@ -48,7 +48,15 @@ import {
   DEFAULT_PROBE_COSTS,
   generateClaimStressReport,
   preregisterStressCandidate,
-  validateStressWeights
+  validateStressWeights,
+  CAMPAIGN_VERSION,
+  CAMPAIGN_GATE_DECISIONS,
+  DEFAULT_CAMPAIGN_POLICY,
+  normalizeCampaignPolicy,
+  verifyResearchCampaignPlan,
+  createResearchCampaignPlan,
+  ResearchCampaignTracker,
+  validateCampaignConstants
 } from "../src/index.js";
 
 const required=[
@@ -76,6 +84,7 @@ const required=[
   "schemas/claim.schema.json","schemas/claim-evidence.schema.json","schemas/claim-assessment.schema.json","schemas/claim-evidence-graph.schema.json",
   "schemas/claim-challenge.schema.json","schemas/claim-challenge-result.schema.json","schemas/claim-challenge-registry.schema.json",
   "schemas/claim-stress-report.schema.json","schemas/stress-selection-receipt.schema.json",
+  "schemas/research-campaign-plan.schema.json","schemas/research-campaign-gate.schema.json","schemas/research-campaign-tracker.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -136,7 +145,12 @@ for(const [name,value] of Object.entries({
   validateChallengeConstants,
   generateClaimStressReport,
   preregisterStressCandidate,
-  validateStressWeights
+  validateStressWeights,
+  normalizeCampaignPolicy,
+  verifyResearchCampaignPlan,
+  createResearchCampaignPlan,
+  ResearchCampaignTracker,
+  validateCampaignConstants
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -157,6 +171,11 @@ if(challengeConstantErrors.length) throw new Error("Challenge constant errors: "
 if(STRESS_LAB_VERSION!=="STRESS_LAB_V0.1") throw new Error("Unexpected stress lab version");
 validateStressWeights(DEFAULT_STRESS_WEIGHTS);
 if(Object.keys(DEFAULT_PROBE_COSTS).length!==PROBE_CATALOG.length) throw new Error("Stress cost catalog must cover every probe");
+if(CAMPAIGN_VERSION!=="RESEARCH_CAMPAIGN_V0.1") throw new Error("Unexpected campaign version");
+if(CAMPAIGN_GATE_DECISIONS.length!==9) throw new Error("Expected 9 campaign gate decisions");
+normalizeCampaignPolicy(DEFAULT_CAMPAIGN_POLICY);
+const campaignErrors=validateCampaignConstants();
+if(campaignErrors.length) throw new Error("Campaign constant errors: "+campaignErrors.join(", "));
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");

@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Research Campaign Tracker",
+  "type":"object",
+  "required":["version","plan","selections","fingerprint"],
+  "properties":{
+    "version":{"const":"RESEARCH_CAMPAIGN_TRACKER_V0.1"},
+    "selections":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

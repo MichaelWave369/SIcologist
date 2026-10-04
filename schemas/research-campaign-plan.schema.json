@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Research Campaign Plan",
+  "type":"object",
+  "required":["version","target","initialAssessment","policy","selectionStrategy","stressReports","steps","planning","stopRules","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"RESEARCH_CAMPAIGN_V0.1"},
+    "steps":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

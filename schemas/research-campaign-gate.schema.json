@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Research Campaign Gate",
+  "type":"object",
+  "required":["version","planFingerprint","decision","assessmentFingerprint","selectedStepCount","detail","executionAuthorized","operatorActionRequired","fingerprint"],
+  "properties":{
+    "version":{"const":"RESEARCH_CAMPAIGN_GATE_V0.1"},
+    "executionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
