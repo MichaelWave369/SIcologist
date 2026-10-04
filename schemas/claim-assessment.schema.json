@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Assessment",
+  "type":"object",
+  "required":["version","claimId","claimKey","revision","status","evidenceGrade","counts","strongestReplicationGrade","supersededBy","evidenceIds","boundary","fingerprint"],
+  "properties":{
+    "version":{"const":"CLAIM_ASSESSMENT_V0.1"},
+    "status":{"enum":["UNASSESSED","SUPPORT_ONLY","CONTESTED","CONTRADICTED","SUPERSEDED"]},
+    "evidenceGrade":{"enum":["NO_EVIDENCE","PRELIMINARY_SUPPORT","MULTI_SOURCE_SUPPORT","REPLICATION_SUPPORT","ROBUST_REPLICATION_CANDIDATE","CONTESTED_EVIDENCE","ADVERSE_EVIDENCE_ONLY"]},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

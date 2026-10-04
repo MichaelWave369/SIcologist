@@ -21,44 +21,45 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 11. Independent Evaluator Package + Custody Split
 12. Reproducibility + External Replication Protocol
 13. Replication Registry + Evidence Ladder
+14. Claim Registry + Evidence Graph
 
-## Rung 13
+## Rung 14
 
-Rung 13 aggregates multiple Rung 12 replication receipts without treating receipt count as scientific truth.
+Rung 14 turns evidence artifacts into explicit, versioned claims.
 
-The registry:
-- verifies every replication receipt
-- requires one frozen replication protocol
-- rejects exact duplicate receipts
-- detects reused observed evidence
-- counts declared replicators separately from run count
-- tracks cross-environment support
-- preserves divergent, mismatched, and insufficient runs
-- measures metric-delta heterogeneity
-- measures prediction-agreement heterogeneity
-- applies frozen promotion thresholds
+Claims are immutable revisions. Changing a statement, scope, qualifier, or claim type creates a new revision that supersedes the prior claim instead of rewriting history.
 
-Evidence grades are:
+Evidence edges are explicit:
 
-    NO_REPLICATION_EVIDENCE
-    SINGLE_REPLICATION_SUPPORT
-    MULTI_REPLICATOR_SUPPORT
-    CROSS_ENVIRONMENT_SUPPORT
-    ROBUST_REPLICATION_CANDIDATE
+    SUPPORTS
+    CONTRADICTS
+    QUALIFIES
+    CONTEXT
 
-Even the top grade retains:
+Evidence can arrive as a verified fingerprinted artifact or as a declared SHA-256. Verified artifacts carry stronger provenance. Replication-registry summaries can raise a claim's engineering evidence grade, but contradictory evidence always keeps the claim contested.
 
-    replicatorIdentity = DECLARED_NOT_VERIFIED
-    replicationIndependence = NOT_ESTABLISHED
+Claim status is limited to:
+
+    UNASSESSED
+    SUPPORT_ONLY
+    CONTESTED
+    CONTRADICTED
+    SUPERSEDED
+
+There is intentionally no PROVEN status.
+
+The evidence graph contains claim nodes, evidence nodes, evidence-to-claim relations, and claim supersession edges.
+
+Every assessment retains:
+
+    causalityEstablished = false
     scientificTruth = NOT_ESTABLISHED
-
-A registry is an evidence summary, not a reality oracle.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run evidence
+    npm run claims
 
 ## License
 
