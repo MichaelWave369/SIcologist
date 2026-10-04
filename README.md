@@ -1,70 +1,41 @@
 # SIcologist
 
-Synthetic Intelligence Behavioral Observatory, Experimental Probe & Governed Recovery Runtime.
+**Synthetic Intelligence Behavioral Observatory, Experimental Probe & Governed Recovery Runtime**
 
-SIcologist is a deterministic, model-agnostic framework for observing agent behavior, detecting operational deviations, testing competing explanations, planning minimally invasive recovery actions, and recording whether recovery actually occurred.
+SIcologist is a deterministic, model-agnostic framework for observing software-agent behavior, testing competing explanations, governing interventions, measuring recovery, and preserving replayable evidence.
 
-SIcologist classifies observable synthetic-agent behavior. It does not claim that models are conscious, emotional, mentally ill, or equivalent to human patients.
+> SIcologist classifies observable synthetic-agent behavior. It does not claim consciousness, emotion, psychiatric illness, or human-equivalent subjective experience.
 
 ## Rungs
 
-Rung 1: Behavioral core.
-Rung 2: Agent Session Observatory.
-Rung 3: Experimental Probe Engine and software-only Phi Interferometer.
-Rung 4: Longitudinal Agent Profiles.
-Rung 5: Case Files and Intervention History.
-Rung 6: Differential Hypothesis Engine.
-Rung 7: Blind Case Conference.
-Rung 8: Calibration and Benchmark Lab.
+1. Behavioral core
+2. Agent Session Observatory
+3. Experimental Probe Engine + software-only Φ Interferometer
+4. Longitudinal Agent Profiles
+5. Case Files + Intervention History
+6. Differential Hypothesis Engine
+7. Blind Case Conference
+8. Calibration + Benchmark Lab
+9. Real-Case Evidence Intake + Dataset Builder
 
-## Rung 8
+## Rung 9
 
-Rung 8 adds:
+Rung 9 creates a governed path from actual agent incidents to research-dataset candidates.
 
-- a frozen deterministic synthetic benchmark recipe
-- 336 labeled cases spanning all 12 conditions and all 28 declared hypotheses
-- 224 TRAIN cases and 112 HELDOUT cases
-- a pinned benchmark SHA-256 fingerprint
-- beta-smoothed empirical probe likelihood fitting
-- train-only model estimation
-- fitted class priors
-- differential-engine support for injected empirical specs
-- held-out multiclass accuracy
-- multiclass Brier score
-- log loss
-- expected calibration error
-- confidence bins
-- per-condition confusion matrices
-- held-out probe-likelihood Brier score
-- heuristic-versus-empirical comparison
-- versioned calibrated-model artifacts with fingerprints
+It adds closed-case and ledger-integrity intake gates, data-minimized candidate records, immutable TRAIN_CANDIDATE or EVAL_QUARANTINE assignment, exact-source duplicate rejection, lineage and evidence split locks, blind independent adjudication, ADJUDICATED_REFERENCE labels, operator approval before promotion, complete-probe requirements, neverTrain evaluation exports, fitter refusal for evaluation-quarantine data, and deterministic dataset fingerprints.
 
-The first benchmark is deliberately synthetic:
+Core boundary:
 
-    datasetKind = SYNTHETIC_FROZEN
-    externalValidity = NOT_ESTABLISHED
-
-Passing it validates the calibration machinery against frozen known labels. It does not establish real-world agent validity.
+    real incident != automatic training example
+    adjudicated label != ground truth
+    evaluation quarantine != training data
+    operator approval != scientific validation
 
 ## Quick start
 
-~~~bash
-npm test
-npm run validate
-npm run benchmark
-~~~
-
-## Design rules
-
-1. Evidence before labels.
-2. Unknown is not zero.
-3. Consensus is not truth.
-4. Calibration uses a train/held-out split.
-5. Held-out labels never fit model likelihoods.
-6. Synthetic benchmark success is not external validation.
-7. Model artifacts include dataset and training fingerprints.
-8. Never silently cross an authority boundary.
-9. Preserve replayability and provenance.
+    npm test
+    npm run validate
+    npm run intake
 
 ## License
 

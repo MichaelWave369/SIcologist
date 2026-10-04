@@ -12,6 +12,14 @@ function hypothesisId(conditionId,index){
 function rounded(value){ return Number(value.toFixed(9)); }
 
 export function fitEmpiricalDifferentialModel(dataset,{alpha=1,beta=1,priorAlpha=1}={}){
+  if(dataset?.kind==="REAL_CASE_EVAL_QUARANTINE"){
+    throw new Error("Evaluation quarantine cannot be used to fit a model");
+  }
+  const forbidden=(dataset?.cases??[]).filter(item=>item.split==="TRAIN"&&item.neverTrain===true);
+  if(forbidden.length){
+    throw new Error("neverTrain cases cannot be used for model fitting");
+  }
+
   for(const [name,value] of Object.entries({alpha,beta,priorAlpha})){
     if(typeof value!=="number"||!Number.isFinite(value)||value<=0){
       throw new TypeError(name+" must be a finite number > 0");

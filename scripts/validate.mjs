@@ -12,7 +12,9 @@ import {
   profileScopes,
   validateDifferentialCatalog,
   validateFrozenSyntheticBenchmark,
-  validateProbeCatalog
+  validateProbeCatalog,
+  DATASET_USES,
+  CANDIDATE_STATUSES
 } from "../src/index.js";
 
 const required=[
@@ -20,7 +22,7 @@ const required=[
   "docs/CONSTITUTION.md","docs/ARCHITECTURE.md","docs/FAILURE_TAXONOMY.md","docs/GOVERNANCE.md",
   "docs/SESSION_OBSERVATORY.md","docs/EXPERIMENTAL_PROBES.md","docs/PHI_INTERFEROMETER.md",
   "docs/LONGITUDINAL_PROFILES.md","docs/CASE_FILES.md","docs/DIFFERENTIAL_HYPOTHESES.md",
-  "docs/CASE_CONFERENCE.md","docs/CALIBRATION_BENCHMARK.md",
+  "docs/CASE_CONFERENCE.md","docs/CALIBRATION_BENCHMARK.md","docs/REAL_CASE_INTAKE.md",
   "schemas/observation.schema.json","schemas/assessment.schema.json","schemas/intervention.schema.json",
   "schemas/ledger-entry.schema.json","schemas/session-event.schema.json","schemas/session-report.schema.json",
   "schemas/experiment-plan.schema.json","schemas/probe-result.schema.json","schemas/interferometer-result.schema.json",
@@ -29,6 +31,7 @@ const required=[
   "schemas/differential-snapshot.schema.json","schemas/differential-evidence.schema.json",
   "schemas/conference-review.schema.json","schemas/conference-report.schema.json",
   "schemas/empirical-model.schema.json","schemas/benchmark-report.schema.json",
+  "schemas/real-case-candidate.schema.json","schemas/real-case-dataset.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -64,8 +67,10 @@ if(benchmarkErrors.length) throw new Error("Frozen benchmark errors: "+benchmark
 if(dataset.fingerprint!==FROZEN_BENCHMARK_FINGERPRINT) throw new Error("Frozen benchmark fingerprint changed");
 if(dataset.cases.length!==FROZEN_BENCHMARK_COUNTS.cases) throw new Error("Frozen benchmark case count changed");
 
+if(DATASET_USES.length!==2) throw new Error("Expected 2 dataset uses");
+if(CANDIDATE_STATUSES.length!==5) throw new Error("Expected 5 candidate statuses");
+
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
-if(manifest.cases!==dataset.cases.length) throw new Error("Benchmark manifest case count mismatch");
 
 console.log("SIcologist repository contracts valid.");

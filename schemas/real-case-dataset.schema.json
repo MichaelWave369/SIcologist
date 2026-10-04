@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Real Case Dataset",
+  "type":"object",
+  "required":["version","kind","externalValidity","labelSemantics","cases","fingerprint"],
+  "properties":{
+    "version":{"const":"REAL_CASE_DATASET_V0.1"},
+    "kind":{"enum":["REAL_CASE_TRAINING_CANDIDATES","REAL_CASE_EVAL_QUARANTINE"]},
+    "externalValidity":{"const":"CANDIDATE"},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "cases":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
