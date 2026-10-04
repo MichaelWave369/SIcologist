@@ -12,7 +12,8 @@ SIcologist is a deterministic, model-agnostic framework for observing agent beha
 Agent session
    -> event stream
    -> derived behavioral metrics
-   -> condition assessment
+   -> universal condition assessment
+   -> longitudinal self-baseline comparison
    -> competing explanations
    -> controlled probe / shadow replay
    -> differential evidence
@@ -48,13 +49,29 @@ Agent session
 - ranked follow-up evidence
 - **Φ Interferometer** 2×2 software interaction analysis
 
-The Φ Interferometer is a software experiment primitive. It measures whether two controlled perturbations interact non-additively:
+### Rung 4 — Longitudinal Agent Profiles
+- per-agent contextual behavioral baselines
+- exact and fallback cohort scopes
+- online mean/variance/min/max statistics
+- self-deviation z-scores with variance floor protection
+- explicit profile maturity and metric coverage
+- qualified-session admission gate
+- duplicate-sample rejection
+- invalid-ledger / untrusted / critical-session baseline-poisoning protection
+- deterministic export/import for persistent profile stores
+- evaluate-before-admit workflow to prevent the current session from normalizing itself
+
+Rung 4 lets SIcologist ask two different questions:
 
 ```text
-interaction = AB - A - B + CONTROL
+Universal:
+"Does this session match a declared behavioral condition?"
+
+Longitudinal:
+"Is this session unusual for this specific agent in this context?"
 ```
 
-It does **not** imply physical waves, consciousness, or causation by itself.
+Those are deliberately separate. A behavior can be unusual for an agent without being globally bad, and globally risky without being unusual for that agent.
 
 ## Quick start
 
@@ -66,6 +83,7 @@ npm run validate
 npm run observe -- fixtures/session-loop.json
 npm run probe -- fixtures/probe-experiment.json
 npm run interferometer
+npm run profile
 ```
 
 ## Design rules
@@ -75,10 +93,12 @@ npm run interferometer
 3. Unknown is not zero.
 4. A probe result is evidence, not a causal verdict.
 5. Prefer controlled, reversible shadow experiments.
-6. Prefer the least invasive reversible intervention.
-7. Never silently cross an authority boundary.
-8. Record what changed and whether it helped.
-9. Preserve replayability.
+6. A baseline only learns from explicitly qualified evidence.
+7. Evaluate a session before admitting it into its own baseline.
+8. Prefer the least invasive reversible intervention.
+9. Never silently cross an authority boundary.
+10. Record what changed and whether it helped.
+11. Preserve replayability.
 
 See the documents in [docs/](docs/).
 

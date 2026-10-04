@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Profile Comparison",
+  "type":"object",
+  "required":["profileId","profileScope","profileContext","profileMaturity","comparedMetrics","unavailable","deviations","notable","maxAbsZ","status"],
+  "properties":{
+    "profileId":{"type":"string"},
+    "profileScope":{"type":"string"},
+    "profileContext":{"type":"object"},
+    "profileMaturity":{"type":"string"},
+    "comparedMetrics":{"type":"integer","minimum":0},
+    "unavailable":{"type":"array"},
+    "deviations":{"type":"array"},
+    "notable":{"type":"array"},
+    "maxAbsZ":{"type":["number","null"]},
+    "status":{"enum":["SELF_DEVIATION_DETECTED","WITHIN_ESTABLISHED_VARIATION"]}
+  }
+}

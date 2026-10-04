@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Longitudinal Profile",
+  "type":"object",
+  "required":["version","profileId","scope","context","contextKey","acceptedSamples","maturity","metrics","admittedSampleFingerprints","rejections"],
+  "properties":{
+    "version":{"const":"0.4.0"},
+    "profileId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "scope":{"enum":["EXACT","TASK_ANY_RUNTIME","ROLE","AGENT_GLOBAL"]},
+    "context":{"type":"object"},
+    "contextKey":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "acceptedSamples":{"type":"integer","minimum":0},
+    "maturity":{"enum":["COLD","WARM","ESTABLISHED"]},
+    "metrics":{"type":"object"},
+    "admittedSampleFingerprints":{"type":"array","items":{"type":"string","pattern":"^[a-f0-9]{64}$"}},
+    "rejections":{"type":"object"}
+  }
+}
