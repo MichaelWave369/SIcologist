@@ -17,25 +17,38 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 7. Blind Case Conference
 8. Calibration + Benchmark Lab
 9. Real-Case Evidence Intake + Dataset Builder
+10. Sealed External Evaluation Harness
 
-## Rung 9
+## Rung 10
 
-Rung 9 creates a governed path from actual agent incidents to research-dataset candidates.
+Rung 10 evaluates a frozen model against approved EVAL_QUARANTINE cases without exposing reference labels through the runner API before predictions are committed.
 
-It adds closed-case and ledger-integrity intake gates, data-minimized candidate records, immutable TRAIN_CANDIDATE or EVAL_QUARANTINE assignment, exact-source duplicate rejection, lineage and evidence split locks, blind independent adjudication, ADJUDICATED_REFERENCE labels, operator approval before promotion, complete-probe requirements, neverTrain evaluation exports, fitter refusal for evaluation-quarantine data, and deterministic dataset fingerprints.
+The protocol freezes three independent commitments:
 
-Core boundary:
+    reference-label commitment
+    model-artifact commitment
+    prediction-set commitment
 
-    real incident != automatic training example
-    adjudicated label != ground truth
-    evaluation quarantine != training data
-    operator approval != scientific validation
+Only after the prediction commitment exists can an authorized reveal score the run.
+
+The public evaluation manifest contains trial IDs, conditions, and probe outcomes. It omits adjudicated labels, raw source references, approval receipts, and raw agent identity.
+
+Every closed receipt records:
+
+    labelRevealTiming = AFTER_PREDICTION_COMMIT
+    labelSemantics = ADJUDICATED_REFERENCE
+    evaluationStatus = SEALED_REFERENCE_EVALUATION_COMPLETE
+    externalValidity = CANDIDATE
+    custodyIndependence = NOT_ESTABLISHED
+    productionStatus = NOT_VALIDATED
+
+This proves ordering and commitment integrity within the protocol. It does not prove that a genuinely independent third party held the labels.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run intake
+    npm run evaluate:sealed
 
 ## License
 

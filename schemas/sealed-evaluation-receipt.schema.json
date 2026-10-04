@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Sealed Evaluation Receipt",
+  "type":"object",
+  "required":["version","harnessId","phase","sourceDatasetFingerprint","evaluationSetFingerprint","labelCommitment","modelCommitment","model","predictionsCommitment","revealReceipt","labelRevealTiming","labelSemantics","evaluationStatus","externalValidity","custodyIndependence","productionStatus","metrics","scoredCases","integrity","fingerprint"],
+  "properties":{
+    "version":{"const":"SEALED_EVALUATION_RECEIPT_V0.1"},
+    "harnessId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "phase":{"const":"CLOSED"},
+    "labelRevealTiming":{"const":"AFTER_PREDICTION_COMMIT"},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "evaluationStatus":{"const":"SEALED_REFERENCE_EVALUATION_COMPLETE"},
+    "externalValidity":{"const":"CANDIDATE"},
+    "custodyIndependence":{"const":"NOT_ESTABLISHED"},
+    "productionStatus":{"const":"NOT_VALIDATED"},
+    "metrics":{"type":"object"},
+    "scoredCases":{"type":"array"},
+    "integrity":{"type":"object"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Sealed Evaluation Manifest",
+  "type":"object",
+  "required":["version","harnessId","phase","sourceDatasetFingerprint","evaluationSetFingerprint","labelCommitment","caseCount","cases","labelsExposed","labelSemantics","externalValidity","custodyIndependence"],
+  "properties":{
+    "version":{"const":"SEALED_EVALUATION_V0.1"},
+    "harnessId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "sourceDatasetFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "evaluationSetFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "labelCommitment":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "caseCount":{"type":"integer","minimum":1},
+    "cases":{"type":"array","minItems":1},
+    "labelsExposed":{"const":false},
+    "labelSemantics":{"const":"ADJUDICATED_REFERENCE"},
+    "externalValidity":{"const":"CANDIDATE"},
+    "custodyIndependence":{"const":"NOT_ESTABLISHED"}
+  }
+}
