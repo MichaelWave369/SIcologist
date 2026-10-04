@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Stress Candidate Selection Receipt",
+  "type":"object",
+  "required":["version","stressReportFingerprint","candidateId","candidateRank","operatorApproved","approvalReceipt","challengeContractId","executionAuthorized","fingerprint"],
+  "properties":{
+    "version":{"const":"STRESS_SELECTION_RECEIPT_V0.1"},
+    "operatorApproved":{"const":true},
+    "executionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

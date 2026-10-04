@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Stress Report",
+  "type":"object",
+  "required":["version","target","rival","conditionId","evidenceModel","calibration","externalValidity","pairPriors","scoring","candidates","recommendation","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"STRESS_LAB_V0.1"},
+    "candidates":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
