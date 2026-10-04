@@ -1,6 +1,6 @@
 {
   "name":"sicologist",
-  "version":"0.17.0",
+  "version":"0.18.0",
   "description":"Synthetic Intelligence behavioral observatory, experimental probe and governed recovery runtime",
   "type":"module",
   "private":false,
@@ -26,6 +26,7 @@
     "claims":"node examples/claim-evidence-graph.mjs",
     "challenge":"node examples/claim-challenge.mjs",
     "stress":"node examples/claim-stress-lab.mjs",
-    "campaign":"node examples/research-campaign.mjs"
+    "campaign":"node examples/research-campaign.mjs",
+    "adapt":"node examples/adaptive-campaign.mjs"
   }
 }

@@ -25,41 +25,41 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 15. Falsification + Claim Challenge Engine
 16. Claim Stress Lab + Adversarial Challenge Generator
 17. Research Campaign Planner
+18. Campaign Outcomes + Adaptive Replanning
 
-## Rung 17
+## Rung 18
 
-Rung 17 turns one target claim, multiple registered rivals, and Rung 16 stress reports into a bounded research campaign.
+Rung 18 adapts a completed Rung 17 campaign without rewriting it.
 
-The planner freezes:
+An adaptive revision records:
 
-    target claim revision
-    rival claim revisions
-    hypothesis bindings
-    stress reports
-    ranked candidate steps
-    max step count
-    estimated-cost budget
-    stop and escalation rules
+    prior tracker fingerprint
+    superseded plan fingerprint
+    completed challenge outcomes
+    target claim revision changes
+    rival claim revision changes
+    assessment transition
+    retired completed candidates
+    old-vs-new plan diff
+    newly generated campaign plan
 
-The default selection strategy first tries to cover distinct rivals with their strongest challenge, then spends remaining step/budget capacity on the strongest remaining candidates.
+Completed target/rival probe pairs are retired from the new plan by default. Retesting requires an explicit override.
 
-Every planned step retains:
+The latest claim revision is resolved by stable claim key, so a revised target or rival creates a genuinely new campaign binding rather than mutating the old one.
+
+Adaptive revisions are not active automatically. A separate operator approval receipt creates a new Rung 17 tracker.
+
+Even after activation:
 
     executionAuthorized = false
-    operatorSelectionRequired = true
-    checkpointRequiredAfterCompletion = true
 
-The campaign tracker gates every next selection. It waits for the prior challenge result, then waits for that result to be attached to the claim evidence graph before continuing.
-
-It stops or escalates when a challenge contradicts the target, the target is superseded, the next rival revision becomes stale, the claim becomes contested, or the plan is exhausted.
-
-A campaign plan never executes probes or automatically advances to the next experiment.
+Campaign revision lineage is fingerprinted and continuous.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run campaign
+    npm run adapt
 
 ## License
 

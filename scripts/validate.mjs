@@ -56,7 +56,12 @@ import {
   verifyResearchCampaignPlan,
   createResearchCampaignPlan,
   ResearchCampaignTracker,
-  validateCampaignConstants
+  validateCampaignConstants,
+  ADAPTIVE_CAMPAIGN_VERSION,
+  verifyAdaptiveCampaignRevision,
+  createAdaptiveCampaignRevision,
+  activateAdaptiveCampaignRevision,
+  adaptiveCampaignLineage
 } from "../src/index.js";
 
 const required=[
@@ -85,6 +90,7 @@ const required=[
   "schemas/claim-challenge.schema.json","schemas/claim-challenge-result.schema.json","schemas/claim-challenge-registry.schema.json",
   "schemas/claim-stress-report.schema.json","schemas/stress-selection-receipt.schema.json",
   "schemas/research-campaign-plan.schema.json","schemas/research-campaign-gate.schema.json","schemas/research-campaign-tracker.schema.json",
+  "schemas/adaptive-campaign-revision.schema.json","schemas/adaptive-campaign-activation.schema.json","schemas/adaptive-campaign-lineage.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -150,7 +156,11 @@ for(const [name,value] of Object.entries({
   verifyResearchCampaignPlan,
   createResearchCampaignPlan,
   ResearchCampaignTracker,
-  validateCampaignConstants
+  validateCampaignConstants,
+  verifyAdaptiveCampaignRevision,
+  createAdaptiveCampaignRevision,
+  activateAdaptiveCampaignRevision,
+  adaptiveCampaignLineage
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -176,6 +186,7 @@ if(CAMPAIGN_GATE_DECISIONS.length!==9) throw new Error("Expected 9 campaign gate
 normalizeCampaignPolicy(DEFAULT_CAMPAIGN_POLICY);
 const campaignErrors=validateCampaignConstants();
 if(campaignErrors.length) throw new Error("Campaign constant errors: "+campaignErrors.join(", "));
+if(ADAPTIVE_CAMPAIGN_VERSION!=="ADAPTIVE_CAMPAIGN_REVISION_V0.1") throw new Error("Unexpected adaptive campaign version");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
