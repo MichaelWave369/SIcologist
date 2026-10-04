@@ -105,7 +105,7 @@ test("private custody carries committed adjudicated references",()=>{
 test("challenge and custody fingerprints detect tampering",()=>{
   const {challengeBundle,custodyBundle}=split();
   const badChallenge=structuredClone(challengeBundle);
-  badChallenge.cases[0].outcomes.known_good_fixture=badChallenge.cases[0].outcomes.known_good_fixture==="POSITIVE"?"NEGATIVE":"POSITIVE";
+  badChallenge.cases[0].outcomes.known_good_fixture="POSITIVE";
   assert.throws(()=>createIndependentSubmission(badChallenge,{
     modelId:"m",
     modelVersion:"1",

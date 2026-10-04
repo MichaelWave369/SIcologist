@@ -45,7 +45,10 @@ export function signEvaluatorReceipt(receipt,{
 export function verifyEvaluatorSignature(receipt,signatureEnvelope,publicKeyPem){
   try{
     if(signatureEnvelope?.algorithm!=="Ed25519") return false;
-    if(signatureEnvelope?.receiptFingerprint!==receipt?.fingerprint) return false;
+    if(typeof receipt?.fingerprint!=="string") return false;
+    const {fingerprint:storedFingerprint,...receiptBody}=receipt;
+    if(fingerprint(receiptBody)!==storedFingerprint) return false;
+    if(signatureEnvelope?.receiptFingerprint!==storedFingerprint) return false;
     if(signatureEnvelope?.publicKeyFingerprint!==evaluatorPublicKeyFingerprint(publicKeyPem)) return false;
 
     const payload={
