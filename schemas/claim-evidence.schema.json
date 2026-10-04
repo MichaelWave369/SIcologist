@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Evidence",
+  "type":"object",
+  "required":["version","claimId","evidenceType","relation","artifactFingerprint","provenance","sourceLabel","note","artifactSummary","evidenceId"],
+  "properties":{
+    "version":{"const":"CLAIM_EVIDENCE_V0.1"},
+    "artifactFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "provenance":{"enum":["VERIFIED_ARTIFACT","DECLARED_FINGERPRINT"]},
+    "evidenceId":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Evidence Graph",
+  "type":"object",
+  "required":["version","nodes","edges","fingerprint"],
+  "properties":{
+    "version":{"const":"CLAIM_EVIDENCE_GRAPH_V0.1"},
+    "nodes":{"type":"array"},
+    "edges":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

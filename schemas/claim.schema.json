@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Claim Revision",
+  "type":"object",
+  "required":["version","claimKey","revision","claimType","statement","scope","qualifiers","supersedes","claimId","supersededBy","revisionReason"],
+  "properties":{
+    "version":{"const":"CLAIM_V0.1"},
+    "claimId":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "claimKey":{"type":"string","minLength":1},
+    "revision":{"type":"integer","minimum":1},
+    "statement":{"type":"string","minLength":1}
+  }
+}
