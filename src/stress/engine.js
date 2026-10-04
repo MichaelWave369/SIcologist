@@ -198,12 +198,14 @@ export function generateClaimStressReport(claimRegistry,{
       preregistered:false
     };
     return {...body,candidateId:fingerprint(body)};
-  }).sort((a,b)=>
+  }).filter(item=>item.metrics.discrimination>0).sort((a,b)=>
     b.metrics.stressScore-a.metrics.stressScore||
     b.metrics.informationGain-a.metrics.informationGain||
     b.metrics.discrimination-a.metrics.discrimination||
     a.probeId.localeCompare(b.probeId)
   ).map((item,index)=>({rank:index+1,...item}));
+
+  if(!candidates.length) throw new Error("No discriminating probes are available for the selected hypothesis pair");
 
   const body={
     version:STRESS_LAB_VERSION,
