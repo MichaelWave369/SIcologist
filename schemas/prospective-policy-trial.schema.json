@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Prospective Portfolio Policy Trial",
+  "type":"object",
+  "required":["version","policyRevisionFingerprint","baselinePolicy","baselinePolicyFingerprint","candidatePolicy","candidatePolicyFingerprint","assignmentMode","minRounds","primaryMetrics","preregistrationNote","approvalReceipt","status","assignmentEvidence","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PROSPECTIVE_POLICY_TRIAL_V0.1"},
+    "assignmentMode":{"enum":["BASELINE_ACTIVE_CANDIDATE_SHADOW","ALTERNATING_AB"]},
+    "status":{"const":"PREREGISTERED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

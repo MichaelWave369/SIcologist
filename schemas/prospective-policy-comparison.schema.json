@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Prospective Policy Comparison",
+  "type":"object",
+  "required":["version","trialProtocolFingerprint","roundIndex","roundKey","cohortFingerprint","cohort","baselinePortfolio","candidatePortfolio","comparison","assignment","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PROSPECTIVE_POLICY_COMPARISON_V0.1"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

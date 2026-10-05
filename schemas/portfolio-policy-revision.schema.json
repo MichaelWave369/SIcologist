@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Policy Revision",
+  "type":"object",
+  "required":["version","baselinePolicy","baselinePolicyFingerprint","proposedPolicy","proposedPolicyFingerprint","sourceGovernanceReviewFingerprint","revisionReason","proposerId","status","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_POLICY_REVISION_V0.1"},
+    "status":{"const":"PROPOSED_NOT_ACTIVATED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

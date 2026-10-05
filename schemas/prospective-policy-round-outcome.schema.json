@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Prospective Policy Round Outcome",
+  "type":"object",
+  "required":["version","trialProtocolFingerprint","comparisonFingerprint","roundIndex","roundKey","cohortFingerprint","assignedArm","activePortfolioFingerprint","metrics","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PROSPECTIVE_POLICY_ROUND_OUTCOME_V0.1"},
+    "assignedArm":{"enum":["BASELINE","CANDIDATE"]},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
