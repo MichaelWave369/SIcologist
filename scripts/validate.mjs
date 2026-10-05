@@ -122,7 +122,18 @@ import {
   assertConstitutionalAuthorization,
   applyConstitutionAmendment,
   activatePolicyPromotionConstitutionally,
-  rollbackActivePolicyConstitutionally
+  rollbackActivePolicyConstitutionally,
+  PRINCIPAL_KEY_REGISTRY_VERSION,
+  SIGNED_PRINCIPAL_APPROVAL_VERSION,
+  CRYPTOGRAPHIC_AUTHORIZATION_ATTESTATION_VERSION,
+  principalPublicKeyFingerprint,
+  PrincipalKeyRegistry,
+  createSignedPrincipalApproval,
+  verifySignedPrincipalApproval,
+  authorizeCryptographically,
+  verifyCryptographicAuthorizationAttestation,
+  activatePolicyPromotionCryptographically,
+  rollbackActivePolicyCryptographically
 } from "../src/index.js";
 
 const required=[
@@ -157,6 +168,7 @@ const required=[
   "schemas/portfolio-policy-revision.schema.json","schemas/prospective-policy-trial.schema.json","schemas/prospective-policy-comparison.schema.json","schemas/prospective-policy-round-outcome.schema.json","schemas/prospective-policy-trial-summary.schema.json",
   "schemas/policy-promotion-proposal.schema.json","schemas/policy-activation-receipt.schema.json","schemas/active-policy-state.schema.json","schemas/post-activation-policy-monitor.schema.json","schemas/policy-rollback-receipt.schema.json","schemas/active-policy-state-lineage.schema.json",
   "schemas/policy-constitution.schema.json","schemas/constitutional-authorization-receipt.schema.json","schemas/constitutional-authority-ledger.schema.json","schemas/constitution-amendment-proposal.schema.json",
+  "schemas/principal-key-registry.schema.json","schemas/principal-key-event.schema.json","schemas/signed-principal-approval.schema.json","schemas/cryptographic-authorization-attestation.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -266,7 +278,15 @@ for(const [name,value] of Object.entries({
   assertConstitutionalAuthorization,
   applyConstitutionAmendment,
   activatePolicyPromotionConstitutionally,
-  rollbackActivePolicyConstitutionally
+  rollbackActivePolicyConstitutionally,
+  principalPublicKeyFingerprint,
+  PrincipalKeyRegistry,
+  createSignedPrincipalApproval,
+  verifySignedPrincipalApproval,
+  authorizeCryptographically,
+  verifyCryptographicAuthorizationAttestation,
+  activatePolicyPromotionCryptographically,
+  rollbackActivePolicyCryptographically
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -314,6 +334,9 @@ if(CONSTITUTIONAL_AUTHORIZATION_VERSION!=="CONSTITUTIONAL_AUTHORIZATION_RECEIPT_
 if(AUTHORITY_DOMAINS.length!==11) throw new Error("Expected 11 authority domains");
 if(AUTHORITY_ACTIONS.length!==11) throw new Error("Expected 11 authority actions");
 if(DEFAULT_AUTHORITY_RULES.length!==11) throw new Error("Expected 11 default authority rules");
+if(PRINCIPAL_KEY_REGISTRY_VERSION!=="PRINCIPAL_KEY_REGISTRY_V0.1") throw new Error("Unexpected principal key registry version");
+if(SIGNED_PRINCIPAL_APPROVAL_VERSION!=="SIGNED_PRINCIPAL_APPROVAL_V0.1") throw new Error("Unexpected signed principal approval version");
+if(CRYPTOGRAPHIC_AUTHORIZATION_ATTESTATION_VERSION!=="CRYPTOGRAPHIC_AUTHORIZATION_ATTESTATION_V0.1") throw new Error("Unexpected cryptographic authorization attestation version");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
