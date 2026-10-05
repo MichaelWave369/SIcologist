@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Program Snapshot",
+  "type":"object",
+  "required":["version","programId","trackerFingerprint","planFingerprint","targetClaimId","campaignGateDecision","eligibleForAllocation","components","priorityScore","recommendationOnly","executionAuthorized","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_PROGRAM_V0.1"},
+    "recommendationOnly":{"const":true},
+    "executionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
