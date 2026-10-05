@@ -27,42 +27,51 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 17. Research Campaign Planner
 18. Campaign Outcomes + Adaptive Replanning
 19. Research Program Portfolio + Resource Allocation
+20. Portfolio Outcomes + Program Governance
 
-## Rung 19
+## Rung 20
 
-Rung 19 ranks the next research opportunity across multiple governed campaigns.
+Rung 20 audits what happened after a Rung 19 allocation.
 
-Each program snapshot exposes:
+A governance selection links:
 
-    information opportunity
-    evidence weakness
-    replication need
-    operator-declared importance
-    cost efficiency
-    transparent priority score
+    portfolio allocation
+    operator portfolio-selection receipt
+    exact Rung 17 campaign selection
+    exact Rung 15 challenge contract
 
-Only campaigns whose Rung 17 gate is READY_FOR_OPERATOR_SELECTION are eligible for allocation.
+An outcome is recorded only after:
 
-Waiting, stopped, stale, contested, and completed campaigns remain visible but receive no portfolio allocation.
+    the selected challenge resolves
+    its result verifies
+    the result is attached to the Rung 14 claim graph
 
-The portfolio enforces:
+The registry summarizes:
 
-    max allocated campaigns
-    shared estimated-cost budget
-    duplicate campaign rejection
-    deterministic ranking
-    explicit operator approval for choosing an allocated campaign
+    selections
+    completed outcomes
+    pending outcomes
+    completion rate
+    decisive rate
+    inconclusive rate
+    contradiction rate
+    estimated allocated/completed cost
 
-A portfolio selection receipt authorizes campaign selection only:
+Governance review may flag pending work, high inconclusive rate, or high contradiction rate.
 
-    campaignSelectionAuthorized = true
-    experimentExecutionAuthorized = false
+It never automatically changes:
+
+    portfolio weights
+    portfolio budgets
+    execution authority
+
+Observed portfolio outcomes are descriptive. They do not establish that the allocation policy caused the result or that its weights are validated.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run portfolio
+    npm run governance
 
 ## License
 

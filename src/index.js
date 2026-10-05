@@ -156,3 +156,11 @@ export {
   portfolioRecommendation,
   createPortfolioSelectionReceipt
 } from "./portfolio/engine.js";
+
+export {
+  PORTFOLIO_GOVERNANCE_VERSION,
+  DEFAULT_PORTFOLIO_GOVERNANCE_POLICY,
+  GOVERNANCE_REVIEW_FLAGS,
+  normalizePortfolioGovernancePolicy
+} from "./portfolio/governance-policy.js";
+export {PortfolioGovernanceRegistry} from "./portfolio/governance.js";
