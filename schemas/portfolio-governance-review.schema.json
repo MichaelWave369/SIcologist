@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Governance Review",
+  "type":"object",
+  "required":["version","summaryFingerprint","flags","reviewStatus","automaticWeightUpdate","automaticBudgetUpdate","automaticExecutionChange","policyRecommendation","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_GOVERNANCE_REVIEW_V0.1"},
+    "automaticWeightUpdate":{"const":false},
+    "automaticBudgetUpdate":{"const":false},
+    "automaticExecutionChange":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Governance Registry",
+  "type":"object",
+  "required":["version","policy","selections","outcomes","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_GOVERNANCE_REGISTRY_V0.1"},
+    "selections":{"type":"array"},
+    "outcomes":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
