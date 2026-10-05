@@ -30,42 +30,46 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 20. Portfolio Outcomes + Program Governance
 21. Policy Revision + Prospective A/B Governance
 22. Policy Promotion + Rollback Governance
+23. Policy Constitution + Authority Domains
 
-## Rung 22
+## Rung 23
 
-Rung 22 governs the lifecycle after a prospective policy trial.
+Rung 23 replaces the vague idea of one all-powerful operator with explicit constitutional authority.
 
-A candidate policy can be proposed for promotion only when a Rung 21 trial has:
+A constitution freezes:
 
-    met its preregistered minimum rounds
-    observed both baseline and candidate arms
-    reached HUMAN_POLICY_REVIEW_REQUIRED
+    declared principals
+    authority domains
+    action rules
+    quorum requirements
+    required prior authorizations
+    separation-of-duty constraints
 
-Promotion still does not happen automatically.
+Default policy-sensitive flow:
 
-A reviewed promotion proposal requires an explicit operator activation receipt.
+    POLICY_PROPOSAL
+        ↓ different principal
+    TRIAL_GOVERNANCE
+        ↓
+    POLICY_REVIEW (2-person quorum)
+        ↓ different activator
+    POLICY_ACTIVATION
+        ↓ different rollback authority
+    POLICY_ROLLBACK
 
-Activation preserves:
+Operational domains are also separated for portfolio selection, campaign selection, and experiment execution.
 
-    active candidate policy
-    prior baseline policy as rollback target
-    post-activation monitoring thresholds
-    a frozen governance-evidence baseline
+Holding a domain does not execute anything. Every action needs a fingerprinted constitutional authorization receipt for the exact subject artifact.
 
-That baseline prevents Rung 21 trial outcomes and earlier governance records from being counted again as post-activation monitoring evidence.
+Principal identity is declared, not cryptographically or legally established.
 
-Post-activation monitoring can recommend rollback for high inconclusive or contradiction rates, but:
-
-    rollbackAuthorized = false
-    automaticRollback = false
-
-An operator may approve a recommended or discretionary rollback. The new policy state preserves exact lineage and flips the prior policy back into the active position without deleting either policy.
+The constitution itself can only be revised through a fingerprinted amendment proposal authorized under the previous constitution.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run policy:lifecycle
+    npm run constitution
 
 ## License
 

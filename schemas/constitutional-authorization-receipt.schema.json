@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Constitutional Authorization Receipt",
+  "type":"object",
+  "required":["version","sequence","constitutionId","constitutionRevision","constitutionFingerprint","actionType","subjectFingerprint","lineageKey","rule","approvals","priorAuthorizationFingerprints","separationEvidence","actionAuthorized","actionPerformed","identityAssurance","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"CONSTITUTIONAL_AUTHORIZATION_RECEIPT_V0.1"},
+    "sequence":{"type":"integer","minimum":1},
+    "actionAuthorized":{"const":true},
+    "actionPerformed":{"const":false},
+    "identityAssurance":{"const":"DECLARED_PRINCIPAL_ONLY"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

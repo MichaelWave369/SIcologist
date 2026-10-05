@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Constitutional Authority Ledger",
+  "type":"object",
+  "required":["version","constitution","receipts","fingerprint"],
+  "properties":{
+    "version":{"const":"CONSTITUTIONAL_AUTHORITY_LEDGER_V0.1"},
+    "receipts":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

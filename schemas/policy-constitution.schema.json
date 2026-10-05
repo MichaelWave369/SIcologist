@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Policy Constitution",
+  "type":"object",
+  "required":["version","constitutionId","revision","previousConstitutionFingerprint","amendmentReason","principals","rules","identityAssurance","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"POLICY_CONSTITUTION_V0.1"},
+    "revision":{"type":"integer","minimum":1},
+    "identityAssurance":{"const":"DECLARED_PRINCIPAL_ONLY"},
+    "principals":{"type":"array","minItems":1},
+    "rules":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

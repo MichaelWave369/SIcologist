@@ -201,3 +201,24 @@ export {
   verifyPolicyRollbackReceipt,
   activePolicyStateLineage
 } from "./portfolio/policy-lifecycle.js";
+
+export {
+  POLICY_CONSTITUTION_VERSION,
+  CONSTITUTIONAL_AUTHORIZATION_VERSION,
+  AUTHORITY_DOMAINS,
+  AUTHORITY_ACTIONS,
+  DEFAULT_AUTHORITY_RULES,
+  createPolicyConstitution,
+  verifyPolicyConstitution,
+  authorityRule,
+  createConstitutionAmendmentProposal,
+  verifyConstitutionAmendmentProposal
+} from "./authority/constitution.js";
+export {
+  ConstitutionalAuthorityLedger,
+  verifyConstitutionalAuthorizationReceipt,
+  assertConstitutionalAuthorization,
+  applyConstitutionAmendment,
+  activatePolicyPromotionConstitutionally,
+  rollbackActivePolicyConstitutionally
+} from "./authority/ledger.js";
