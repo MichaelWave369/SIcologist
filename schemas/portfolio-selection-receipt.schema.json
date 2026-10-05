@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Selection Receipt",
+  "type":"object",
+  "required":["version","portfolioFingerprint","programId","allocationId","recommendedStepId","operatorApproved","approvalReceipt","campaignSelectionAuthorized","experimentExecutionAuthorized","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_SELECTION_RECEIPT_V0.1"},
+    "operatorApproved":{"const":true},
+    "campaignSelectionAuthorized":{"const":true},
+    "experimentExecutionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

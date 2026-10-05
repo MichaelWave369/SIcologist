@@ -138,3 +138,21 @@ export {
   activateAdaptiveCampaignRevision,
   adaptiveCampaignLineage
 } from "./campaign/adaptive.js";
+
+export {
+  PORTFOLIO_VERSION,
+  DEFAULT_PORTFOLIO_WEIGHTS,
+  DEFAULT_PORTFOLIO_POLICY,
+  EVIDENCE_WEAKNESS,
+  REPLICATION_NEED,
+  validatePortfolioWeights,
+  normalizePortfolioPolicy,
+  evidenceWeaknessForGrade,
+  replicationNeedForGrade
+} from "./portfolio/policy.js";
+export {
+  verifyResearchPortfolio,
+  createResearchPortfolio,
+  portfolioRecommendation,
+  createPortfolioSelectionReceipt
+} from "./portfolio/engine.js";

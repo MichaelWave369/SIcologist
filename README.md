@@ -26,40 +26,43 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 16. Claim Stress Lab + Adversarial Challenge Generator
 17. Research Campaign Planner
 18. Campaign Outcomes + Adaptive Replanning
+19. Research Program Portfolio + Resource Allocation
 
-## Rung 18
+## Rung 19
 
-Rung 18 adapts a completed Rung 17 campaign without rewriting it.
+Rung 19 ranks the next research opportunity across multiple governed campaigns.
 
-An adaptive revision records:
+Each program snapshot exposes:
 
-    prior tracker fingerprint
-    superseded plan fingerprint
-    completed challenge outcomes
-    target claim revision changes
-    rival claim revision changes
-    assessment transition
-    retired completed candidates
-    old-vs-new plan diff
-    newly generated campaign plan
+    information opportunity
+    evidence weakness
+    replication need
+    operator-declared importance
+    cost efficiency
+    transparent priority score
 
-Completed target/rival probe pairs are retired from the new plan by default. Retesting requires an explicit override.
+Only campaigns whose Rung 17 gate is READY_FOR_OPERATOR_SELECTION are eligible for allocation.
 
-The latest claim revision is resolved by stable claim key, so a revised target or rival creates a genuinely new campaign binding rather than mutating the old one.
+Waiting, stopped, stale, contested, and completed campaigns remain visible but receive no portfolio allocation.
 
-Adaptive revisions are not active automatically. A separate operator approval receipt creates a new Rung 17 tracker.
+The portfolio enforces:
 
-Even after activation:
+    max allocated campaigns
+    shared estimated-cost budget
+    duplicate campaign rejection
+    deterministic ranking
+    explicit operator approval for choosing an allocated campaign
 
-    executionAuthorized = false
+A portfolio selection receipt authorizes campaign selection only:
 
-Campaign revision lineage is fingerprinted and continuous.
+    campaignSelectionAuthorized = true
+    experimentExecutionAuthorized = false
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run adapt
+    npm run portfolio
 
 ## License
 
