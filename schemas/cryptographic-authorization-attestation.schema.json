@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Cryptographic Authorization Attestation",
+  "type":"object",
+  "required":["version","constitutionFingerprint","keyRegistryId","keyRegistrySequence","keyRegistryFingerprint","actionType","subjectFingerprint","lineageKey","constitutionalReceipt","signedApprovals","identityAssurance","actionAuthorized","actionPerformed","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"CRYPTOGRAPHIC_AUTHORIZATION_ATTESTATION_V0.1"},
+    "identityAssurance":{"const":"PUBLIC_KEY_POSSESSION"},
+    "actionAuthorized":{"const":true},
+    "actionPerformed":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

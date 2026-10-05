@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Principal Key Registry",
+  "type":"object",
+  "required":["version","registryId","constitutionFingerprint","sequence","events","fingerprint"],
+  "properties":{
+    "version":{"const":"PRINCIPAL_KEY_REGISTRY_V0.1"},
+    "sequence":{"type":"integer","minimum":0},
+    "events":{"type":"array"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

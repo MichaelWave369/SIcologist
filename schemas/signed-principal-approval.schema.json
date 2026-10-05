@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Signed Principal Approval",
+  "type":"object",
+  "required":["version","registryId","registrySequence","registryFingerprint","constitutionFingerprint","principalId","keyId","keyGeneration","publicKeyFingerprint","actionType","subjectFingerprint","lineageKey","identityAssurance","algorithm","signature","fingerprint"],
+  "properties":{
+    "version":{"const":"SIGNED_PRINCIPAL_APPROVAL_V0.1"},
+    "identityAssurance":{"const":"PUBLIC_KEY_POSSESSION"},
+    "algorithm":{"const":"Ed25519"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
