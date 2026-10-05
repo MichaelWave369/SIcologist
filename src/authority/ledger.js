@@ -49,6 +49,8 @@ export function verifyConstitutionalAuthorizationReceipt(constitution,receipt){
     receipt.constitutionRevision!==constitution.revision||
     receipt.actionAuthorized!==true||
     receipt.actionPerformed!==false||
+    !Number.isInteger(receipt.sequence)||
+    receipt.sequence<1||
     receipt.identityAssurance!=="DECLARED_PRINCIPAL_ONLY"
   ) return false;
 
@@ -110,7 +112,7 @@ export class ConstitutionalAuthorityLedger{
   receipts(){
     return [...this.#receipts.values()]
       .map(clone)
-      .sort((a,b)=>a.fingerprint.localeCompare(b.fingerprint));
+      .sort((a,b)=>a.sequence-b.sequence||a.fingerprint.localeCompare(b.fingerprint));
   }
 
   #lineageReceipts(lineageKey){
@@ -202,6 +204,7 @@ export class ConstitutionalAuthorityLedger{
 
     const body={
       version:CONSTITUTIONAL_AUTHORIZATION_VERSION,
+      sequence:this.#receipts.size+1,
       constitutionId:this.#constitution.constitutionId,
       constitutionRevision:this.#constitution.revision,
       constitutionFingerprint:this.#constitution.fingerprint,
@@ -245,10 +248,67 @@ export class ConstitutionalAuthorityLedger{
       throw new Error("Constitutional authority ledger fingerprint mismatch");
     }
     const ledger=new ConstitutionalAuthorityLedger(snapshot.constitution);
-    for(const receipt of snapshot.receipts??[]){
+    const receipts=[...(snapshot.receipts??[])].sort((a,b)=>a.sequence-b.sequence);
+    const accepted=[];
+    const duplicateKeys=new Set();
+
+    for(let i=0;i<receipts.length;i++){
+      const receipt=receipts[i];
       if(!verifyConstitutionalAuthorizationReceipt(snapshot.constitution,receipt)){
         throw new Error("Constitutional authorization receipt fingerprint mismatch");
       }
+      if(receipt.sequence!==i+1){
+        throw new Error("Constitutional authorization sequence is not contiguous");
+      }
+
+      const rule=authorityRule(snapshot.constitution,receipt.actionType);
+      const lineagePrior=accepted.filter(item=>item.lineageKey===receipt.lineageKey);
+      const expectedPrior=[];
+      for(const requiredAction of rule.requiresPriorActions){
+        const matches=lineagePrior.filter(item=>item.actionType===requiredAction);
+        if(!matches.length){
+          throw new Error("Restored authorization missing required prior action: "+requiredAction);
+        }
+        expectedPrior.push(...matches.map(item=>item.fingerprint));
+      }
+      if(
+        JSON.stringify([...new Set(expectedPrior)].sort())!==
+        JSON.stringify(receipt.priorAuthorizationFingerprints)
+      ){
+        throw new Error("Restored authorization prior evidence mismatch");
+      }
+
+      const expectedSeparation=[];
+      const currentIds=new Set(receipt.approvals.map(item=>item.principalId));
+      for(const separatedAction of rule.separateFromActions){
+        const matches=lineagePrior.filter(item=>item.actionType===separatedAction);
+        const priorPrincipalIds=[...new Set(
+          matches.flatMap(item=>item.approvals.map(approval=>approval.principalId))
+        )].sort();
+        const overlap=priorPrincipalIds.filter(id=>currentIds.has(id));
+        if(overlap.length){
+          throw new Error("Restored authorization violates separation of duty");
+        }
+        expectedSeparation.push({
+          actionType:separatedAction,
+          priorPrincipalIds,
+          overlap:[]
+        });
+      }
+      if(JSON.stringify(expectedSeparation)!==JSON.stringify(receipt.separationEvidence)){
+        throw new Error("Restored authorization separation evidence mismatch");
+      }
+
+      const duplicateKey=[
+        receipt.actionType,
+        receipt.subjectFingerprint,
+        receipt.lineageKey
+      ].join(":");
+      if(duplicateKeys.has(duplicateKey)){
+        throw new Error("DUPLICATE_CONSTITUTIONAL_AUTHORIZATION");
+      }
+      duplicateKeys.add(duplicateKey);
+      accepted.push(receipt);
       ledger.#receipts.set(receipt.fingerprint,clone(receipt));
     }
     return ledger;

@@ -164,7 +164,7 @@ test("constitution is deterministic, fingerprinted, and covers the authority cat
 
 test("constitution rejects an unfulfillable quorum",()=>{
   const rules=DEFAULT_AUTHORITY_RULES.map(rule=>
-    rule.actionType==="POLICY_REVIEW"
+    rule.actionType==="REVIEW_POLICY_PROMOTION"
       ?{...rule,quorum:99}
       :rule
   );
@@ -396,6 +396,41 @@ test("ledger export restore preserves constitutional receipts",()=>{
   const snapshot=ledger.export();
   const restored=ConstitutionalAuthorityLedger.fromSnapshot(snapshot);
   assert.deepEqual(restored.export(),snapshot);
+});
+
+test("restored ledger rejects semantically forged missing-prerequisite history",()=>{
+  const constitution=constitutionFixture();
+  const ledger=new ConstitutionalAuthorityLedger(constitution);
+  ledger.authorize({
+    actionType:"PROPOSE_POLICY_REVISION",
+    subjectFingerprint:"1".repeat(64),
+    lineageKey:"restore-lineage",
+    approvals:[approval("proposer")]
+  });
+  ledger.authorize({
+    actionType:"APPROVE_POLICY_TRIAL",
+    subjectFingerprint:"2".repeat(64),
+    lineageKey:"restore-lineage",
+    approvals:[approval("trial")]
+  });
+
+  const snapshot=ledger.export();
+  const forged=structuredClone(snapshot);
+  const trialReceipt=forged.receipts[1];
+  const trialBody={...trialReceipt,sequence:1,priorAuthorizationFingerprints:[]};
+  delete trialBody.fingerprint;
+  const forgedTrial={...trialBody,fingerprint:fingerprint(trialBody)};
+  const forgedBody={
+    version:forged.version,
+    constitution:forged.constitution,
+    receipts:[forgedTrial]
+  };
+  const forgedSnapshot={...forgedBody,fingerprint:fingerprint(forgedBody)};
+
+  assert.throws(
+    ()=>ConstitutionalAuthorityLedger.fromSnapshot(forgedSnapshot),
+    /missing required prior action/
+  );
 });
 
 test("tampered authorization receipt fails verification",()=>{
