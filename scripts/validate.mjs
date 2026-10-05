@@ -90,7 +90,23 @@ import {
   verifyProspectivePolicyComparison,
   recordProspectivePolicyRoundOutcome,
   verifyProspectivePolicyRoundOutcome,
-  summarizeProspectivePolicyTrial
+  summarizeProspectivePolicyTrial,
+  POLICY_PROMOTION_VERSION,
+  ACTIVE_POLICY_STATE_VERSION,
+  POLICY_MONITOR_VERSION,
+  POLICY_ROLLBACK_VERSION,
+  DEFAULT_POST_ACTIVATION_POLICY,
+  normalizePostActivationPolicy,
+  createPolicyPromotionProposal,
+  verifyPolicyPromotionProposal,
+  activatePolicyPromotion,
+  verifyPolicyActivationReceipt,
+  verifyActivePolicyState,
+  monitorActivePolicy,
+  verifyPolicyMonitorReport,
+  rollbackActivePolicy,
+  verifyPolicyRollbackReceipt,
+  activePolicyStateLineage
 } from "../src/index.js";
 
 const required=[
@@ -123,6 +139,7 @@ const required=[
   "schemas/research-portfolio.schema.json","schemas/portfolio-program.schema.json","schemas/portfolio-selection-receipt.schema.json",
   "schemas/portfolio-governance-selection.schema.json","schemas/portfolio-governance-outcome.schema.json","schemas/portfolio-governance-review.schema.json","schemas/portfolio-governance-registry.schema.json",
   "schemas/portfolio-policy-revision.schema.json","schemas/prospective-policy-trial.schema.json","schemas/prospective-policy-comparison.schema.json","schemas/prospective-policy-round-outcome.schema.json","schemas/prospective-policy-trial-summary.schema.json",
+  "schemas/policy-promotion-proposal.schema.json","schemas/policy-activation-receipt.schema.json","schemas/active-policy-state.schema.json","schemas/post-activation-policy-monitor.schema.json","schemas/policy-rollback-receipt.schema.json","schemas/active-policy-state-lineage.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -210,7 +227,18 @@ for(const [name,value] of Object.entries({
   verifyProspectivePolicyComparison,
   recordProspectivePolicyRoundOutcome,
   verifyProspectivePolicyRoundOutcome,
-  summarizeProspectivePolicyTrial
+  summarizeProspectivePolicyTrial,
+  normalizePostActivationPolicy,
+  createPolicyPromotionProposal,
+  verifyPolicyPromotionProposal,
+  activatePolicyPromotion,
+  verifyPolicyActivationReceipt,
+  verifyActivePolicyState,
+  monitorActivePolicy,
+  verifyPolicyMonitorReport,
+  rollbackActivePolicy,
+  verifyPolicyRollbackReceipt,
+  activePolicyStateLineage
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -248,6 +276,11 @@ if(POLICY_TRIAL_VERSION!=="PROSPECTIVE_POLICY_TRIAL_V0.1") throw new Error("Unex
 if(POLICY_COMPARISON_VERSION!=="PROSPECTIVE_POLICY_COMPARISON_V0.1") throw new Error("Unexpected policy comparison version");
 if(POLICY_ROUND_OUTCOME_VERSION!=="PROSPECTIVE_POLICY_ROUND_OUTCOME_V0.1") throw new Error("Unexpected policy round outcome version");
 if(POLICY_TRIAL_ASSIGNMENT_MODES.length!==2) throw new Error("Expected 2 policy trial assignment modes");
+if(POLICY_PROMOTION_VERSION!=="POLICY_PROMOTION_PROPOSAL_V0.1") throw new Error("Unexpected policy promotion version");
+if(ACTIVE_POLICY_STATE_VERSION!=="ACTIVE_PORTFOLIO_POLICY_STATE_V0.1") throw new Error("Unexpected active policy state version");
+if(POLICY_MONITOR_VERSION!=="POST_ACTIVATION_POLICY_MONITOR_V0.1") throw new Error("Unexpected policy monitor version");
+if(POLICY_ROLLBACK_VERSION!=="POLICY_ROLLBACK_RECEIPT_V0.1") throw new Error("Unexpected policy rollback version");
+normalizePostActivationPolicy(DEFAULT_POST_ACTIVATION_POLICY);
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");

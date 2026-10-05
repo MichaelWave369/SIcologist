@@ -44,7 +44,7 @@ function governanceSnapshot(value){
   return snapshot;
 }
 
-function normalizeMonitoringPolicy(policy={}){
+export function normalizePostActivationPolicy(policy={}){
   const value={...DEFAULT_POST_ACTIVATION_POLICY,...policy};
   if(!Number.isInteger(value.minCompletedOutcomes)||value.minCompletedOutcomes<1){
     throw new TypeError("minCompletedOutcomes must be an integer >= 1");
@@ -111,7 +111,7 @@ export function createPolicyPromotionProposal(policyRevision,trialProtocol,trial
     throw new TypeError("riskAcceptance is required");
   }
 
-  const monitor=normalizeMonitoringPolicy(monitoringPolicy);
+  const monitor=normalizePostActivationPolicy(monitoringPolicy);
   const baseline=normalizePortfolioPolicy(policyRevision.baselinePolicy);
   const candidate=normalizePortfolioPolicy(policyRevision.proposedPolicy);
 
@@ -205,6 +205,15 @@ export function activatePolicyPromotion(proposal,governanceRegistry,{
     state,
     activationReceipt:{...receiptBody,fingerprint:fingerprint(receiptBody)}
   };
+}
+
+export function verifyPolicyActivationReceipt(value){
+  return Boolean(
+    value?.version==="POLICY_ACTIVATION_RECEIPT_V0.1"&&
+    verifyFingerprint(value)&&
+    value.operatorApproved===true&&
+    value.experimentExecutionAuthorized===false
+  );
 }
 
 export function verifyActivePolicyState(value){
@@ -312,6 +321,15 @@ export function monitorActivePolicy(state,governanceRegistry){
   return {...body,fingerprint:fingerprint(body)};
 }
 
+export function verifyPolicyMonitorReport(value){
+  return Boolean(
+    value?.version===POLICY_MONITOR_VERSION&&
+    verifyFingerprint(value)&&
+    value.rollbackAuthorized===false&&
+    value.automaticRollback===false
+  );
+}
+
 export function rollbackActivePolicy(state,monitorReport,governanceRegistry,{
   operatorApproved=false,
   approvalReceipt=null,
@@ -321,8 +339,7 @@ export function rollbackActivePolicy(state,monitorReport,governanceRegistry,{
     throw new Error("Active policy state fingerprint mismatch");
   }
   if(
-    monitorReport?.version!==POLICY_MONITOR_VERSION||
-    !verifyFingerprint(monitorReport)||
+    !verifyPolicyMonitorReport(monitorReport)||
     monitorReport.activePolicyStateFingerprint!==state.fingerprint
   ){
     throw new Error("Policy monitor report fingerprint mismatch");
@@ -384,6 +401,15 @@ export function rollbackActivePolicy(state,monitorReport,governanceRegistry,{
     state:nextState,
     rollbackReceipt:{...receiptBody,fingerprint:fingerprint(receiptBody)}
   };
+}
+
+export function verifyPolicyRollbackReceipt(value){
+  return Boolean(
+    value?.version===POLICY_ROLLBACK_VERSION&&
+    verifyFingerprint(value)&&
+    value.operatorApproved===true&&
+    value.experimentExecutionAuthorized===false
+  );
 }
 
 export function activePolicyStateLineage(states){

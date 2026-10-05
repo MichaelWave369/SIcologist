@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Active Policy State Lineage",
+  "type":"object",
+  "required":["version","generationCount","states","fingerprint"],
+  "properties":{
+    "version":{"const":"ACTIVE_POLICY_STATE_LINEAGE_V0.1"},
+    "generationCount":{"type":"integer","minimum":1},
+    "states":{"type":"array","minItems":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

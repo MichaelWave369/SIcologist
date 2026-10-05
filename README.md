@@ -29,41 +29,43 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 19. Research Program Portfolio + Resource Allocation
 20. Portfolio Outcomes + Program Governance
 21. Policy Revision + Prospective A/B Governance
+22. Policy Promotion + Rollback Governance
 
-## Rung 21
+## Rung 22
 
-Rung 21 evaluates proposed portfolio-policy revisions prospectively.
+Rung 22 governs the lifecycle after a prospective policy trial.
 
-A policy revision must be justified by a fingerprinted Rung 20 governance review and remains:
+A candidate policy can be proposed for promotion only when a Rung 21 trial has:
 
-    PROPOSED_NOT_ACTIVATED
+    met its preregistered minimum rounds
+    observed both baseline and candidate arms
+    reached HUMAN_POLICY_REVIEW_REQUIRED
 
-A prospective trial freezes:
+Promotion still does not happen automatically.
 
-    baseline policy
-    candidate policy
-    assignment mode
-    minimum rounds
-    primary evaluation metrics
+A reviewed promotion proposal requires an explicit operator activation receipt.
 
-Every trial round evaluates both policies on the exact same frozen campaign cohort.
+Activation preserves:
 
-One policy arm is active for that round. The other remains shadow-only.
+    active candidate policy
+    prior baseline policy as rollback target
+    post-activation monitoring thresholds
+    a frozen governance-evidence baseline
 
-Supported assignment modes:
+That baseline prevents Rung 21 trial outcomes and earlier governance records from being counted again as post-activation monitoring evidence.
 
-    BASELINE_ACTIVE_CANDIDATE_SHADOW
-    ALTERNATING_AB
+Post-activation monitoring can recommend rollback for high inconclusive or contradiction rates, but:
 
-Alternating assignment is deterministic, not randomized, so causal superiority remains NOT_ESTABLISHED.
+    rollbackAuthorized = false
+    automaticRollback = false
 
-Future Rung 20 governance outcomes can be attached only to the active arm. Trial summaries never automatically promote or activate the candidate policy.
+An operator may approve a recommended or discretionary rollback. The new policy state preserves exact lineage and flips the prior policy back into the active position without deleting either policy.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run policy:trial
+    npm run policy:lifecycle
 
 ## License
 
