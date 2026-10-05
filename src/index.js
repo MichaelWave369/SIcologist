@@ -130,3 +130,11 @@ export {
   ResearchCampaignTracker,
   validateCampaignConstants
 } from "./campaign/planner.js";
+
+export {
+  ADAPTIVE_CAMPAIGN_VERSION,
+  verifyAdaptiveCampaignRevision,
+  createAdaptiveCampaignRevision,
+  activateAdaptiveCampaignRevision,
+  adaptiveCampaignLineage
+} from "./campaign/adaptive.js";

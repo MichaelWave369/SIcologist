@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Adaptive Campaign Revision",
+  "type":"object",
+  "required":["version","revisionNumber","rootPlanFingerprint","supersedesPlanFingerprint","supersedesRevisionFingerprint","priorTrackerFingerprint","revisionReason","triggers","assessmentTransition","retiredCompletedCandidates","allowRetestCompleted","planDiff","nextPlan","activation","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"ADAPTIVE_CAMPAIGN_REVISION_V0.1"},
+    "revisionNumber":{"type":"integer","minimum":2},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

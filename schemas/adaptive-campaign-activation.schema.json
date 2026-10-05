@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Adaptive Campaign Activation Receipt",
+  "type":"object",
+  "required":["version","revisionFingerprint","revisionNumber","nextPlanFingerprint","operatorApproved","approvalReceipt","activated","executionAuthorized","fingerprint"],
+  "properties":{
+    "version":{"const":"ADAPTIVE_CAMPAIGN_ACTIVATION_V0.1"},
+    "operatorApproved":{"const":true},
+    "activated":{"const":true},
+    "executionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

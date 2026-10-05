@@ -25,6 +25,31 @@ function currentClaim(claimRegistry,claimId,label){
   return claim;
 }
 
+function cleanExclusions(exclusions=[]){
+  if(!Array.isArray(exclusions)) throw new TypeError("exclusions must be an array");
+  const seen=new Set();
+  return exclusions.map((item,index)=>{
+    if(typeof item?.rivalClaimKey!=="string"||!item.rivalClaimKey.trim()){
+      throw new TypeError("exclusions["+index+"].rivalClaimKey is required");
+    }
+    if(typeof item?.probeId!=="string"||!item.probeId.trim()){
+      throw new TypeError("exclusions["+index+"].probeId is required");
+    }
+    const normalized={
+      rivalClaimKey:item.rivalClaimKey.trim(),
+      probeId:item.probeId.trim(),
+      reason:typeof item.reason==="string"?item.reason.trim():""
+    };
+    const key=normalized.rivalClaimKey+":"+normalized.probeId;
+    if(seen.has(key)) throw new Error("Duplicate campaign exclusion");
+    seen.add(key);
+    return normalized;
+  }).sort((a,b)=>
+    a.rivalClaimKey.localeCompare(b.rivalClaimKey)||
+    a.probeId.localeCompare(b.probeId)
+  );
+}
+
 function cleanBindings(rivals){
   if(!Array.isArray(rivals)||!rivals.length) throw new TypeError("rivals must be a non-empty array");
   return rivals.map((item,index)=>{
@@ -85,7 +110,8 @@ export function createResearchCampaignPlan(claimRegistry,{
   targetClaimId,
   rivals,
   policy={},
-  title=""
+  title="",
+  exclusions=[]
 }){
   const target=currentClaim(claimRegistry,targetClaimId,"target");
   const assessment=claimRegistry.assessClaim(targetClaimId);
@@ -93,6 +119,10 @@ export function createResearchCampaignPlan(claimRegistry,{
 
   const resolvedPolicy=normalizeCampaignPolicy(policy);
   const bindings=cleanBindings(rivals);
+  const normalizedExclusions=cleanExclusions(exclusions);
+  const exclusionKeys=new Set(
+    normalizedExclusions.map(item=>item.rivalClaimKey+":"+item.probeId)
+  );
   const rivalIds=new Set();
 
   const stressReports=bindings.map(binding=>{
@@ -114,7 +144,9 @@ export function createResearchCampaignPlan(claimRegistry,{
     });
   });
 
-  const pool=buildSelectionPool(stressReports);
+  const pool=buildSelectionPool(stressReports).filter(item=>
+    !exclusionKeys.has(item.stressReport.rival.claimKey+":"+item.candidate.probeId)
+  );
   const steps=[];
   let totalCost=0;
   const selectedCandidateKeys=new Set();
@@ -160,6 +192,7 @@ export function createResearchCampaignPlan(claimRegistry,{
     },
     initialAssessment:assessment,
     policy:clone(resolvedPolicy),
+    exclusions:clone(normalizedExclusions),
     selectionStrategy:resolvedPolicy.selectionStrategy,
     stressReports:stressReports.map(clone).sort((a,b)=>a.rival.claimId.localeCompare(b.rival.claimId)),
     steps,
