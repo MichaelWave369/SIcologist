@@ -215,14 +215,14 @@ test("summary keeps pending and completed allocations separate",()=>{
   const registry=new PortfolioGovernanceRegistry();
   const first=selectProgram(base,registry,"program-1");
   selectProgram(base,registry,"program-2");
-  resolve(base,registry,first,"WEAKENED");
+  resolve(base,registry,first,"SURVIVED_CHALLENGE");
 
   const summary=registry.summary();
   assert.equal(summary.selectionCount,2);
   assert.equal(summary.completedOutcomeCount,1);
   assert.equal(summary.pendingOutcomeCount,1);
   assert.equal(summary.completionRate,.5);
-  assert.equal(summary.outcomeCounts.WEAKENED,1);
+  assert.equal(summary.outcomeCounts.SURVIVED_CHALLENGE,1);
   assert.equal(summary.pendingSelections.length,1);
 });
 
