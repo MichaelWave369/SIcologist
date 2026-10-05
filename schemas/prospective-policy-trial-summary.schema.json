@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Prospective Policy Trial Summary",
+  "type":"object",
+  "required":["version","trialProtocolFingerprint","completedRoundCount","minRoundsRequired","minRoundsMet","baseline","candidate","deltas","primaryMetrics","evaluationStatus","candidatePromotionAuthorized","automaticPolicyActivation","causalStatus","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PROSPECTIVE_POLICY_TRIAL_SUMMARY_V0.1"},
+    "evaluationStatus":{"enum":["INSUFFICIENT_PROSPECTIVE_EVIDENCE","SHADOW_COMPARISON_ONLY","HUMAN_POLICY_REVIEW_REQUIRED"]},
+    "candidatePromotionAuthorized":{"const":false},
+    "automaticPolicyActivation":{"const":false},
+    "causalStatus":{"const":"NOT_ESTABLISHED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

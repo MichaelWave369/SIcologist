@@ -75,7 +75,22 @@ import {
   DEFAULT_PORTFOLIO_GOVERNANCE_POLICY,
   GOVERNANCE_REVIEW_FLAGS,
   normalizePortfolioGovernancePolicy,
-  PortfolioGovernanceRegistry
+  PortfolioGovernanceRegistry,
+  POLICY_REVISION_VERSION,
+  POLICY_TRIAL_VERSION,
+  POLICY_COMPARISON_VERSION,
+  POLICY_ROUND_OUTCOME_VERSION,
+  POLICY_TRIAL_ASSIGNMENT_MODES,
+  createPortfolioPolicyRevision,
+  verifyPortfolioPolicyRevision,
+  createProspectivePolicyTrialProtocol,
+  verifyProspectivePolicyTrialProtocol,
+  policyTrialAssignment,
+  createProspectivePolicyComparison,
+  verifyProspectivePolicyComparison,
+  recordProspectivePolicyRoundOutcome,
+  verifyProspectivePolicyRoundOutcome,
+  summarizeProspectivePolicyTrial
 } from "../src/index.js";
 
 const required=[
@@ -107,6 +122,7 @@ const required=[
   "schemas/adaptive-campaign-revision.schema.json","schemas/adaptive-campaign-activation.schema.json","schemas/adaptive-campaign-lineage.schema.json",
   "schemas/research-portfolio.schema.json","schemas/portfolio-program.schema.json","schemas/portfolio-selection-receipt.schema.json",
   "schemas/portfolio-governance-selection.schema.json","schemas/portfolio-governance-outcome.schema.json","schemas/portfolio-governance-review.schema.json","schemas/portfolio-governance-registry.schema.json",
+  "schemas/portfolio-policy-revision.schema.json","schemas/prospective-policy-trial.schema.json","schemas/prospective-policy-comparison.schema.json","schemas/prospective-policy-round-outcome.schema.json","schemas/prospective-policy-trial-summary.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -184,7 +200,17 @@ for(const [name,value] of Object.entries({
   portfolioRecommendation,
   createPortfolioSelectionReceipt,
   normalizePortfolioGovernancePolicy,
-  PortfolioGovernanceRegistry
+  PortfolioGovernanceRegistry,
+  createPortfolioPolicyRevision,
+  verifyPortfolioPolicyRevision,
+  createProspectivePolicyTrialProtocol,
+  verifyProspectivePolicyTrialProtocol,
+  policyTrialAssignment,
+  createProspectivePolicyComparison,
+  verifyProspectivePolicyComparison,
+  recordProspectivePolicyRoundOutcome,
+  verifyProspectivePolicyRoundOutcome,
+  summarizeProspectivePolicyTrial
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -217,6 +243,11 @@ normalizePortfolioPolicy(DEFAULT_PORTFOLIO_POLICY);
 if(PORTFOLIO_GOVERNANCE_VERSION!=="PORTFOLIO_GOVERNANCE_V0.1") throw new Error("Unexpected portfolio governance version");
 if(GOVERNANCE_REVIEW_FLAGS.length!==3) throw new Error("Expected 3 governance review flags");
 normalizePortfolioGovernancePolicy(DEFAULT_PORTFOLIO_GOVERNANCE_POLICY);
+if(POLICY_REVISION_VERSION!=="PORTFOLIO_POLICY_REVISION_V0.1") throw new Error("Unexpected policy revision version");
+if(POLICY_TRIAL_VERSION!=="PROSPECTIVE_POLICY_TRIAL_V0.1") throw new Error("Unexpected policy trial version");
+if(POLICY_COMPARISON_VERSION!=="PROSPECTIVE_POLICY_COMPARISON_V0.1") throw new Error("Unexpected policy comparison version");
+if(POLICY_ROUND_OUTCOME_VERSION!=="PROSPECTIVE_POLICY_ROUND_OUTCOME_V0.1") throw new Error("Unexpected policy round outcome version");
+if(POLICY_TRIAL_ASSIGNMENT_MODES.length!==2) throw new Error("Expected 2 policy trial assignment modes");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
