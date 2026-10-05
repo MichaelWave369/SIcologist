@@ -28,50 +28,42 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 18. Campaign Outcomes + Adaptive Replanning
 19. Research Program Portfolio + Resource Allocation
 20. Portfolio Outcomes + Program Governance
+21. Policy Revision + Prospective A/B Governance
 
-## Rung 20
+## Rung 21
 
-Rung 20 audits what happened after a Rung 19 allocation.
+Rung 21 evaluates proposed portfolio-policy revisions prospectively.
 
-A governance selection links:
+A policy revision must be justified by a fingerprinted Rung 20 governance review and remains:
 
-    portfolio allocation
-    operator portfolio-selection receipt
-    exact Rung 17 campaign selection
-    exact Rung 15 challenge contract
+    PROPOSED_NOT_ACTIVATED
 
-An outcome is recorded only after:
+A prospective trial freezes:
 
-    the selected challenge resolves
-    its result verifies
-    the result is attached to the Rung 14 claim graph
+    baseline policy
+    candidate policy
+    assignment mode
+    minimum rounds
+    primary evaluation metrics
 
-The registry summarizes:
+Every trial round evaluates both policies on the exact same frozen campaign cohort.
 
-    selections
-    completed outcomes
-    pending outcomes
-    completion rate
-    decisive rate
-    inconclusive rate
-    contradiction rate
-    estimated allocated/completed cost
+One policy arm is active for that round. The other remains shadow-only.
 
-Governance review may flag pending work, high inconclusive rate, or high contradiction rate.
+Supported assignment modes:
 
-It never automatically changes:
+    BASELINE_ACTIVE_CANDIDATE_SHADOW
+    ALTERNATING_AB
 
-    portfolio weights
-    portfolio budgets
-    execution authority
+Alternating assignment is deterministic, not randomized, so causal superiority remains NOT_ESTABLISHED.
 
-Observed portfolio outcomes are descriptive. They do not establish that the allocation policy caused the result or that its weights are validated.
+Future Rung 20 governance outcomes can be attached only to the active arm. Trial summaries never automatically promote or activate the candidate policy.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run governance
+    npm run policy:trial
 
 ## License
 

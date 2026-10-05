@@ -164,3 +164,21 @@ export {
   normalizePortfolioGovernancePolicy
 } from "./portfolio/governance-policy.js";
 export {PortfolioGovernanceRegistry} from "./portfolio/governance.js";
+
+export {
+  POLICY_REVISION_VERSION,
+  POLICY_TRIAL_VERSION,
+  POLICY_COMPARISON_VERSION,
+  POLICY_ROUND_OUTCOME_VERSION,
+  POLICY_TRIAL_ASSIGNMENT_MODES,
+  createPortfolioPolicyRevision,
+  verifyPortfolioPolicyRevision,
+  createProspectivePolicyTrialProtocol,
+  verifyProspectivePolicyTrialProtocol,
+  policyTrialAssignment,
+  createProspectivePolicyComparison,
+  verifyProspectivePolicyComparison,
+  recordProspectivePolicyRoundOutcome,
+  verifyProspectivePolicyRoundOutcome,
+  summarizeProspectivePolicyTrial
+} from "./portfolio/policy-trial.js";
