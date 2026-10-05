@@ -594,6 +594,7 @@ export function verifySignedPrincipalApproval(
 ){
   try{
     if(!verifyPolicyConstitution(constitution)) return false;
+    if(keyRegistry.constitution().fingerprint!==constitution.fingerprint) return false;
     if(approval?.version!==SIGNED_PRINCIPAL_APPROVAL_VERSION||!verifyFingerprint(approval)) return false;
     if(approval.algorithm!=="Ed25519"||approval.identityAssurance!=="PUBLIC_KEY_POSSESSION") return false;
     if(approval.constitutionFingerprint!==constitution.fingerprint) return false;
@@ -728,6 +729,7 @@ export function verifyCryptographicAuthorizationAttestation(
       attestation.constitutionalReceipt.lineageKey!==attestation.lineageKey
     ) return false;
 
+    if(attestation.constitutionalReceipt.approvals.length!==attestation.signedApprovals.length) return false;
     const approvalByPrincipal=new Map(attestation.signedApprovals.map(item=>[item.principalId,item]));
     if(approvalByPrincipal.size!==attestation.signedApprovals.length) return false;
 
