@@ -106,7 +106,23 @@ import {
   verifyPolicyMonitorReport,
   rollbackActivePolicy,
   verifyPolicyRollbackReceipt,
-  activePolicyStateLineage
+  activePolicyStateLineage,
+  POLICY_CONSTITUTION_VERSION,
+  CONSTITUTIONAL_AUTHORIZATION_VERSION,
+  AUTHORITY_DOMAINS,
+  AUTHORITY_ACTIONS,
+  DEFAULT_AUTHORITY_RULES,
+  createPolicyConstitution,
+  verifyPolicyConstitution,
+  authorityRule,
+  createConstitutionAmendmentProposal,
+  verifyConstitutionAmendmentProposal,
+  ConstitutionalAuthorityLedger,
+  verifyConstitutionalAuthorizationReceipt,
+  assertConstitutionalAuthorization,
+  applyConstitutionAmendment,
+  activatePolicyPromotionConstitutionally,
+  rollbackActivePolicyConstitutionally
 } from "../src/index.js";
 
 const required=[
@@ -140,6 +156,7 @@ const required=[
   "schemas/portfolio-governance-selection.schema.json","schemas/portfolio-governance-outcome.schema.json","schemas/portfolio-governance-review.schema.json","schemas/portfolio-governance-registry.schema.json",
   "schemas/portfolio-policy-revision.schema.json","schemas/prospective-policy-trial.schema.json","schemas/prospective-policy-comparison.schema.json","schemas/prospective-policy-round-outcome.schema.json","schemas/prospective-policy-trial-summary.schema.json",
   "schemas/policy-promotion-proposal.schema.json","schemas/policy-activation-receipt.schema.json","schemas/active-policy-state.schema.json","schemas/post-activation-policy-monitor.schema.json","schemas/policy-rollback-receipt.schema.json","schemas/active-policy-state-lineage.schema.json",
+  "schemas/policy-constitution.schema.json","schemas/constitutional-authorization-receipt.schema.json","schemas/constitutional-authority-ledger.schema.json","schemas/constitution-amendment-proposal.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -238,7 +255,18 @@ for(const [name,value] of Object.entries({
   verifyPolicyMonitorReport,
   rollbackActivePolicy,
   verifyPolicyRollbackReceipt,
-  activePolicyStateLineage
+  activePolicyStateLineage,
+  createPolicyConstitution,
+  verifyPolicyConstitution,
+  authorityRule,
+  createConstitutionAmendmentProposal,
+  verifyConstitutionAmendmentProposal,
+  ConstitutionalAuthorityLedger,
+  verifyConstitutionalAuthorizationReceipt,
+  assertConstitutionalAuthorization,
+  applyConstitutionAmendment,
+  activatePolicyPromotionConstitutionally,
+  rollbackActivePolicyConstitutionally
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -281,6 +309,11 @@ if(ACTIVE_POLICY_STATE_VERSION!=="ACTIVE_PORTFOLIO_POLICY_STATE_V0.1") throw new
 if(POLICY_MONITOR_VERSION!=="POST_ACTIVATION_POLICY_MONITOR_V0.1") throw new Error("Unexpected policy monitor version");
 if(POLICY_ROLLBACK_VERSION!=="POLICY_ROLLBACK_RECEIPT_V0.1") throw new Error("Unexpected policy rollback version");
 normalizePostActivationPolicy(DEFAULT_POST_ACTIVATION_POLICY);
+if(POLICY_CONSTITUTION_VERSION!=="POLICY_CONSTITUTION_V0.1") throw new Error("Unexpected policy constitution version");
+if(CONSTITUTIONAL_AUTHORIZATION_VERSION!=="CONSTITUTIONAL_AUTHORIZATION_RECEIPT_V0.1") throw new Error("Unexpected constitutional authorization version");
+if(AUTHORITY_DOMAINS.length!==11) throw new Error("Expected 11 authority domains");
+if(AUTHORITY_ACTIONS.length!==11) throw new Error("Expected 11 authority actions");
+if(DEFAULT_AUTHORITY_RULES.length!==11) throw new Error("Expected 11 default authority rules");
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");

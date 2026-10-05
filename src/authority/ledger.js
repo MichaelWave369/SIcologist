@@ -40,15 +40,38 @@ function ruleSatisfiedBy(principal,rule){
 }
 
 export function verifyConstitutionalAuthorizationReceipt(constitution,receipt){
-  return Boolean(
-    verifyPolicyConstitution(constitution)&&
-    receipt?.version===CONSTITUTIONAL_AUTHORIZATION_VERSION&&
-    verifyFingerprint(receipt)&&
-    receipt.constitutionFingerprint===constitution.fingerprint&&
-    receipt.constitutionId===constitution.constitutionId&&
-    receipt.constitutionRevision===constitution.revision&&
-    receipt.actionAuthorized===true
-  );
+  if(
+    !verifyPolicyConstitution(constitution)||
+    receipt?.version!==CONSTITUTIONAL_AUTHORIZATION_VERSION||
+    !verifyFingerprint(receipt)||
+    receipt.constitutionFingerprint!==constitution.fingerprint||
+    receipt.constitutionId!==constitution.constitutionId||
+    receipt.constitutionRevision!==constitution.revision||
+    receipt.actionAuthorized!==true||
+    receipt.actionPerformed!==false||
+    receipt.identityAssurance!=="DECLARED_PRINCIPAL_ONLY"
+  ) return false;
+
+  try{
+    const rule=authorityRule(constitution,receipt.actionType);
+    if(JSON.stringify(rule)!==JSON.stringify(receipt.rule)) return false;
+    if(!Array.isArray(receipt.approvals)||receipt.approvals.length<rule.quorum) return false;
+    const principals=principalMap(constitution);
+    const seen=new Set();
+    for(const approval of receipt.approvals){
+      if(seen.has(approval.principalId)) return false;
+      seen.add(approval.principalId);
+      const principal=principals.get(approval.principalId);
+      if(!principal||!ruleSatisfiedBy(principal,rule)) return false;
+      if(approval.displayName!==principal.displayName) return false;
+      if(JSON.stringify(approval.domains)!==JSON.stringify(principal.domains)) return false;
+      if(typeof approval.approvalReceiptFingerprint!=="string"||
+         !/^[a-f0-9]{64}$/.test(approval.approvalReceiptFingerprint)) return false;
+    }
+    return true;
+  }catch{
+    return false;
+  }
 }
 
 export function assertConstitutionalAuthorization(
