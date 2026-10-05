@@ -1,9 +1,7 @@
 import {createPublicKey,sign,verify} from "node:crypto";
 import {canonicalize,fingerprint} from "../experiment/fingerprint.js";
-import {
-  verifyPolicyConstitution,
-  verifyConstitutionalAuthorizationReceipt
-} from "../index.js";
+import {verifyPolicyConstitution} from "./constitution.js";
+import {verifyConstitutionalAuthorizationReceipt} from "./ledger.js";
 
 export const PRINCIPAL_KEY_REGISTRY_VERSION="PRINCIPAL_KEY_REGISTRY_V0.1";
 export const SIGNED_PRINCIPAL_APPROVAL_VERSION="SIGNED_PRINCIPAL_APPROVAL_V0.1";
@@ -77,7 +75,7 @@ function keyStatusAt(record,sequence){
   return "ACTIVE";
 }
 
-function replayEvents(constitution,events,throughSequence=events.length){
+function replayEvents(constitution,events,throughSequence=events.length,expectedRegistryId=null){
   const state=new Map();
   let previous=null;
   for(let index=0;index<throughSequence;index++){
@@ -88,6 +86,12 @@ function replayEvents(constitution,events,throughSequence=events.length){
       throw new Error("Principal key event chain mismatch");
     }
     principalExists(constitution,event.principalId);
+    if(event.constitutionFingerprint!==constitution.fingerprint){
+      throw new Error("Principal key event constitution mismatch");
+    }
+    if(expectedRegistryId!==null&&event.registryId!==expectedRegistryId){
+      throw new Error("Principal key event registry mismatch");
+    }
 
     if(event.type==="ENROLL"){
       if(state.has(event.keyId)) throw new Error("Duplicate keyId in key registry history");
@@ -253,7 +257,7 @@ export class PrincipalKeyRegistry{
     if(!Number.isInteger(sequence)||sequence<0||sequence>this.sequence()){
       throw new TypeError("sequence is outside registry history");
     }
-    const state=replayEvents(this.#constitution,this.#events,sequence);
+    const state=replayEvents(this.#constitution,this.#events,sequence,this.#registryId);
     return [...state.values()].map(record=>({
       ...clone(record),
       status:keyStatusAt(record,sequence)
@@ -296,7 +300,7 @@ export class PrincipalKeyRegistry{
   #append(body){
     const event={...body,fingerprint:fingerprint(body)};
     this.#events.push(event);
-    replayEvents(this.#constitution,this.#events);
+    replayEvents(this.#constitution,this.#events,this.#events.length,this.#registryId);
     return clone(event);
   }
 
@@ -497,7 +501,7 @@ export class PrincipalKeyRegistry{
     if(snapshot.sequence!==(snapshot.events??[]).length){
       throw new Error("Principal key registry sequence mismatch");
     }
-    replayEvents(constitution,snapshot.events??[]);
+    replayEvents(constitution,snapshot.events??[],snapshot.sequence,snapshot.registryId);
     const registry=new PrincipalKeyRegistry(constitution,{registryId:snapshot.registryId});
     registry.#events=(snapshot.events??[]).map(clone);
     return registry;
