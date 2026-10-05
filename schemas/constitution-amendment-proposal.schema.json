@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Constitution Amendment Proposal",
+  "type":"object",
+  "required":["version","constitutionId","currentConstitutionFingerprint","proposedConstitution","amendmentReason","status","fingerprint"],
+  "properties":{
+    "version":{"const":"CONSTITUTION_AMENDMENT_PROPOSAL_V0.1"},
+    "status":{"const":"PROPOSED_NOT_APPLIED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
