@@ -95,6 +95,15 @@ function replayEvents(constitution,events,throughSequence=events.length,expected
 
     if(event.type==="ENROLL"){
       if(state.has(event.keyId)) throw new Error("Duplicate keyId in key registry history");
+      const expectedGeneration=Math.max(
+        0,
+        ...[...state.values()]
+          .filter(item=>item.principalId===event.principalId)
+          .map(item=>item.generation)
+      )+1;
+      if(event.generation!==expectedGeneration){
+        throw new Error("Principal key generation is not contiguous");
+      }
       const payload={
         version:"PRINCIPAL_KEY_ENROLLMENT_V0.1",
         registryId:event.registryId,
@@ -132,6 +141,15 @@ function replayEvents(constitution,events,throughSequence=events.length,expected
         throw new Error("Rotation old key was not active");
       }
       if(state.has(event.newKeyId)) throw new Error("Rotation new keyId already exists");
+      const expectedGeneration=Math.max(
+        0,
+        ...[...state.values()]
+          .filter(item=>item.principalId===event.principalId)
+          .map(item=>item.generation)
+      )+1;
+      if(event.newGeneration!==expectedGeneration){
+        throw new Error("Principal key generation is not contiguous");
+      }
       const payload={
         version:"PRINCIPAL_KEY_ROTATION_V0.1",
         registryId:event.registryId,
@@ -192,6 +210,15 @@ function replayEvents(constitution,events,throughSequence=events.length,expected
       target.revokedAtSequence=event.sequence;
     }else if(event.type==="RECOVER"){
       if(state.has(event.newKeyId)) throw new Error("Recovery new keyId already exists");
+      const expectedGeneration=Math.max(
+        0,
+        ...[...state.values()]
+          .filter(item=>item.principalId===event.principalId)
+          .map(item=>item.generation)
+      )+1;
+      if(event.newGeneration!==expectedGeneration){
+        throw new Error("Principal key generation is not contiguous");
+      }
       const payload={
         version:"PRINCIPAL_KEY_RECOVERY_V0.1",
         registryId:event.registryId,

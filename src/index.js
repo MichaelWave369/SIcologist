@@ -222,3 +222,19 @@ export {
   activatePolicyPromotionConstitutionally,
   rollbackActivePolicyConstitutionally
 } from "./authority/ledger.js";
+
+export {
+  PRINCIPAL_KEY_REGISTRY_VERSION,
+  SIGNED_PRINCIPAL_APPROVAL_VERSION,
+  CRYPTOGRAPHIC_AUTHORIZATION_ATTESTATION_VERSION,
+  principalPublicKeyFingerprint,
+  PrincipalKeyRegistry,
+  createSignedPrincipalApproval,
+  verifySignedPrincipalApproval,
+  authorizeCryptographically,
+  verifyCryptographicAuthorizationAttestation
+} from "./authority/identity.js";
+export {
+  activatePolicyPromotionCryptographically,
+  rollbackActivePolicyCryptographically
+} from "./authority/identity-adapters.js";

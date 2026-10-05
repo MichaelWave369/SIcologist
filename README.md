@@ -31,45 +31,59 @@ SIcologist is a deterministic, model-agnostic framework for observing software-a
 21. Policy Revision + Prospective A/B Governance
 22. Policy Promotion + Rollback Governance
 23. Policy Constitution + Authority Domains
+24. Cryptographic Principal Identity + Key Lifecycle
 
-## Rung 23
+## Rung 24
 
-Rung 23 replaces the vague idea of one all-powerful operator with explicit constitutional authority.
+Rung 24 adds Ed25519 key possession to the Rung 23 constitutional authority model.
 
-A constitution freezes:
+A principal-key registry is event-sourced:
 
-    declared principals
-    authority domains
-    action rules
-    quorum requirements
-    required prior authorizations
-    separation-of-duty constraints
+    ENROLL
+      |
+      +--> ROTATE
+      |
+      +--> REVOKE
+      |
+      +--> RECOVER
 
-Default policy-sensitive flow:
+Enrollment proves possession of the new private key and records an external bootstrap-receipt fingerprint.
 
-    POLICY_PROPOSAL
-        ↓ different principal
-    TRIAL_GOVERNANCE
-        ↓
-    POLICY_REVIEW (2-person quorum)
-        ↓ different activator
-    POLICY_ACTIVATION
-        ↓ different rollback authority
-    POLICY_ROLLBACK
+Rotation requires both:
 
-Operational domains are also separated for portfolio selection, campaign selection, and experiment execution.
+    old active key signature
+    new key proof of possession
 
-Holding a domain does not execute anything. Every action needs a fingerprinted constitutional authorization receipt for the exact subject artifact.
+Ordinary revocation requires a different active key belonging to the same principal.
 
-Principal identity is declared, not cryptographically or legally established.
+Lost-key recovery is explicitly weaker:
 
-The constitution itself can only be revised through a fingerprinted amendment proposal authorized under the previous constitution.
+    recoveryAssurance = EXTERNAL_RECOVERY_RECEIPT_ONLY
+
+Recovery revokes all active keys for that principal and proves possession of the replacement key.
+
+Signed constitutional approvals bind the exact:
+
+    registry snapshot
+    constitution fingerprint
+    principal + key generation
+    action type
+    subject fingerprint
+    lineage key
+
+A cryptographic authorization attestation wraps the Rung 23 constitutional receipt and raises identity assurance to:
+
+    PUBLIC_KEY_POSSESSION
+
+It still does not establish legal identity, physical human identity, or a trusted timestamp.
+
+Historical signatures remain auditable after rotation/revocation. Privileged actions require the current key-registry snapshot, so stale or revoked approvals cannot be used to activate or rollback policy.
 
 ## Quick start
 
     npm test
     npm run validate
-    npm run constitution
+    npm run identity
 
 ## License
 

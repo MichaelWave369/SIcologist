@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Principal Key Event",
+  "type":"object",
+  "required":["type","sequence","registryId","constitutionFingerprint","principalId","previousEventFingerprint","fingerprint"],
+  "properties":{
+    "type":{"enum":["ENROLL","ROTATE","REVOKE","RECOVER"]},
+    "sequence":{"type":"integer","minimum":1},
+    "registryId":{"type":"string","minLength":1},
+    "constitutionFingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "principalId":{"type":"string","minLength":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
