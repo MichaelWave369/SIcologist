@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Active Portfolio Policy State",
+  "type":"object",
+  "required":["version","generation","activePolicy","activePolicyFingerprint","rollbackPolicy","rollbackPolicyFingerprint","promotionProposalFingerprint","previousStateFingerprint","monitoringPolicy","monitoringBaseline","status","authority","fingerprint"],
+  "properties":{
+    "version":{"const":"ACTIVE_PORTFOLIO_POLICY_STATE_V0.1"},
+    "generation":{"type":"integer","minimum":1},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Policy Rollback Receipt",
+  "type":"object",
+  "required":["version","priorPolicyStateFingerprint","monitorReportFingerprint","rollbackFromPolicyFingerprint","rollbackToPolicyFingerprint","nextPolicyStateFingerprint","monitorStatusAtRollback","discretionaryRollback","rollbackReason","operatorApproved","approvalReceipt","experimentExecutionAuthorized","fingerprint"],
+  "properties":{
+    "version":{"const":"POLICY_ROLLBACK_RECEIPT_V0.1"},
+    "operatorApproved":{"const":true},
+    "experimentExecutionAuthorized":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

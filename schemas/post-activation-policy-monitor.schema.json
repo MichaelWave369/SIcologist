@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Post Activation Policy Monitor",
+  "type":"object",
+  "required":["version","activePolicyStateFingerprint","activePolicyFingerprint","governanceRegistryFingerprint","postActivationSelectionCount","completedOutcomeCount","pendingOutcomeCount","decisiveOutcomeCount","decisiveRate","inconclusiveRate","contradictionRate","outcomeCounts","flags","status","rollbackAuthorized","automaticRollback","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"POST_ACTIVATION_POLICY_MONITOR_V0.1"},
+    "rollbackAuthorized":{"const":false},
+    "automaticRollback":{"const":false},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
