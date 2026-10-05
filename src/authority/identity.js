@@ -705,8 +705,12 @@ export function verifyCryptographicAuthorizationAttestation(
     if(approvalByPrincipal.size!==attestation.signedApprovals.length) return false;
 
     for(const approval of attestation.signedApprovals){
+      if(
+        approval.registrySequence!==attestation.keyRegistrySequence||
+        approval.registryFingerprint!==attestation.keyRegistryFingerprint
+      ) return false;
       if(!verifySignedPrincipalApproval(keyRegistry,constitution,approval,{
-        requireCurrent:false,
+        requireCurrent:requireCurrentRegistry,
         actionType:attestation.actionType,
         subjectFingerprint:attestation.subjectFingerprint,
         lineageKey:attestation.lineageKey

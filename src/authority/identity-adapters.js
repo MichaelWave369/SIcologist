@@ -20,7 +20,7 @@ export function activatePolicyPromotionCryptographically(
     constitution,
     keyRegistry,
     attestation,
-    {requireCurrentRegistry:false}
+    {requireCurrentRegistry:true}
   )){
     throw new Error("Cryptographic authorization attestation verification failed");
   }
@@ -51,7 +51,7 @@ export function rollbackActivePolicyCryptographically(
     constitution,
     keyRegistry,
     attestation,
-    {requireCurrentRegistry:false}
+    {requireCurrentRegistry:true}
   )){
     throw new Error("Cryptographic authorization attestation verification failed");
   }
