@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Portfolio Governance Outcome",
+  "type":"object",
+  "required":["version","selectionFingerprint","portfolioFingerprint","policyFingerprint","programId","allocationId","allocationRank","allocatedPriorityScore","allocatedEstimatedCost","recommendedProbeId","challengeContractId","challengeResultFingerprint","challengeOutcome","decisionYield","evidenceAttached","claimTransition","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"PORTFOLIO_GOVERNANCE_OUTCOME_V0.1"},
+    "challengeOutcome":{"enum":["SURVIVED_CHALLENGE","WEAKENED","CONTRADICTED","INCONCLUSIVE"]},
+    "evidenceAttached":{"const":true},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}

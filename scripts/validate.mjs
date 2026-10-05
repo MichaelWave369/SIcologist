@@ -70,7 +70,12 @@ import {
   verifyResearchPortfolio,
   createResearchPortfolio,
   portfolioRecommendation,
-  createPortfolioSelectionReceipt
+  createPortfolioSelectionReceipt,
+  PORTFOLIO_GOVERNANCE_VERSION,
+  DEFAULT_PORTFOLIO_GOVERNANCE_POLICY,
+  GOVERNANCE_REVIEW_FLAGS,
+  normalizePortfolioGovernancePolicy,
+  PortfolioGovernanceRegistry
 } from "../src/index.js";
 
 const required=[
@@ -101,6 +106,7 @@ const required=[
   "schemas/research-campaign-plan.schema.json","schemas/research-campaign-gate.schema.json","schemas/research-campaign-tracker.schema.json",
   "schemas/adaptive-campaign-revision.schema.json","schemas/adaptive-campaign-activation.schema.json","schemas/adaptive-campaign-lineage.schema.json",
   "schemas/research-portfolio.schema.json","schemas/portfolio-program.schema.json","schemas/portfolio-selection-receipt.schema.json",
+  "schemas/portfolio-governance-selection.schema.json","schemas/portfolio-governance-outcome.schema.json","schemas/portfolio-governance-review.schema.json","schemas/portfolio-governance-registry.schema.json",
   "fixtures/session-loop.json","fixtures/probe-experiment.json","fixtures/benchmark-v0.1-manifest.json"
 ];
 
@@ -176,7 +182,9 @@ for(const [name,value] of Object.entries({
   verifyResearchPortfolio,
   createResearchPortfolio,
   portfolioRecommendation,
-  createPortfolioSelectionReceipt
+  createPortfolioSelectionReceipt,
+  normalizePortfolioGovernancePolicy,
+  PortfolioGovernanceRegistry
 })){
   if(typeof value!=="function") throw new Error(name+" export missing");
 }
@@ -206,6 +214,9 @@ if(ADAPTIVE_CAMPAIGN_VERSION!=="ADAPTIVE_CAMPAIGN_REVISION_V0.1") throw new Erro
 if(PORTFOLIO_VERSION!=="RESEARCH_PORTFOLIO_V0.1") throw new Error("Unexpected portfolio version");
 validatePortfolioWeights(DEFAULT_PORTFOLIO_WEIGHTS);
 normalizePortfolioPolicy(DEFAULT_PORTFOLIO_POLICY);
+if(PORTFOLIO_GOVERNANCE_VERSION!=="PORTFOLIO_GOVERNANCE_V0.1") throw new Error("Unexpected portfolio governance version");
+if(GOVERNANCE_REVIEW_FLAGS.length!==3) throw new Error("Expected 3 governance review flags");
+normalizePortfolioGovernancePolicy(DEFAULT_PORTFOLIO_GOVERNANCE_POLICY);
 
 const manifest=JSON.parse(await readFile("fixtures/benchmark-v0.1-manifest.json","utf8"));
 if(manifest.fingerprint!==dataset.fingerprint) throw new Error("Benchmark manifest fingerprint mismatch");
