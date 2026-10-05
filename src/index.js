@@ -182,3 +182,22 @@ export {
   verifyProspectivePolicyRoundOutcome,
   summarizeProspectivePolicyTrial
 } from "./portfolio/policy-trial.js";
+
+export {
+  POLICY_PROMOTION_VERSION,
+  ACTIVE_POLICY_STATE_VERSION,
+  POLICY_MONITOR_VERSION,
+  POLICY_ROLLBACK_VERSION,
+  DEFAULT_POST_ACTIVATION_POLICY,
+  normalizePostActivationPolicy,
+  createPolicyPromotionProposal,
+  verifyPolicyPromotionProposal,
+  activatePolicyPromotion,
+  verifyPolicyActivationReceipt,
+  verifyActivePolicyState,
+  monitorActivePolicy,
+  verifyPolicyMonitorReport,
+  rollbackActivePolicy,
+  verifyPolicyRollbackReceipt,
+  activePolicyStateLineage
+} from "./portfolio/policy-lifecycle.js";

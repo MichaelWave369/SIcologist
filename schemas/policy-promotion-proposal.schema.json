@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"SIcologist Policy Promotion Proposal",
+  "type":"object",
+  "required":["version","policyRevisionFingerprint","trialProtocolFingerprint","trialSummaryFingerprint","baselinePolicy","baselinePolicyFingerprint","candidatePolicy","candidatePolicyFingerprint","descriptiveTrialDeltas","reviewerId","promotionReason","riskAcceptance","monitoringPolicy","status","boundaries","fingerprint"],
+  "properties":{
+    "version":{"const":"POLICY_PROMOTION_PROPOSAL_V0.1"},
+    "status":{"const":"PROMOTION_REVIEWED_NOT_ACTIVATED"},
+    "fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"}
+  }
+}
